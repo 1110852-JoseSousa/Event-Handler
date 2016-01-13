@@ -56,7 +56,7 @@ public class Main implements EventOperations {
     	Response response;
     	
     	
-    	subOp.setFilter(2, "Subscriber for the Workstation cpuCores", "cpuCores", "Sensor 1");
+    	subOp.setFilter(2, "Subscribing the temperature of porto-sensor-1", "temperature", "porto-sensor-1");
 			
 		// Registers this subscriber to the eventhandler
 		response = subOp.registerSubscriber(subOp.getTarget()); System.out.println(response.readEntity(String.class));

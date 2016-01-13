@@ -38,8 +38,8 @@ public class Main {
     public static void main(String[] args) throws IOException {
         
     	producerOp.setName("Sensor 1");
-    	producerOp.setType("cpuCores");
-    	producerOp.setUID("sensor1");
+    	producerOp.setType("temperature");
+    	producerOp.setUID("porto-sensor1");
     	
     	
     	Response response;

@@ -74,6 +74,9 @@ public class Registry {
         return r;
     }
 
+    // In case the UID is not yet registed and there is a Producer which matches the Consumer filter response 200 is returned
+    // In case the UID is not yet registed and there isnt a Producer which matches the Consumer filter response 201 is returned
+    // In case the UID is already registed response 204 is returned
     @PUT
     @Path("/{uid}")
     @Consumes(MediaType.APPLICATION_XML)
@@ -83,7 +86,12 @@ public class Registry {
 
          if (ehs.GetConsumer(uid) == null) {
             ehs.ImportConsumer(uid, c);
-            return Response.status(201).entity("created " + uid).build();
+            if(ehs.ExistsEventsForConsumer(c)){
+                return Response.status(200).entity("Created subscriber with UID: " + uid).build();}
+            else{
+                return Response.status(201).entity("Created subscriber with UID:  + uid\nNo producers exist"
+                        + " for this type of event").build();
+            }
         } else {
             return Response.status(204).entity("UID: " + uid + "already exists!!").build();
         }

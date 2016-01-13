@@ -30,7 +30,7 @@ public class EventHandlerSystem {
     }
     EventHandlerOperations eventOp = new EventHandlerOperations();
 
-	//	private static final Cloner cloner = new Cloner();
+    //	private static final Cloner cloner = new Cloner();
     public Registered m_registered;
     public Events events;
 
@@ -113,21 +113,20 @@ public class EventHandlerSystem {
     }
 
     /*public boolean SubstituteProducer(String uid, Registered r) {
-        if (DeleteProducer(uid)) {
-            return ImportOne(uid, r);
-        } else {
-            return false;
-        }
-    }
+     if (DeleteProducer(uid)) {
+     return ImportOne(uid, r);
+     } else {
+     return false;
+     }
+     }
 
-   /* public boolean SubstituteConsumer(String uid, Registered r) {
-        if (DeleteConsumer(uid)) {
-            return ImportOne(uid, r);
-        } else {
-            return false;
-        }
-    }*/
-
+     /* public boolean SubstituteConsumer(String uid, Registered r) {
+     if (DeleteConsumer(uid)) {
+     return ImportOne(uid, r);
+     } else {
+     return false;
+     }
+     }*/
     public Registered ResolveQueryProducer(String uid) {
         ProducerType p = GetProducer(uid);
         if (null == p) {
@@ -192,58 +191,57 @@ public class EventHandlerSystem {
     }
 
     /*public boolean alreadyExists(String uid) {
-        Iterator<ProducerType> ip = m_registered.getProducer().iterator();
-        while (ip.hasNext()) {
-            ProducerType p = ip.next();
-            if (p.getUid().equals(uid)) {
-                return true;
-            }
-        }
-        Iterator<ConsumerType> ic = m_registered.getConsumer().iterator();
-        while (ic.hasNext()) {
-            ConsumerType c = ic.next();
-            if (c.getUid().equals(uid)) {
-                return true;
-            }
-        }
-        return false;
-    }*/
-    
-    public void ImportProducer(String uid, ProducerType p){
+     Iterator<ProducerType> ip = m_registered.getProducer().iterator();
+     while (ip.hasNext()) {
+     ProducerType p = ip.next();
+     if (p.getUid().equals(uid)) {
+     return true;
+     }
+     }
+     Iterator<ConsumerType> ic = m_registered.getConsumer().iterator();
+     while (ic.hasNext()) {
+     ConsumerType c = ic.next();
+     if (c.getUid().equals(uid)) {
+     return true;
+     }
+     }
+     return false;
+     }*/
+    public void ImportProducer(String uid, ProducerType p) {
         m_registered.getProducer().add(p);
     }
-    
-    public void ImportConsumer(String uid, ConsumerType c){
+
+    public void ImportConsumer(String uid, ConsumerType c) {
         m_registered.getConsumer().add(c);
     }
-    
-   /* public boolean ImportEntity(String uid, Registered r) {
-        
-        Iterator<ProducerType> ip = r.getProducer().iterator();
-        while (ip.hasNext()) {
-            ProducerType p = ip.next();
-            if (p.getUid().equals(uid)) {
-                ProducerType newp = DeepCopyProducer(p);
-                m_registered.getProducer().add(newp);
-                System.out.println("added producer " + uid);
-                return true;
-            }
-        }
-        Iterator<ConsumerType> ic = r.getConsumer().iterator();
-        while (ic.hasNext()) {
-            ConsumerType c = ic.next();
-            if (c.getUid().equals(uid)) {
-                ConsumerType newp = DeepCopyConsumer(c);
-                m_registered.getConsumer().add(newp);
-                System.out.println("added consumer " + uid);
-                return true;
-            }
-        }
-        System.out.println("could not add " + uid);
 
-        return false;
-    }
-    */
+    /* public boolean ImportEntity(String uid, Registered r) {
+        
+     Iterator<ProducerType> ip = r.getProducer().iterator();
+     while (ip.hasNext()) {
+     ProducerType p = ip.next();
+     if (p.getUid().equals(uid)) {
+     ProducerType newp = DeepCopyProducer(p);
+     m_registered.getProducer().add(newp);
+     System.out.println("added producer " + uid);
+     return true;
+     }
+     }
+     Iterator<ConsumerType> ic = r.getConsumer().iterator();
+     while (ic.hasNext()) {
+     ConsumerType c = ic.next();
+     if (c.getUid().equals(uid)) {
+     ConsumerType newp = DeepCopyConsumer(c);
+     m_registered.getConsumer().add(newp);
+     System.out.println("added consumer " + uid);
+     return true;
+     }
+     }
+     System.out.println("could not add " + uid);
+
+     return false;
+     }
+     */
     public Events GetHistoricalData(arrowhead.generated.FilterType filter) {
         Events ret = new Events();
         // filter Events' DB using FilterType filter
@@ -254,7 +252,7 @@ public class EventHandlerSystem {
         this.events.getEvent().clear();
     }
 
-	// Access each Subscriber's notify Service to send the events
+    // Access each Subscriber's notify Service to send the events
     public void notifyEvent(Events events) {
 
         WebTarget target;
@@ -281,7 +279,7 @@ public class EventHandlerSystem {
 
     }
 
-	// For an event apply the filter of each subscriber and return a list
+    // For an event apply the filter of each subscriber and return a list
     public List<ConsumerType> applyFilter(EventType e) {
 
         List<ConsumerType> toNotify = new ArrayList<ConsumerType>();
@@ -299,6 +297,18 @@ public class EventHandlerSystem {
         }
 
         return toNotify;
+    }
+
+    // Checks if there is any producer publishing events according to the subscriber filter
+
+    boolean ExistsEventsForConsumer(ConsumerType c) {
+        for (ProducerType p : m_registered.getProducer()) {
+            if (c.getFilter().getFrom().equalsIgnoreCase(p.getUid()) && c.getFilter().getType().equalsIgnoreCase(p.getType())) {
+                System.out.println("CHECK PRODUCER: " + p.getUid() + "  " + p.getType());
+                return true;
+            }
+        }
+        return false;
     }
 
 }
