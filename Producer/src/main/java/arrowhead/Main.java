@@ -50,12 +50,12 @@ public class Main {
 		
 		System.out.println(response.readEntity(String.class));
 		
-		/*
+		
 		for (int i = 0; i < 1000; i++) {
 			producerOp.addEvent(1, "Hello " + i);
 			response = producerOp.publishEvents(producerOp.getEvents(), producerOp.getTarget());
 			producerOp.getEvents().getEvent().clear();
-		}*/
+		}
 		
 		
 		System.out.println(response.readEntity(String.class));

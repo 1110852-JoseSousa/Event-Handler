@@ -2,12 +2,15 @@
  * Registry.java by Michele Albano - CISTER/INESC-TEC, ISEP, Polytechnic
  * Institute of. Porto This work was supported by National Funds through FCT
  * (Portuguese Foundation for Science and Technology) and by the EU ARTEMIS JU
- * funding, within Arrowhead project, ref. ARTEMIS/0001/2012, JU grant nr. 332987
+ * funding, within Arrowhead project, ref. ARTEMIS/0001/2012, JU grant nr.
+ * 332987
  *
- * 
+ *
  */
 package arrowhead;
 
+import arrowhead.generated.ConsumerType;
+import arrowhead.generated.ProducerType;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.POST;
@@ -27,96 +30,108 @@ import arrowhead.generated.Registered;
 public class Registry {
 
     /*@GET
-    @Path("/{uid}")
-	@Produces(MediaType.APPLICATION_XML)
-    public Registered retrieveDetails(@PathParam("uid") String uid) {
-		EventHandlerSystem ehs = EventHandlerSystem.getInstance();
-		Registered ret = null;
-		if (null == ret) {
-			ret = ehs.ResolveQueryProducer(uid);
-		}
-		if (null == ret) {
-			ret = ehs.ResolveQueryConsumer(uid);
-		}
+     @Path("/{uid}")
+     @Produces(MediaType.APPLICATION_XML)
+     public Registered retrieveDetails(@PathParam("uid") String uid) {
+     EventHandlerSystem ehs = EventHandlerSystem.getInstance();
+     Registered ret = null;
+     if (null == ret) {
+     ret = ehs.ResolveQueryProducer(uid);
+     }
+     if (null == ret) {
+     ret = ehs.ResolveQueryConsumer(uid);
+     }
 
-		return ret;
-	}
-    */
-	
+     return ret;
+     }
+     */
     @GET
     @Path("queryAll")
-	@Produces(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_XML)
     public Registered queryAllRegistered() {
-		EventHandlerSystem ehs = EventHandlerSystem.getInstance();
-		return ehs.m_registered;
-	}
-    
-    
+        EventHandlerSystem ehs = EventHandlerSystem.getInstance();
+        return ehs.m_registered;
+    }
+
     @GET
     @Path("query")
-	@Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.TEXT_PLAIN)
     public Registered queryRegistered(
-		@DefaultValue("false") @QueryParam("condition") boolean condition,
-		@DefaultValue("") @QueryParam("name") String q_name,
-		@DefaultValue("") @QueryParam("type") String q_type,
-		@DefaultValue("") @QueryParam("from") String q_from
-//		@Context UriInfo uri,
-		) {
-			EventHandlerSystem ehs = EventHandlerSystem.getInstance();
-			Registered r = ehs.m_registered;
-			
-			if (condition)
-				r = ehs.QueryProducer(q_name, q_type);
-			else{
-				r = ehs.QueryConsumer(q_name, q_type, q_from);
-			}
-			return r;
-	}
-	
-    
+            @DefaultValue("false") @QueryParam("condition") boolean condition,
+            @DefaultValue("") @QueryParam("name") String q_name,
+            @DefaultValue("") @QueryParam("type") String q_type,
+            @DefaultValue("") @QueryParam("from") String q_from
+    //		@Context UriInfo uri,
+    ) {
+        EventHandlerSystem ehs = EventHandlerSystem.getInstance();
+        Registered r = ehs.m_registered;
+
+        if (condition) {
+            r = ehs.QueryProducer(q_name, q_type);
+        } else {
+            r = ehs.QueryConsumer(q_name, q_type, q_from);
+        }
+        return r;
+    }
+
+    @PUT
+    @Path("/{uid}")
+    @Consumes(MediaType.APPLICATION_XML)
+    public Response registerConsumer(@PathParam("uid") String uid, ConsumerType c) {
+
+        EventHandlerSystem ehs = EventHandlerSystem.getInstance();
+
+         if (ehs.GetConsumer(uid) == null) {
+            ehs.ImportConsumer(uid, c);
+            return Response.status(201).entity("created " + uid).build();
+        } else {
+            return Response.status(204).entity("UID: " + uid + "already exists!!").build();
+        }
+    }
+
     @POST
     @Path("/{uid}")
-	@Consumes(MediaType.APPLICATION_XML)
-    public Response registerEntity(@PathParam("uid") String uid, Registered r) {
-    	
-		EventHandlerSystem ehs = EventHandlerSystem.getInstance();
+    @Consumes(MediaType.APPLICATION_XML)
+    public Response registerProducer(@PathParam("uid") String uid, ProducerType p) {
 
-		if (ehs.GetProducer(uid) == null && ehs.GetConsumer(uid) == null) {
-			if (ehs.ImportOne(uid, r))
-				return Response.status(201).entity("created "+uid).build();
-			else
-				return Response.status(204).entity("problem with importing "+uid).build();
-		}
+        EventHandlerSystem ehs = EventHandlerSystem.getInstance();
 
-		return Response.status(201).entity("already exists "+uid).build();
-	}
-
-
+        if (ehs.GetProducer(uid) == null) {
+            ehs.ImportProducer(uid, p);
+            return Response.status(201).entity("created " + uid).build();
+        } else {
+            return Response.status(204).entity("UID: " + uid + "already exists!!").build();
+        }
+    }
+    
     /*@PUT
-    @Path("/{uid}")
-	@Consumes(MediaType.APPLICATION_XML)
-    public Response modifySystem(@PathParam("uid") String uid, Registered r) {
-		EventHandlerSystem ehs = EventHandlerSystem.getInstance();
+     @Path("/{uid}")
+     @Consumes(MediaType.APPLICATION_XML)
+     public Response modifySystem(@PathParam("uid") String uid, Registered r) {
+     EventHandlerSystem ehs = EventHandlerSystem.getInstance();
 
-		if (ehs.SubstituteProducer(uid, r)) return Response.status(200).entity("substituted Producer "+uid).build();
-		if (ehs.SubstituteConsumer(uid, r)) return Response.status(200).entity("substituted Consumer "+uid).build();
+     if (ehs.SubstituteProducer(uid, r)) return Response.status(200).entity("substituted Producer "+uid).build();
+     if (ehs.SubstituteConsumer(uid, r)) return Response.status(200).entity("substituted Consumer "+uid).build();
 
-		return Response.status(200).entity("could not substitute "+uid).build();
-    }*/
+     return Response.status(200).entity("could not substitute "+uid).build();
+     }*/
 
     @DELETE
     @Path("/{uid}")
-	@Consumes(MediaType.APPLICATION_XML)
+    @Consumes(MediaType.APPLICATION_XML)
     public Response unRegisterEntity(@PathParam("uid") String uid) {
-    	
-		EventHandlerSystem ehs = EventHandlerSystem.getInstance();
 
-		if (ehs.DeleteProducer(uid)) return Response.status(200).entity("removed Producer "+uid).build();
-		if (ehs.DeleteConsumer(uid)) return Response.status(200).entity("removed Consumer "+uid).build();
-		
-		return Response.status(200).entity("could not remove "+uid).build();
-		
-	}
+        EventHandlerSystem ehs = EventHandlerSystem.getInstance();
 
+        if (ehs.DeleteProducer(uid)) {
+            return Response.status(200).entity("removed Producer " + uid).build();
+        }
+        if (ehs.DeleteConsumer(uid)) {
+            return Response.status(200).entity("removed Consumer " + uid).build();
+        }
+
+        return Response.status(200).entity("could not remove " + uid).build();
+
+    }
 
 }

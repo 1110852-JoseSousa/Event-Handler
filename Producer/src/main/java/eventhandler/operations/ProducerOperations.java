@@ -92,15 +92,15 @@ public class ProducerOperations {
 		return this.UID;
 	}
 	
-	private Registered createProducer() {
+	private ProducerType createProducer() {
 		
-		arrowhead.generated.ProducerType newp = new arrowhead.generated.ProducerType();
-		newp.setUid(this.getUID());
-		newp.setType(this.getType());
-		newp.setName(this.getName());
-		arrowhead.generated.Registered r1 = new arrowhead.generated.Registered();
-		r1.getProducer().add(newp);
-		return r1;
+		ProducerType p = new ProducerType();
+                
+		p.setUid(this.getUID());
+		p.setType(this.getType());
+		p.setName(this.getName());
+                
+		return p;
 	
 	}
 	

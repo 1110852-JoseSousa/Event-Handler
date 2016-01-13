@@ -95,9 +95,8 @@ public class SubscriberOperations {
 		return this.filter;
 	}
 	
-	private Registered createSubscriber()
+	private ConsumerType createSubscriber()
 	{
-		Registered r = new Registered();
 		ConsumerType subscriber = new ConsumerType();
 		
 		try {
@@ -106,18 +105,18 @@ public class SubscriberOperations {
 			e.printStackTrace();
 		}
 		
+                
 		subscriber.setUid(this.getUID());
 		subscriber.setName(this.getName());
 		subscriber.setFilter(this.getFilter());
 		
-		r.getConsumer().add(subscriber);
 		
-		return r;
+		return subscriber;
 		
 	}
 	
 	public Response registerSubscriber(WebTarget eventHandler){
-		return eventHandler.path("registry").path(this.getUID()).request(MediaType.APPLICATION_XML).post(Entity.entity(createSubscriber(), MediaType.APPLICATION_XML));
+		return eventHandler.path("registry").path(this.getUID()).request(MediaType.APPLICATION_XML).put(Entity.entity(createSubscriber(), MediaType.APPLICATION_XML));
 	}
 
 	public Events getEvents() { return this.events; }
