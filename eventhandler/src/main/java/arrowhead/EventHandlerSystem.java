@@ -5,23 +5,19 @@
 package arrowhead;
 
 import arrowhead.generated.*;
-
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
-//import com.rits.cloning.Cloner;
-//import org.apache.log4j.Logger;
-
-import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
-
 import org.apache.log4j.Logger;
-
 import eventhandler.operations.*;
+import javax.ws.rs.client.WebTarget;
+
+//import com.rits.cloning.Cloner;
 
 public class EventHandlerSystem {
 
-    final static Logger logger = Logger.getLogger(EventHandlerSystem.class);
+   // final static Logger logger = Logger.getLogger(EventHandlerSystem.class);
 
     private static final EventHandlerSystem instance = new EventHandlerSystem();
 
@@ -205,6 +201,7 @@ public class EventHandlerSystem {
      }*/
     public void ImportProducer(String uid, ProducerType p) {
         m_registered.getProducer().add(p);
+        //logger.debug("");
     }
 
     public void ImportConsumer(String uid, ConsumerType c) {
@@ -254,8 +251,9 @@ public class EventHandlerSystem {
 
         WebTarget target;
         Response r;
-
-        List<ConsumerType> subs = new ArrayList<ConsumerType>();
+        LogData data = new LogData();
+        
+        List<ConsumerType> subs;
 
         //Iterator<EventType> itEvents = events.getEvent().iterator();
         subs = applyFilter(event);
@@ -263,11 +261,11 @@ public class EventHandlerSystem {
         for (ConsumerType c : subs) {
             target = eventOp.setTarget("http://localhost:8081", c.getUid());
             r = eventOp.notifySubscriber(event, target);
-            System.out.println(target.toString());
-            System.out.println(r);
-            logger.debug(r);
         }
-
+        
+        data.setEvent(event);
+        data.setConsumers(subs);
+        System.out.println(data.writeObject());
     }
 
     // For an event apply the filter of each subscriber and return a list

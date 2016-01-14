@@ -54,7 +54,7 @@ public class LogData {
     }
 
     /**
-     * Sets the event properties, including .
+     * Sets the event properties.
      * 
      *     
      * @param from
@@ -77,6 +77,19 @@ public class LogData {
         this.event.setPayload(payload);
     }
 
+    /**
+     * Sets the event properties.
+     * 
+     *     
+     * @param event
+     * allowed object is
+     *     {@link EventType }
+     */
+    
+    public void setEvent(EventType event) {
+        this.event = event;
+    }
+    
     /**
      * Sets the list of consumers that were notified.
      * 
@@ -104,4 +117,12 @@ public class LogData {
         return this.consumerList;
     }
     
+    public String writeObject(){
+        String eventInfo = this.event.getFrom() + "-" + this.event.getType()+ "-" + this.event.getDescription().getSeverity()+ "-" + this.event.getFrom();
+        String consumerList = "/";
+        for(ConsumerType c : this.consumerList){
+            consumerList += c.getUid() + ";";
+        }
+        return eventInfo+consumerList;
+    }
 }
