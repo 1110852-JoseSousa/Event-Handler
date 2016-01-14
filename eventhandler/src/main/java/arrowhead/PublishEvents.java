@@ -1,5 +1,6 @@
 package arrowhead;
 
+import arrowhead.generated.EventType;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
@@ -18,17 +19,17 @@ public class PublishEvents {
     @POST
     @Path("/{uid}")
 	@Consumes(MediaType.APPLICATION_XML)
-    public Response publishEvents(Events events) {
+    public Response publishEvents(EventType event) {
     	
     	EventHandlerSystem ehs = EventHandlerSystem.getInstance();
     	
-		ehs.addEvent(events);
+		ehs.addEvent(event);
 		
-		ehs.notifyEvent(events);
+		ehs.notifyEvent(event);
 		
 		ehs.flushEvents();
 		
-		return Response.status(200).entity("events posted ").build();
+		return Response.status(200).entity("Events Posted!").build();
 		
 	}
 

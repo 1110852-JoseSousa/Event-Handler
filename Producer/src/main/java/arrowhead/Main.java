@@ -52,10 +52,9 @@ public class Main {
 		
 		
 		for (int i = 0; i < 1000; i++) {
-			producerOp.addEvent(1, "Hello " + i);
-			response = producerOp.publishEvents(producerOp.getEvents(), producerOp.getTarget());
-			producerOp.getEvents().getEvent().clear();
-		}
+			producerOp.createEvent(1, "porto-sensor-1 ", "temperature", "10ºC");
+			response = producerOp.publishEvent(producerOp.getEvent(), producerOp.getTarget());
+               }
 		
 		
 		System.out.println(response.readEntity(String.class));

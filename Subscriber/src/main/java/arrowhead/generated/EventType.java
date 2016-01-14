@@ -45,7 +45,7 @@ import javax.xml.bind.annotation.XmlType;
     "payload"
 })
 
-@XmlRootElement(name = "EventType")
+@XmlRootElement(name = "event")
 public class EventType {
 
     @XmlElement(required = true)

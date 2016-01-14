@@ -39,12 +39,8 @@ public class EventHandlerSystem {
         events = new Events();
     }
 
-    public void addEvent(Events e) {
-        Iterator<EventType> it = e.getEvent().iterator();
-        while (it.hasNext()) {
-            EventType ev = it.next();
-            this.events.getEvent().add(ev);
-        }
+    public void addEvent(EventType e) {
+        this.events.getEvent().add(e);
     }
 
     public Registered QueryProducer(String q_name, String q_type) {
@@ -156,9 +152,9 @@ public class EventHandlerSystem {
         return newm;
     }
 
-    private arrowhead.generated.FilterType DeepCopyFilter(arrowhead.generated.FilterType f) {
+    private FilterType DeepCopyFilter(FilterType f) {
 
-        arrowhead.generated.FilterType newf = new arrowhead.generated.FilterType();
+        FilterType newf = new FilterType();
         newf.setDescription(DeepCopyMeta(f.getDescription()));
         newf.setEndDateTime(f.getEndDateTime());
         newf.setStartDateTime(f.getStartDateTime());
@@ -242,9 +238,10 @@ public class EventHandlerSystem {
      return false;
      }
      */
-    public Events GetHistoricalData(arrowhead.generated.FilterType filter) {
+    public Events GetHistoricalData(FilterType filter) {
         Events ret = new Events();
         // filter Events' DB using FilterType filter
+
         return ret;
     }
 
@@ -253,28 +250,22 @@ public class EventHandlerSystem {
     }
 
     // Access each Subscriber's notify Service to send the events
-    public void notifyEvent(Events events) {
+    public void notifyEvent(EventType event) {
 
         WebTarget target;
         Response r;
 
         List<ConsumerType> subs = new ArrayList<ConsumerType>();
 
-        Iterator<EventType> itEvents = events.getEvent().iterator();
+        //Iterator<EventType> itEvents = events.getEvent().iterator();
+        subs = applyFilter(event);
 
-        while (itEvents.hasNext()) {
-
-            subs.clear();
-            EventType event = itEvents.next();
-            subs = applyFilter(event);
-
-            for (ConsumerType c : subs) {
-                target = eventOp.setTarget("http://localhost:8081", c.getUid());
-                r = eventOp.notifySubscriber(event, target);
-                System.out.println(target.toString());
-                System.out.println(r);
-                logger.debug(r);
-            }
+        for (ConsumerType c : subs) {
+            target = eventOp.setTarget("http://localhost:8081", c.getUid());
+            r = eventOp.notifySubscriber(event, target);
+            System.out.println(target.toString());
+            System.out.println(r);
+            logger.debug(r);
         }
 
     }
@@ -300,7 +291,6 @@ public class EventHandlerSystem {
     }
 
     // Checks if there is any producer publishing events according to the subscriber filter
-
     boolean ExistsEventsForConsumer(ConsumerType c) {
         for (ProducerType p : m_registered.getProducer()) {
             if (c.getFilter().getFrom().equalsIgnoreCase(p.getUid()) && c.getFilter().getType().equalsIgnoreCase(p.getType())) {
