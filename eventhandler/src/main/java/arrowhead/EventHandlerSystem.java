@@ -14,11 +14,9 @@ import eventhandler.operations.*;
 import javax.ws.rs.client.WebTarget;
 
 //import com.rits.cloning.Cloner;
-
 public class EventHandlerSystem {
 
-   // final static Logger logger = Logger.getLogger(EventHandlerSystem.class);
-
+    // final static Logger logger = Logger.getLogger(EventHandlerSystem.class);
     private static final EventHandlerSystem instance = new EventHandlerSystem();
 
     public static EventHandlerSystem getInstance() {
@@ -252,20 +250,22 @@ public class EventHandlerSystem {
         WebTarget target;
         Response r;
         LogData data = new LogData();
-        
+        data.setEvent(event);
         List<ConsumerType> subs;
 
         //Iterator<EventType> itEvents = events.getEvent().iterator();
         subs = applyFilter(event);
-
+        
         for (ConsumerType c : subs) {
             target = eventOp.setTarget("http://localhost:8081", c.getUid());
+            if (!data.getListConsumers().contains(c.getUid())) {
+                data.addConsumer(Integer.parseInt(c.getUid()));
+                System.out.println("...");
+            }
+            System.out.println(data.writeObject());
             r = eventOp.notifySubscriber(event, target);
         }
-        
-        data.setEvent(event);
-        data.setConsumers(subs);
-        System.out.println(data.writeObject());
+
     }
 
     // For an event apply the filter of each subscriber and return a list

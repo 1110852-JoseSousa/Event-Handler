@@ -1,5 +1,6 @@
 package arrowhead.generated;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -19,7 +20,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="event" type="{http://www.arrowhead.org/eventhandler/events}EventType" maxOccurs="1" minOccurs="0"/>
- *         &lt;element name="consumer" type="{http://www.arrowhead.org/eventhandler/registered}ConsumerType" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="consumer" type="Integer" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -39,8 +40,12 @@ import javax.xml.bind.annotation.XmlType;
 public class LogData {
 
     protected EventType event;
-    protected List<ConsumerType> consumerList;
+    protected List<Integer> consumerList;
 
+    public LogData(){
+        this.event = new EventType();
+        this.consumerList = new ArrayList<>();
+    }
     /**
      * Gets the event.
      * 
@@ -98,10 +103,10 @@ public class LogData {
      *     {@link List<ConsumerType> }
      * 
      */
-    public void setConsumers(List<ConsumerType> listC) {
+    public void setConsumers(List<Integer> listC) {
         this.consumerList.clear();
-        for (ConsumerType c : listC){
-            this.consumerList.add(c);
+        for (Integer i : listC){
+            this.consumerList.add(i);
         }
     }
    
@@ -110,18 +115,22 @@ public class LogData {
      * 
      * @return
      *     possible object is
-     *     {@link List<ConsumerType> }
+     *     {@link List<Integer> }
      *     
      */
-    public List<ConsumerType> getListConsumers() {
+    public List<Integer> getListConsumers() {
         return this.consumerList;
+    }
+    
+    public void addConsumer(Integer i){
+        this.consumerList.add(i);
     }
     
     public String writeObject(){
         String eventInfo = this.event.getFrom() + "-" + this.event.getType()+ "-" + this.event.getDescription().getSeverity()+ "-" + this.event.getFrom();
         String consumerList = "/";
-        for(ConsumerType c : this.consumerList){
-            consumerList += c.getUid() + ";";
+        for(Integer i : this.consumerList){
+            consumerList += i + ";";
         }
         return eventInfo+consumerList;
     }

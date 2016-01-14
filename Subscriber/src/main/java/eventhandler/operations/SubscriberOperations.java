@@ -72,7 +72,7 @@ public class SubscriberOperations {
 		return this.target;
 	}
 	
-	public void setFilter(int severity, String description, String type, String from){
+	public void setFilter(int severity, String type, String from){
 		javax.xml.datatype.DatatypeFactory dtFactory = null;
 		try {
 			dtFactory = javax.xml.datatype.DatatypeFactory.newInstance();
