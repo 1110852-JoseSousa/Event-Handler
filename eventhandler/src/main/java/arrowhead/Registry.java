@@ -89,8 +89,8 @@ public class Registry {
             if(ehs.ExistsEventsForConsumer(c)){
                 return Response.status(200).entity("Created subscriber with UID: " + uid).build();}
             else{
-                return Response.status(201).entity("Created subscriber with UID:  + uid\nNo producers exist"
-                        + " for this type of event").build();
+                return Response.status(201).entity("Created subscriber with UID: " + uid + "\nNo producers exist"
+                        + " for the event type " + c.getFilter().getType()).build();
             }
         } else {
             return Response.status(204).entity("UID: " + uid + "already exists!!").build();

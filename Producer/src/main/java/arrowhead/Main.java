@@ -39,7 +39,7 @@ public class Main {
         
     	producerOp.setName("Sensor 1");
     	producerOp.setType("temperature");
-    	producerOp.setUID("porto-sensor1");
+    	producerOp.setUID("porto-sensor-1");
     	
     	
     	Response response;
