@@ -8,6 +8,7 @@ import javax.ws.rs.core.MediaType;
 
 import arrowhead.generated.Events;
 import arrowhead.generated.FilterType;
+import arrowhead.generated.LogData;
 //import arrowhead.generated.filter.FilterType;
 
 @Path("historicals")
@@ -16,10 +17,10 @@ public class Historicals {
     @POST
     @Produces(MediaType.APPLICATION_XML)
     @Consumes(MediaType.APPLICATION_XML)
-    public Events getHistoricalData(FilterType filter) {
+    public LogData getHistoricalData(FilterType filter) {
         EventHandlerSystem ehs = EventHandlerSystem.getInstance();
-        Events ret = ehs.GetHistoricalData(filter);
-        return ret;
+        LogData data = ehs.GetHistoricalData(filter);
+        return data;
     }
 
 }

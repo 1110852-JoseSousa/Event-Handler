@@ -10,6 +10,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import javax.ws.rs.core.Response;
 import eventhandler.operations.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import javax.ws.rs.client.WebTarget;
 import org.apache.log4j.Logger;
 
@@ -18,7 +22,7 @@ public class EventHandlerSystem {
 
     final static Logger logger = Logger.getLogger(EventHandlerSystem.class);
     private static final EventHandlerSystem instance = new EventHandlerSystem();
-    
+
     public static EventHandlerSystem getInstance() {
         return instance;
     }
@@ -233,14 +237,29 @@ public class EventHandlerSystem {
      return false;
      }
      */
-    
-   /*Instead of a Database server, a file will be used to store data*/
-    
-   public Events GetHistoricalData(FilterType filter) {
-        Events ret = new Events();
-        
+    /*Instead of a Database server, a file will be used to store data*/
+    public LogData GetHistoricalData(FilterType filter) {
+        LogData data = new LogData();
+        EventType e = new EventType();
+        List<ConsumerType> listC = new ArrayList<>();
 
-        return ret;
+        BufferedReader br = null;
+
+        try {
+
+            String sCurrentLine;
+
+            br = new BufferedReader(new FileReader("log4j-eh.log"));
+
+            while ((sCurrentLine = br.readLine()) != null) {
+                System.out.println(sCurrentLine);
+            }
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        return data;
     }
 
     public void flushEvents() {
@@ -257,7 +276,7 @@ public class EventHandlerSystem {
         List<ConsumerType> subs;
 
         subs = applyFilter(event);
-        
+
         for (ConsumerType c : subs) {
             target = eventOp.setTarget("http://localhost:8081", c.getUid());
             System.out.println(data.writeObject());
@@ -296,18 +315,17 @@ public class EventHandlerSystem {
         }
         return false;
     }
-    
-    public void storeEvent(EventType event){
-        
+
+    public void storeEvent(EventType event) {
+
         List<ConsumerType> subs = applyFilter(event);
         LogData data = new LogData();
         data.setEvent(event);
-        for(ConsumerType c : subs){
+        for (ConsumerType c : subs) {
             data.addConsumer(c.getUid());
         }
         logger.debug(data.writeObject());
-        
+
     }
-    
 
 }
