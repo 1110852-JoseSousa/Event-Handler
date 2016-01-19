@@ -25,7 +25,7 @@ public class PublishEvents {
         ehs.addEvent(event);
 
         ehs.notifyEvent(event);
-
+        
         ehs.flushEvents();
 
         return Response.status(200).entity("Events Posted!").build();

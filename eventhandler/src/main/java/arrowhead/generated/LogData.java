@@ -40,7 +40,7 @@ import javax.xml.bind.annotation.XmlType;
 public class LogData {
 
     protected EventType event;
-    protected List<Integer> consumerList;
+    protected List<String> consumerList;
 
     public LogData(){
         this.event = new EventType();
@@ -103,10 +103,10 @@ public class LogData {
      *     {@link List<ConsumerType> }
      * 
      */
-    public void setConsumers(List<Integer> listC) {
+    public void setConsumers(List<String> listC) {
         this.consumerList.clear();
-        for (Integer i : listC){
-            this.consumerList.add(i);
+        for (String uid : listC){
+            this.consumerList.add(uid);
         }
     }
    
@@ -118,19 +118,19 @@ public class LogData {
      *     {@link List<Integer> }
      *     
      */
-    public List<Integer> getListConsumers() {
+    public List<String> getListConsumers() {
         return this.consumerList;
     }
     
-    public void addConsumer(Integer i){
-        this.consumerList.add(i);
+    public void addConsumer(String uid){
+        this.consumerList.add(uid);
     }
     
     public String writeObject(){
         String eventInfo = this.event.getFrom() + "-" + this.event.getType()+ "-" + this.event.getDescription().getSeverity()+ "-" + this.event.getFrom();
         String consumerList = "/";
-        for(Integer i : this.consumerList){
-            consumerList += i + ";";
+        for(String uid : this.consumerList){
+            consumerList += uid + ";";
         }
         return eventInfo+consumerList;
     }
