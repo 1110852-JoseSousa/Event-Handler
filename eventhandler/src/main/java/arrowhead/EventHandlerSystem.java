@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.ws.rs.core.Response;
-import org.apache.log4j.Logger;
 import eventhandler.operations.*;
 import javax.ws.rs.client.WebTarget;
+import org.apache.log4j.Logger;
 
 //import com.rits.cloning.Cloner;
 public class EventHandlerSystem {
