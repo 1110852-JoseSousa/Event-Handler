@@ -141,6 +141,6 @@ public class SubscriberOperations {
 			this.events.getEvent().add(e);
 		}
 	}
-
+        
 
 }

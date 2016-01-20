@@ -126,8 +126,9 @@ public class LogData {
         this.consumerList.add(uid);
     }
     
+    /*How data will be written to a file*/
     public String writeObject(){
-        String eventInfo = this.event.getFrom() + "-" + this.event.getType()+ "-" + this.event.getDescription().getSeverity()+ "-" + this.event.getFrom();
+        String eventInfo = this.event.getFrom() + " " + this.event.getType()+ " " + this.event.getDescription().getSeverity();
         String consumerList = "/";
         for(String uid : this.consumerList){
             consumerList += uid + ";";
