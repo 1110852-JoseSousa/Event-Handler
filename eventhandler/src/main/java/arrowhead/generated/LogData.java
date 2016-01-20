@@ -126,13 +126,20 @@ public class LogData {
         this.consumerList.add(uid);
     }
     
+    public void addListConsumers(List<String> l){
+        for (String c : l) {
+            this.consumerList.add(c);
+        }
+    }
+    
     /*How data will be written to a file*/
     public String writeObject(){
-        String eventInfo = this.event.getFrom() + " " + this.event.getType()+ " " + this.event.getDescription().getSeverity();
-        String consumerList = "/";
+        String eventInfo = this.event.getFrom() + " " + this.event.getType()+ " " + 
+                this.event.getDescription().getSeverity() + " " + event.getPayload() + " ";
+        String consumerList = "";
         for(String uid : this.consumerList){
             consumerList += uid + ";";
         }
-        return eventInfo+consumerList;
+        return eventInfo+consumerList+"\n";
     }
 }

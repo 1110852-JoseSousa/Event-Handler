@@ -14,6 +14,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import javax.ws.rs.client.WebTarget;
 import org.apache.log4j.Logger;
 
@@ -238,28 +239,36 @@ public class EventHandlerSystem {
      }
      */
     /*Instead of a Database server, a file will be used to store data*/
-    public LogData GetHistoricalData(FilterType filter) {
+    public String GetHistoricalData(FilterType filter) {
+        
         LogData data = new LogData();
         EventType e = new EventType();
-        List<ConsumerType> listC = new ArrayList<>();
-
         BufferedReader br = null;
-
+        EventType event;
+        List<String> subs;
+        String ret = "";
+        
         try {
 
-            String sCurrentLine;
+            String line;
 
             br = new BufferedReader(new FileReader("log4j-eh.log"));
 
-            while ((sCurrentLine = br.readLine()) != null) {
-                System.out.println(sCurrentLine);
+            while ((line = br.readLine()) != null) {
+                event = getEventInfoLog(line);
+                subs = getSubscribersLog(line);
+                if(filter.getFrom().compareTo(event.getFrom()) == 0 && filter.getType().compareTo(event.getType()) == 0){
+                    data.setEvent(event);
+                    data.addListConsumers(subs);
+                    ret += data.writeObject();
+                }
             }
 
         } catch (IOException ex) {
             ex.printStackTrace();
         }
 
-        return data;
+        return ret;
     }
 
     public void flushEvents() {
@@ -326,6 +335,52 @@ public class EventHandlerSystem {
         }
         logger.debug(data.writeObject());
 
+    }
+
+    /*
+     Line format example "date time severityString SystemName from type severityInt/Sub1;Sub2;Sub3"
+     Example: 
+            
+     2016-01-20 11:16:23 DEBUG EventHandlerSystem:348 porto-sensor-1  temperature 1 10ºC Subscriber1;Subscriber2;Subcriber3
+            
+     So 
+     array[0]->date
+     array[1]->time
+     array[2]->severityString
+     array[3]->SystemName
+     array[4]->from
+     array[5]->type
+     array[6]->severityInt
+     array[7]->payload
+     array[8]->subscriberList
+     */
+    public List<String> getSubscribersLog(String line) {
+
+        String[] array = line.split(" ");
+        List<String> subs = Arrays.asList(array[8].split(";"));
+        return subs;
+
+    }
+
+    public EventType getEventInfoLog(String line) {
+
+        EventType e = new EventType();
+
+        String type, from, payload;
+        String[] array;
+        array = line.split(" ");
+        type = array[5];
+        from = array[4];
+        payload = array[7];
+        int severity = Integer.parseInt(array[6]);
+        e.setType(type);
+        e.setFrom(from);
+        Meta m = new Meta();
+        m.setSeverity(severity);
+        e.setDescription(m);
+        e.setPayload(payload);
+
+        return e;
     }
 
 }

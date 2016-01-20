@@ -11,6 +11,7 @@ package arrowhead.generated;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -47,6 +48,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "type",
     "from"
 })
+@XmlRootElement(name = "filter")
 public class FilterType {
 
     @XmlElement(required = true)
