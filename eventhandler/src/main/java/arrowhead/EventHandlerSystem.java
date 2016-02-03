@@ -251,13 +251,17 @@ public class EventHandlerSystem {
         try {
 
             String line;
-
             br = new BufferedReader(new FileReader("log4j-eh.log"));
 
             while ((line = br.readLine()) != null) {
+                System.out.println("LINHA " + line);
                 event = getEventInfoLog(line);
+                System.out.println("DEPOIS LINHA " + event.getDescription() + event.getPayload());
                 subs = getSubscribersLog(line);
+                
+                System.out.println(event.getFrom() + event.getType());
                 if(filter.getFrom().compareTo(event.getFrom()) == 0 && filter.getType().compareTo(event.getType()) == 0){
+                    System.out.println("GOT ONE!");
                     data.setEvent(event);
                     data.addListConsumers(subs);
                     ret += data.writeObject();
@@ -288,7 +292,6 @@ public class EventHandlerSystem {
 
         for (ConsumerType c : subs) {
             target = eventOp.setTarget("http://localhost:8081", c.getUid());
-            System.out.println(data.writeObject());
             r = eventOp.notifySubscriber(event, target);
         }
         storeEvent(event);
@@ -318,7 +321,6 @@ public class EventHandlerSystem {
     boolean ExistsEventsForConsumer(ConsumerType c) {
         for (ProducerType p : m_registered.getProducer()) {
             if (c.getFilter().getFrom().equalsIgnoreCase(p.getUid()) && c.getFilter().getType().equalsIgnoreCase(p.getType())) {
-                System.out.println("CHECK PRODUCER: " + p.getUid() + "  " + p.getType());
                 return true;
             }
         }
@@ -372,7 +374,7 @@ public class EventHandlerSystem {
         type = array[5];
         from = array[4];
         payload = array[7];
-        int severity = Integer.parseInt(array[6]);
+        Integer severity = Integer.parseInt(array[6]);
         e.setType(type);
         e.setFrom(from);
         Meta m = new Meta();

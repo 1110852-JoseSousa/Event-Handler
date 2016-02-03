@@ -140,6 +140,6 @@ public class LogData {
         for(String uid : this.consumerList){
             consumerList += uid + ";";
         }
-        return eventInfo+consumerList+"\n";
+        return eventInfo+consumerList+"\n".replaceAll("\\s+", " ");
     }
 }

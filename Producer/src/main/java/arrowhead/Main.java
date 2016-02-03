@@ -52,7 +52,7 @@ public class Main {
         System.out.println(response.readEntity(String.class));
 
         for (int i = 0; i < 5; i++) {
-            producerOp.createEvent(1, "porto-sensor-1 ", "temperature", "10ºC");
+            producerOp.createEvent(1, "porto-sensor-1", "temperature", "10ºC");
             response = producerOp.publishEvent(producerOp.getEvent());
         }
 
