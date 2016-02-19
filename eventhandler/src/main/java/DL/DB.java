@@ -2,7 +2,7 @@
     This class will later be used for the database operations
 */
 
-/*package DL;
+package DL;
 
 import java.sql.Connection;
 
@@ -21,4 +21,3 @@ public class DB {
     }
     
 }
-*/

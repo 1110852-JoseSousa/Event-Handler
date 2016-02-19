@@ -9,7 +9,6 @@ import javax.ws.rs.Consumes;
 //import javax.ws.rs.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import arrowhead.generated.Events;
 
 @Path("publish")
 public class PublishEvents {

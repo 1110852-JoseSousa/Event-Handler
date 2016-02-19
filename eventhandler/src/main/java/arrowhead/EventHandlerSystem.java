@@ -254,14 +254,10 @@ public class EventHandlerSystem {
             br = new BufferedReader(new FileReader("log4j-eh.log"));
 
             while ((line = br.readLine()) != null) {
-                System.out.println("LINHA " + line);
                 event = getEventInfoLog(line);
-                System.out.println("DEPOIS LINHA " + event.getDescription() + event.getPayload());
                 subs = getSubscribersLog(line);
                 
-                System.out.println(event.getFrom() + event.getType());
                 if(filter.getFrom().compareTo(event.getFrom()) == 0 && filter.getType().compareTo(event.getType()) == 0){
-                    System.out.println("GOT ONE!");
                     data.setEvent(event);
                     data.addListConsumers(subs);
                     ret += data.writeObject();

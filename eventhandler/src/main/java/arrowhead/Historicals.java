@@ -16,10 +16,11 @@ public class Historicals {
     @Produces(MediaType.APPLICATION_XML)
     @Consumes(MediaType.APPLICATION_XML)
     public Response getHistoricalData(FilterType filter) {
+        
         EventHandlerSystem ehs = EventHandlerSystem.getInstance();
         String log = ehs.GetHistoricalData(filter);
-        System.out.println("CHEGOU, " + log);
         return Response.status(200).entity(log).build();
+        
     }
 
 }
