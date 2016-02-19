@@ -38,7 +38,7 @@ public class Main implements EventOperations {
         
 	private static String SUB_URI;
 	
-    public static HttpServer startServer(String u) {
+        public static HttpServer startServer(String u) {
     	
         final ResourceConfig rc = new ResourceConfig().packages("arrowhead");
 
@@ -71,12 +71,11 @@ public class Main implements EventOperations {
 	    server.stop();
 		
 		}
-        
-	@Override
-	public void handleEvents(EventType event) {
-		System.out.println("Gotcha");
-	}
 
-		
+    @Override
+    public void handleEvents(EventType event) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+        
 }
 
