@@ -11,17 +11,25 @@ package arrowhead;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
-
-//import com.wordnik.swagger.jaxrs.config.*;
+import it.unibo.arrowhead.controller.ArrowheadController;
+import it.unibo.arrowhead.controller.ArrowheadSystem;
 import java.io.IOException;
 import java.net.URI;
+import se.bnearit.arrowhead.common.core.service.discovery.exception.ServiceRegisterException;
+import se.bnearit.arrowhead.system.service.AppServiceProducer;
 
 /**
  * Main class.
  *
  */
 public class Main {
-	
+      
+    
+    /* Connection to the Arrowhead at bnearIT*/
+    
+    
+    
+    
     // Base URI the Grizzly HTTP server will listen on
     public static final String BASE_URI = "http://localhost:8080/eventhandler/";
 
@@ -45,8 +53,13 @@ public class Main {
      */
     
     @SuppressWarnings("deprecation")
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, ServiceRegisterException {
     	
+        Arrowhead.connectACS();
+        Arrowhead.publishRegistry();
+        Arrowhead.publishPublishEvents();
+        Arrowhead.publishHistoricals();
+        
         final HttpServer server = startServer();
 
         System.out.println(String.format("Grizzly app started with WADL available at "
