@@ -47,6 +47,8 @@ public class Main implements EventOperations {
     
 	public static void main(String[] args) throws IOException {
     	
+        Arrowhead.connectACS();
+            
     	subOp.setTarget(HANDLER_URI);
     	subOp.setUID("Subscriber1");
     	SUB_URI = subOp.setURI();
