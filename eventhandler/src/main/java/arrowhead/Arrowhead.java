@@ -52,7 +52,7 @@ public class Arrowhead {
             String EndpointPrefix = "/registry";
             AppServiceProducer publisher;
             publisher = arrowheadSystem.createPublisher(
-                    "eh_registry",
+                    "eh_registry1",
                     "_eh_registry-ws-http._tcp",
                     "8080|" + EndpointPrefix,
                     null);
@@ -70,7 +70,7 @@ public class Arrowhead {
             AppServiceProducer publisher;
 
             publisher = arrowheadSystem.createPublisher(
-                    "eh_publish",
+                    "eh_publish1",
                     "_eh_publish-ws-http._tcp",
                     "8080|" + EndpointPrefix,
                     null);
@@ -88,7 +88,7 @@ public class Arrowhead {
             String EndpointPrefix = "/historicals";
 
             AppServiceProducer publisher = arrowheadSystem.createPublisher(
-                    "eh_historicals",
+                    "eh_historicals1",
                     "_eh_historicals-ws-http._tcp",
                     "8080|" + EndpointPrefix,
                     null);
