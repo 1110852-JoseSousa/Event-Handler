@@ -46,7 +46,7 @@ public class Main {
         Response response;
         Registered r;
         producerOp.setTarget(BASE_URI);
-
+        Arrowhead.connectACS();
         response = producerOp.registerProducer();
 
         System.out.println(response.readEntity(String.class));
@@ -55,7 +55,7 @@ public class Main {
             producerOp.createEvent(1, "porto-sensor-1", "temperature", "10ºC");
             response = producerOp.publishEvent(producerOp.getEvent());
         }
-
+        
         System.out.println(response.readEntity(String.class));
         
         /*  Get Historicals example   /*

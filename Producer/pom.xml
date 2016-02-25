@@ -38,6 +38,13 @@
             <version>4.9</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>arrowhead</groupId>
+            <artifactId>arrowheadAdapter</artifactId>
+            <version>1.0</version>
+            <type>jar</type>
+        </dependency>
+
     </dependencies>
 
     <build>
