@@ -10,6 +10,7 @@ import it.unibo.arrowhead.controller.ArrowheadSystem;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import se.bnearit.arrowhead.common.core.service.discovery.exception.ServiceRegisterException;
+import se.bnearit.arrowhead.common.service.ServiceIdentity;
 import se.bnearit.arrowhead.system.service.AppServiceProducer;
 
 /**
@@ -52,7 +53,7 @@ public class Arrowhead {
             String EndpointPrefix = "/registry";
             AppServiceProducer publisher;
             publisher = arrowheadSystem.createPublisher(
-                    "eh_registry1",
+                    "eh_registry",
                     "_eh_registry-ws-http._tcp",
                     "8080|" + EndpointPrefix,
                     null);
@@ -70,7 +71,7 @@ public class Arrowhead {
             AppServiceProducer publisher;
 
             publisher = arrowheadSystem.createPublisher(
-                    "eh_publish1",
+                    "eh_publish",
                     "_eh_publish-ws-http._tcp",
                     "8080|" + EndpointPrefix,
                     null);
@@ -88,7 +89,7 @@ public class Arrowhead {
             String EndpointPrefix = "/historicals";
 
             AppServiceProducer publisher = arrowheadSystem.createPublisher(
-                    "eh_historicals1",
+                    "eh_historicals",
                     "_eh_historicals-ws-http._tcp",
                     "8080|" + EndpointPrefix,
                     null);
@@ -98,6 +99,21 @@ public class Arrowhead {
             logger.debug(ex.getMessage());
         }
 
+    }
+    
+    public static void eraseServiceRegistry(){
+        ServiceIdentity service = arrowheadSystem.getServiceByName("eh_registry");
+        arrowheadSystem.eraseService(service);
+    }
+    
+    public static void eraseServicePublishEvents(){
+        ServiceIdentity service = arrowheadSystem.getServiceByName("eh_publish");
+        arrowheadSystem.eraseService(service);
+    }
+    
+    public static void eraseServiceHistoricals(){
+        ServiceIdentity service = arrowheadSystem.getServiceByName("eh_historicals");
+        arrowheadSystem.eraseService(service);
     }
 
 }
