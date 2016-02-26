@@ -43,13 +43,12 @@ public class Main {
 
         try {
             server.start();
+            System.out.println("\n--- PRESS ENTER TO STOP THE APPLICATION AND REMOVE ALL SERVICES ---");
             System.in.read();
             server.stop();
             
         } finally {
-            Arrowhead.eraseServiceRegistry();
-            Arrowhead.eraseServicePublishEvents();
-            Arrowhead.eraseServiceHistoricals();
+            Arrowhead.disconnectACS();
             server.destroy();
         }
     }
