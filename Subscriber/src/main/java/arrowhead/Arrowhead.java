@@ -7,9 +7,11 @@ package arrowhead;
 
 import it.unibo.arrowhead.controller.ArrowheadController;
 import it.unibo.arrowhead.controller.ArrowheadSystem;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.net.MalformedURLException;
+
+import java.net.URL;
 import se.bnearit.arrowhead.common.core.service.discovery.exception.ServiceRegisterException;
+import se.bnearit.arrowhead.common.service.ServiceIdentity;
 import se.bnearit.arrowhead.system.service.AppServiceProducer;
 
 /**
@@ -23,7 +25,6 @@ public class Arrowhead {
     public static ArrowheadController arrowheadController;
 
     //final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(Arrowhead.class);
-
     public static void connectACS() {
         arrowheadController = new ArrowheadController("eh_subscriber");
 
@@ -45,5 +46,16 @@ public class Arrowhead {
         }
 
     }
-    
+
+    public static String getEventHandlerURL() {
+        ServiceIdentity service = arrowheadSystem.getServiceByName("eh_registry");
+        URL endpoint = null;
+        try {
+            endpoint = arrowheadSystem.serviceGetCompleteUrlForResource(service, "");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return endpoint.toString().replace("/registry", "");
+    }
+
 }

@@ -62,7 +62,6 @@ public class SubscriberOperations {
 	}
 	
 	public void setTarget(String BASE_URI){
-		
 		Client c = ClientBuilder.newClient();
 		target = c.target(BASE_URI);
 	}

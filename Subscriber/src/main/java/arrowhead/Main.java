@@ -31,8 +31,6 @@ public class Main implements EventOperations {
     // Base URI the Grizzly HTTP server will listen on
 	
 	
-    public static final String HANDLER_URI = "http://localhost:8080/eventhandler/";
-
     public static final SubscriberOperations subOp = new SubscriberOperations();
         
 	private static String SUB_URI;
@@ -48,14 +46,13 @@ public class Main implements EventOperations {
     	
         Arrowhead.connectACS();
             
-    	subOp.setTarget(HANDLER_URI);
+    	subOp.setTarget(Arrowhead.getEventHandlerURL());
     	subOp.setUID("Subscriber1");
     	SUB_URI = subOp.setURI();
     	System.out.println(SUB_URI);
     	final HttpServer server = startServer(SUB_URI);
     	// To get the response from the EventHandler Services
     	Response response;
-    	
     	
     	subOp.setFilter(1 ,"temperature", "porto-sensor-1");
 			
