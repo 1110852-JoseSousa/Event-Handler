@@ -9,6 +9,7 @@
  */
 package arrowhead;
 
+import arrowhead.EventHandlerSystem;
 import arrowhead.generated.ConsumerType;
 import arrowhead.generated.ProducerType;
 import javax.ws.rs.GET;

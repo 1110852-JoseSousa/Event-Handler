@@ -17,7 +17,7 @@ import se.bnearit.arrowhead.system.service.AppServiceProducer;
  *
  * @author Cister
  */
-public class Arrowhead {
+ public class Arrowhead {
 
     public static int port = 8080;
     public static ArrowheadSystem arrowheadSystem;
@@ -50,7 +50,7 @@ public class Arrowhead {
     public static void publishRegistry() {
 
         try {
-            String EndpointPrefix = "/registry";
+            String EndpointPrefix = "/eventhandler/registry";
             AppServiceProducer publisher;
             publisher = arrowheadSystem.createPublisher(
                     "eh_registry",
@@ -67,7 +67,7 @@ public class Arrowhead {
 
     public static void publishPublishEvents() {
         try {
-            String EndpointPrefix = "/publish";
+            String EndpointPrefix = "/eventhandler/publish";
             AppServiceProducer publisher;
 
             publisher = arrowheadSystem.createPublisher(
@@ -86,7 +86,7 @@ public class Arrowhead {
     public static void publishHistoricals() {
 
         try {
-            String EndpointPrefix = "/historicals";
+            String EndpointPrefix = "/eventhandler/historicals";
 
             AppServiceProducer publisher = arrowheadSystem.createPublisher(
                     "eh_historicals",
@@ -104,16 +104,19 @@ public class Arrowhead {
     public static void eraseServiceRegistry(){
         ServiceIdentity service = arrowheadSystem.getServiceByName("eh_registry");
         arrowheadSystem.eraseService(service);
+        logger.debug("Erased registry service");
     }
     
     public static void eraseServicePublishEvents(){
         ServiceIdentity service = arrowheadSystem.getServiceByName("eh_publish");
         arrowheadSystem.eraseService(service);
+        logger.debug("Erased publish events service");
     }
     
     public static void eraseServiceHistoricals(){
         ServiceIdentity service = arrowheadSystem.getServiceByName("eh_historicals");
         arrowheadSystem.eraseService(service);
+        logger.debug("Erased historicals service");
     }
 
 }
