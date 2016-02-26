@@ -25,6 +25,10 @@ public class Arrowhead {
     public static ArrowheadController arrowheadController;
 
     //final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(Arrowhead.class);
+    public static void disconnectACS(){
+        arrowheadSystem.stop();
+    }
+    
     public static void connectACS() {
         arrowheadController = new ArrowheadController("eh_subscriber");
 

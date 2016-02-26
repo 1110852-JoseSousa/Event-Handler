@@ -46,8 +46,11 @@ public class Main {
         Registered r;
         producerOp.setTarget(BASE_URI);
         Arrowhead.connectACS();
+        Arrowhead.publishEvent();
+        
         response = producerOp.registerProducer();
 
+        
         System.out.println(response.readEntity(String.class));
 
         for (int i = 0; i < 5; i++) {
@@ -57,6 +60,8 @@ public class Main {
         
         System.out.println(response.readEntity(String.class));
         
+        
+        Arrowhead.disconnectACS();
         /*  Get Historicals example   /*
         
         /*producerOp.setFilter(1, "temperature", "porto-sensor-1");

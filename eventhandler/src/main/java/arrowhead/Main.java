@@ -43,7 +43,7 @@ public class Main {
 
         try {
             server.start();
-            System.out.println("\n--- PRESS ENTER TO STOP THE APPLICATION AND REMOVE ALL SERVICES ---");
+            System.out.println("\n--- PRESS ENTER TO STOP THE APPLICATION AND REMOVE ALL SERVICES ---\n");
             System.in.read();
             server.stop();
             
