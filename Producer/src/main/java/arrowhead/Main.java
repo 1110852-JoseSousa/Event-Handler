@@ -19,7 +19,6 @@ import eventhandler.operations.*;
 
 import java.io.IOException;
 import java.net.ConnectException;
-
 /**
  * Main class.
  *

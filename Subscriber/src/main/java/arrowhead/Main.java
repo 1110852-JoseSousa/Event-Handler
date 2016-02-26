@@ -23,7 +23,6 @@ import arrowhead.generated.EventType;
 import java.io.IOException;
 import java.net.URI;
 
-
 /**
  * Main class.
  *
