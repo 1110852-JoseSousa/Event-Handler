@@ -16,7 +16,7 @@ public class Main {
 
     public static String EndpointPrefix = "/eventhandler";
     public static int port = 8080;
-        
+    final static ResourceConfig config = new ResourceConfig().packages("arrowhead");
     /**
      * Main method.
      *
@@ -32,8 +32,6 @@ public class Main {
         Arrowhead.publishHistoricals();
 
         /* Jetty Server */
-        ResourceConfig config = new ResourceConfig();
-        config.packages("arrowhead");
         ServletHolder servlet = new ServletHolder(new ServletContainer(config));
 
         Server server = new Server(port);
@@ -48,6 +46,9 @@ public class Main {
             server.stop();
             
         } finally {
+            Arrowhead.eraseServiceHistoricals();
+            Arrowhead.eraseServiceRegistry();
+            Arrowhead.eraseServicePublishEvents();
             Arrowhead.disconnectACS();
             server.destroy();
         }

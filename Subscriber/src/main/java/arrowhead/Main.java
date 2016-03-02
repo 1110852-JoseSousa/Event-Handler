@@ -38,6 +38,7 @@ public class Main implements EventOperations {
         Arrowhead.connectACS();
             
     	subOp.setTarget(Arrowhead.getEventHandlerURL());
+            System.out.println("EVENT HANDLER URL " + Arrowhead.getEventHandlerURL());
     	subOp.setUID("Subscriber1");
     	SUB_URI = subOp.setURI();
     	System.out.println(SUB_URI);

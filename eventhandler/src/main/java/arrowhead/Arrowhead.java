@@ -8,6 +8,7 @@ package arrowhead;
 import it.unibo.arrowhead.controller.ArrowheadController;
 import it.unibo.arrowhead.controller.ArrowheadSystem;
 import se.bnearit.arrowhead.common.core.service.discovery.exception.ServiceRegisterException;
+import se.bnearit.arrowhead.common.service.ServiceIdentity;
 import se.bnearit.arrowhead.system.service.AppServiceProducer;
 
 /**
@@ -103,7 +104,7 @@ import se.bnearit.arrowhead.system.service.AppServiceProducer;
     }
     
     
-    /*
+    
     public static void eraseServiceRegistry(){
         ServiceIdentity service = arrowheadSystem.getServiceByName("eh_registry");
         arrowheadSystem.eraseService(service);
@@ -121,5 +122,5 @@ import se.bnearit.arrowhead.system.service.AppServiceProducer;
         arrowheadSystem.eraseService(service);
         logger.debug("Erased historicals service");
     }
-    */
+    
 }
