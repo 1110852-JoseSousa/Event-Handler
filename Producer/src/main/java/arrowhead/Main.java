@@ -41,11 +41,13 @@ public class Main {
         producerOp.setName("Sensor 1");
         producerOp.setType("temperature");
         producerOp.setUID("porto-sensor-1");
-
+        
+        Arrowhead.connectACS();
+        
         Response response;
         Registered r;
-        producerOp.setTarget(BASE_URI);
-        Arrowhead.connectACS();
+        producerOp.setTarget(Arrowhead.getEventHandlerURL());
+        
         Arrowhead.publishEvent();
         
         response = producerOp.registerProducer();

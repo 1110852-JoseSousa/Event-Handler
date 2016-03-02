@@ -37,14 +37,14 @@ import se.bnearit.arrowhead.system.service.AppServiceProducer;
                     + "\n\tDomain: " + System.getProperty("dnssd.domain")
                     + "\n\tHostname: " + System.getProperty("dnssd.hostname")
                     + "\n");
-            logger.debug("Sucessfully Connected to the ACS");
+            logger.warn("Sucessfully Connected to the ACS");
         } catch (NoClassDefFoundError | NullPointerException e) {
             System.out.println("No Arrowhead Core Service found with params:"
                     + "\n\tIP address: " + System.getProperty("dns.server")
                     + "\n\tDomain: " + System.getProperty("dnssd.domain")
                     + "\n\tHostname: " + System.getProperty("dnssd.hostname")
                     + "\nExiting...");
-            logger.debug(e.getMessage());
+            logger.warn(e.getMessage());
         }
 
     }
@@ -60,9 +60,9 @@ import se.bnearit.arrowhead.system.service.AppServiceProducer;
                     "8080|" + EndpointPrefix,
                     null);
             publisher.publish();
-            logger.debug("Sucessfully published registry service");
+            logger.warn("Sucessfully published registry service");
         } catch (ServiceRegisterException ex) {
-            logger.debug(ex.getMessage());
+            logger.warn(ex.getMessage());
         }
 
     }
@@ -78,9 +78,9 @@ import se.bnearit.arrowhead.system.service.AppServiceProducer;
                     "8080|" + EndpointPrefix,
                     null);
             publisher.publish();
-            logger.debug("Sucessfully published publisher service");
+            logger.warn("Sucessfully published publisher service");
         } catch (ServiceRegisterException ex) {
-            logger.debug(ex.getMessage());
+            logger.warn(ex.getMessage());
         }
 
     }
@@ -96,9 +96,9 @@ import se.bnearit.arrowhead.system.service.AppServiceProducer;
                     "8080|" + EndpointPrefix,
                     null);
             publisher.publish();
-            logger.debug("Sucessfully published historicals service");
+            logger.warn("Sucessfully published historicals service");
         } catch (ServiceRegisterException ex) {
-            logger.debug(ex.getMessage());
+            logger.warn(ex.getMessage());
         }
 
     }
@@ -108,19 +108,20 @@ import se.bnearit.arrowhead.system.service.AppServiceProducer;
     public static void eraseServiceRegistry(){
         ServiceIdentity service = arrowheadSystem.getServiceByName("eh_registry");
         arrowheadSystem.eraseService(service);
-        logger.debug("Erased registry service");
+        logger.warn("Erased registry service");
     }
     
     public static void eraseServicePublishEvents(){
         ServiceIdentity service = arrowheadSystem.getServiceByName("eh_publish");
         arrowheadSystem.eraseService(service);
-        logger.debug("Erased publish events service");
+        logger.warn("Erased publish events service");
     }
     
     public static void eraseServiceHistoricals(){
         ServiceIdentity service = arrowheadSystem.getServiceByName("eh_historicals");
         arrowheadSystem.eraseService(service);
-        logger.debug("Erased historicals service");
+        logger.warn("Erased historicals service");
+        
     }
     
 }
