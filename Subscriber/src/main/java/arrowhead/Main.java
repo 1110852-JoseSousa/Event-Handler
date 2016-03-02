@@ -1,6 +1,5 @@
 package arrowhead;
 
-
 import eventhandler.operations.SubscriberOperations;
 
 import javax.ws.rs.core.Response;
@@ -13,6 +12,10 @@ import arrowhead.generated.EventType;
 
 import java.io.IOException;
 import java.net.URI;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
+import org.glassfish.jersey.servlet.ServletContainer;
 
 /**
  * Main class.
@@ -20,52 +23,57 @@ import java.net.URI;
  */
 public class Main implements EventOperations {
     // Base URI the Grizzly HTTP server will listen on
-	
-	
-    public static final SubscriberOperations subOp = new SubscriberOperations();
-        
-	private static String SUB_URI;
-	
-        public static HttpServer startServer(String u) {
-    	
-        final ResourceConfig rc = new ResourceConfig().packages("arrowhead");
 
-        return GrizzlyHttpServerFactory.createHttpServer(URI.create(u), rc);
-	}
-    
-	public static void main(String[] args) throws IOException {
-    	
+    public static final SubscriberOperations subOp = new SubscriberOperations();
+
+    public static String UID = "Subscriber1";
+    public static String EndpointPrefix = "/" + UID;
+    public static int port = 8081;
+    final static ResourceConfig config = new ResourceConfig().packages("arrowhead");
+
+    public static void main(String[] args) throws IOException {
+
         Arrowhead.connectACS();
+        Arrowhead.publishNotify();
+
+        /* Jetty Server */
+        ServletHolder servlet = new ServletHolder(new ServletContainer(config));
+
+        Server server = new Server(port);
+        ServletContextHandler context = new ServletContextHandler(server, "/*");
+        context.setContextPath(EndpointPrefix);
+        context.addServlet(servlet, "/*");
+       
+        
+        // To get the response from the EventHandler Services
+        Response response;
+        
+         
+        subOp.setTarget(Arrowhead.getEventHandlerURL());
+        subOp.setUID(UID);
+        subOp.setFilter(1, "temperature", "porto-sensor-1");
+        response = subOp.registerSubscriber(subOp.getTarget());
+        
+        
+        System.out.println(response.readEntity(String.class));
+        
+        try {
+            server.start();
+            System.out.println("\n--- PRESS ENTER TO STOP THE APPLICATION AND REMOVE ALL SERVICES ---\n");
+            System.in.read();
+            server.stop();
             
-    	subOp.setTarget(Arrowhead.getEventHandlerURL());
-            System.out.println("EVENT HANDLER URL " + Arrowhead.getEventHandlerURL());
-    	subOp.setUID("Subscriber1");
-    	SUB_URI = subOp.setURI();
-    	System.out.println(SUB_URI);
-    	final HttpServer server = startServer(SUB_URI);
-    	// To get the response from the EventHandler Services
-    	Response response;
-    	
-    	subOp.setFilter(1 ,"temperature", "porto-sensor-1");
-			
-		// Registers this subscriber to the eventhandler
-		response = subOp.registerSubscriber(subOp.getTarget()); System.out.println(response.readEntity(String.class));
-			
-		System.out.println(String.format("Jersey app started with WADL available at "
-                + "%s/application.wadl\nHit enter to stop it...", SUB_URI));
-		
-		
-		
-	    System.in.read();
-	    Arrowhead.disconnectACS();
-	    server.stop();
-		
-		}
+        } catch(Exception e){}
+        finally {
+            Arrowhead.disconnectACS();
+            server.destroy();
+        }
+       
+    }
 
     @Override
     public void handleEvents(EventType event) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-        
-}
 
+}

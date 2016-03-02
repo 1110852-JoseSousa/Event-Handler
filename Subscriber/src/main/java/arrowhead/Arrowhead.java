@@ -20,10 +20,10 @@ import se.bnearit.arrowhead.system.service.AppServiceProducer;
  */
 public class Arrowhead {
 
-    public static int port = 8080;
+    public static int port = 8081;
     public static ArrowheadSystem arrowheadSystem;
     public static ArrowheadController arrowheadController;
-
+    public static String UID = "Subscriber1";
     //final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(Arrowhead.class);
     public static void disconnectACS(){
         arrowheadSystem.stop();
@@ -51,6 +51,24 @@ public class Arrowhead {
 
     }
 
+     public static void publishNotify() {
+
+        try {
+            String EndpointPrefix = "/" + System.getProperty("dnssd.hostname") + "/" + UID;
+
+            AppServiceProducer publisher = arrowheadSystem.createPublisher(
+                    "eh_notify_" + UID,
+                    "_eh_notify-ws-http._tcp",
+                    "8081|" + EndpointPrefix,
+                    null);
+            publisher.publish();
+            System.out.println("Notify Service Successfully published!");
+        } catch (ServiceRegisterException ex) {
+        }
+
+    }        
+    
+    
     public static String getEventHandlerURL() {
         ServiceIdentity service = arrowheadSystem.getServiceByName("eh_registry");
         URL endpoint = null;
