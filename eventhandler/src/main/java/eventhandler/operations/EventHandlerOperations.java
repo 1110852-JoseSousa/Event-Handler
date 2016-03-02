@@ -22,10 +22,10 @@ public class EventHandlerOperations {
 
 	public EventHandlerOperations(){}
 	
-	public  WebTarget setTarget(String BASE_URI, String uid){
+	public  WebTarget setTarget(String URI){
 		Client c = ClientBuilder.newClient();
 		WebTarget target;
-		target = c.target(BASE_URI + "/" + uid);
+		target = c.target(URI);
 		return target;
 	}
 	

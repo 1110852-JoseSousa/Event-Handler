@@ -12,10 +12,13 @@ import arrowhead.generated.EventType;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.servlet.ServletContainer;
+import se.bnearit.arrowhead.common.service.exception.ServiceNotStartedException;
 
 /**
  * Main class.
@@ -49,7 +52,12 @@ public class Main implements EventOperations {
         Response response;
         
          
-        subOp.setTarget(Arrowhead.getEventHandlerURL());
+        try {
+            subOp.setTarget(Arrowhead.getEventHandlerURL());
+        } catch (ServiceNotStartedException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println(subOp.getTarget());
         subOp.setUID(UID);
         subOp.setFilter(1, "temperature", "porto-sensor-1");
         response = subOp.registerSubscriber(subOp.getTarget());
@@ -65,6 +73,7 @@ public class Main implements EventOperations {
             
         } catch(Exception e){}
         finally {
+            Arrowhead.eraseServiceNotify();
             Arrowhead.disconnectACS();
             server.destroy();
         }

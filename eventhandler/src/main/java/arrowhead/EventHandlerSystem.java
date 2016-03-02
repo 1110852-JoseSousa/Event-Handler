@@ -287,7 +287,8 @@ public class EventHandlerSystem {
         subs = applyFilter(event);
 
         for (ConsumerType c : subs) {
-            target = eventOp.setTarget("http://localhost:8081", c.getUid());
+            System.out.println("TEST GET SUB URL : " + Arrowhead.getSubscriberURL(c.getUid()));
+            target = eventOp.setTarget(Arrowhead.getSubscriberURL(c.getUid()));
             r = eventOp.notifySubscriber(event, target);
         }
         storeEvent(event);

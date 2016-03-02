@@ -7,15 +7,20 @@ package arrowhead;
 
 import it.unibo.arrowhead.controller.ArrowheadController;
 import it.unibo.arrowhead.controller.ArrowheadSystem;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import se.bnearit.arrowhead.common.core.service.discovery.exception.ServiceRegisterException;
 import se.bnearit.arrowhead.common.service.ServiceIdentity;
+import se.bnearit.arrowhead.common.service.exception.ServiceNotStartedException;
 import se.bnearit.arrowhead.system.service.AppServiceProducer;
 
 /**
  *
  * @author Cister
  */
- public class Arrowhead {
+public class Arrowhead {
 
     public static int port = 8080;
     public static ArrowheadSystem arrowheadSystem;
@@ -23,10 +28,10 @@ import se.bnearit.arrowhead.system.service.AppServiceProducer;
 
     final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(Arrowhead.class);
 
-    public static void disconnectACS(){
+    public static void disconnectACS() {
         arrowheadSystem.stop();
     }
-    
+
     public static void connectACS() {
         arrowheadController = new ArrowheadController("eventhandler");
 
@@ -102,26 +107,35 @@ import se.bnearit.arrowhead.system.service.AppServiceProducer;
         }
 
     }
-    
-    
-    
-    public static void eraseServiceRegistry(){
+
+    public static void eraseServiceRegistry() {
         ServiceIdentity service = arrowheadSystem.getServiceByName("eh_registry");
         arrowheadSystem.eraseService(service);
         logger.warn("Erased registry service");
     }
-    
-    public static void eraseServicePublishEvents(){
+
+    public static void eraseServicePublishEvents() {
         ServiceIdentity service = arrowheadSystem.getServiceByName("eh_publish");
         arrowheadSystem.eraseService(service);
         logger.warn("Erased publish events service");
     }
-    
-    public static void eraseServiceHistoricals(){
+
+    public static void eraseServiceHistoricals() {
         ServiceIdentity service = arrowheadSystem.getServiceByName("eh_historicals");
         arrowheadSystem.eraseService(service);
         logger.warn("Erased historicals service");
-        
+
+    }
+
+    public static String getSubscriberURL(String uid) {
+        ServiceIdentity service = arrowheadSystem.getServiceByName("eh_notify_" + uid);
+        URL endpoint = null;
+        try {
+            endpoint = arrowheadSystem.serviceGetCompleteUrlForResource(service, "");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return endpoint.toString();
     }
     
 }

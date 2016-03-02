@@ -47,7 +47,7 @@ public class Main {
         Response response;
         Registered r;
         producerOp.setTarget(Arrowhead.getEventHandlerURL());
-        
+        System.out.println("EVENT HANDLER : " + producerOp.getTarget());
         Arrowhead.publishEvent();
         
         response = producerOp.registerProducer();
