@@ -42,14 +42,14 @@ public class Arrowhead {
                     + "\n\tDomain: " + System.getProperty("dnssd.domain")
                     + "\n\tHostname: " + System.getProperty("dnssd.hostname")
                     + "\n");
-            logger.warn("Sucessfully Connected to the ACS");
+            //logger.warn("Sucessfully Connected to the ACS");
         } catch (NoClassDefFoundError | NullPointerException e) {
             System.out.println("No Arrowhead Core Service found with params:"
                     + "\n\tIP address: " + System.getProperty("dns.server")
                     + "\n\tDomain: " + System.getProperty("dnssd.domain")
                     + "\n\tHostname: " + System.getProperty("dnssd.hostname")
                     + "\nExiting...");
-            logger.warn(e.getMessage());
+            //logger.warn(e.getMessage());
         }
 
     }
@@ -65,9 +65,9 @@ public class Arrowhead {
                     "8080|" + EndpointPrefix,
                     null);
             publisher.publish();
-            logger.warn("Sucessfully published registry service");
+            //logger.warn("Sucessfully published registry service");
         } catch (ServiceRegisterException ex) {
-            logger.warn(ex.getMessage());
+            //logger.warn(ex.getMessage());
         }
 
     }
@@ -83,9 +83,9 @@ public class Arrowhead {
                     "8080|" + EndpointPrefix,
                     null);
             publisher.publish();
-            logger.warn("Sucessfully published publisher service");
+            //logger.warn("Sucessfully published publisher service");
         } catch (ServiceRegisterException ex) {
-            logger.warn(ex.getMessage());
+            //logger.warn(ex.getMessage());
         }
 
     }
@@ -101,9 +101,9 @@ public class Arrowhead {
                     "8080|" + EndpointPrefix,
                     null);
             publisher.publish();
-            logger.warn("Sucessfully published historicals service");
+            //logger.warn("Sucessfully published historicals service");
         } catch (ServiceRegisterException ex) {
-            logger.warn(ex.getMessage());
+            //logger.warn(ex.getMessage());
         }
 
     }
@@ -111,19 +111,19 @@ public class Arrowhead {
     public static void eraseServiceRegistry() {
         ServiceIdentity service = arrowheadSystem.getServiceByName("eh_registry");
         arrowheadSystem.eraseService(service);
-        logger.warn("Erased registry service");
+        //logger.warn("Erased registry service");
     }
 
     public static void eraseServicePublishEvents() {
         ServiceIdentity service = arrowheadSystem.getServiceByName("eh_publish");
         arrowheadSystem.eraseService(service);
-        logger.warn("Erased publish events service");
+        //logger.warn("Erased publish events service");
     }
 
     public static void eraseServiceHistoricals() {
         ServiceIdentity service = arrowheadSystem.getServiceByName("eh_historicals");
         arrowheadSystem.eraseService(service);
-        logger.warn("Erased historicals service");
+        //logger.warn("Erased historicals service");
 
     }
 

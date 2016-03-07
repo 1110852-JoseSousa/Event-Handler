@@ -4,6 +4,7 @@
  */
 package arrowhead;
 
+import DL.DB;
 import arrowhead.generated.*;
 import java.util.List;
 import java.util.ArrayList;
@@ -23,10 +24,12 @@ public class EventHandlerSystem {
 
     final static Logger logger = Logger.getLogger(EventHandlerSystem.class);
     private static final EventHandlerSystem instance = new EventHandlerSystem();
-
+    
+    
     public static EventHandlerSystem getInstance() {
         return instance;
     }
+    
     EventHandlerOperations eventOp = new EventHandlerOperations();
 
     //	private static final Cloner cloner = new Cloner();

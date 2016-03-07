@@ -1,5 +1,6 @@
 package arrowhead;
 
+import DL.DB;
 import org.glassfish.jersey.server.ResourceConfig;
 import java.io.IOException;
 import org.eclipse.jetty.server.Server;
@@ -13,7 +14,9 @@ import se.bnearit.arrowhead.common.core.service.discovery.exception.ServiceRegis
  *
  */
 public class Main {
-
+    
+    
+    private static DB db = new DB();
     public static String EndpointPrefix = "/eventhandler";
     public static int port = 8080;
     final static ResourceConfig config = new ResourceConfig().packages("arrowhead");
@@ -26,6 +29,12 @@ public class Main {
     @SuppressWarnings("deprecation")
     public static void main(String[] args) throws IOException, ServiceRegisterException, Exception {
 
+        if(db.connectionBD())
+            System.out.println("Connected");
+        else{
+            System.out.println("Not connected");
+        }
+        
         Arrowhead.connectACS();
         Arrowhead.publishRegistry();
         Arrowhead.publishPublishEvents();
