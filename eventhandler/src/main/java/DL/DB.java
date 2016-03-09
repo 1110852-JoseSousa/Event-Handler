@@ -4,12 +4,17 @@
 package DL;
 
 import arrowhead.generated.EventType;
+import arrowhead.generated.FilterType;
+import arrowhead.generated.Meta;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -77,7 +82,7 @@ public class DB {
     public void insertEventDb(EventType event) {
         try {
             // the mysql insert statement
-            String query = "insert into events (date, producerid, event_type, metaid, payload)"
+            String query = "insert into events (date, producerid, event_type, severity, payload)"
                     + " values (?, ?, ?, ?, ?)";
 
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -96,6 +101,46 @@ public class DB {
         } catch (SQLException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public ArrayList<EventType> getEventDB(FilterType f) {
+
+        ArrayList<EventType> events = new ArrayList<>();
+        EventType event;
+        try {
+            
+            String query = "SELECT * FROM events";
+            
+            Statement st = this.con.createStatement();
+            
+            ResultSet rs = st.executeQuery(query);
+            
+            while (rs.next()) {
+                event = new EventType();
+                Date date = rs.getDate("date");
+                String producerID = rs.getString("producerid");
+                String eventType = rs.getString("event_type");
+                int severity = rs.getInt("metaid");
+                String payload = rs.getString("payload");
+                
+                Meta m = new Meta();
+                m.setSeverity(severity);
+                
+                event.setDescription(m);
+                event.setFrom(producerID);
+                event.setType(eventType);
+                event.setPayload(payload);
+                
+                events.add(event);
+            }
+            
+            return events;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+
     }
 
 }
