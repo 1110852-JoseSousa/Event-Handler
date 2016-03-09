@@ -3,9 +3,16 @@
  */
 package DL;
 
+import arrowhead.generated.EventType;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DB {
 
@@ -58,4 +65,37 @@ public class DB {
         }
 
     }
+
+    public void closeConnection() {
+        try {
+            this.con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void insertEventDb(EventType event) {
+        try {
+            // the mysql insert statement
+            String query = "insert into events (date, producerid, event_type, metaid, payload)"
+                    + " values (?, ?, ?, ?, ?)";
+
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            Date date = new Date();
+
+            // create the mysql insert preparedstatement
+            PreparedStatement preparedStmt = this.con.prepareStatement(query);
+            preparedStmt.setDate(1, (java.sql.Date) date);
+            preparedStmt.setString(1, event.getFrom());
+            preparedStmt.setString(2, event.getType());
+            preparedStmt.setInt(4, event.getDescription().getSeverity());
+            preparedStmt.setString(5, event.getPayload());
+
+            // execute the preparedstatement
+            preparedStmt.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }
