@@ -22,7 +22,9 @@ public class PublishEvents {
         EventHandlerSystem ehs = EventHandlerSystem.getInstance();
 
         ehs.addEvent(event);
-
+        
+        ehs.addEventDB(event);
+        
         ehs.notifyEvent(event);
         
         ehs.flushEvents();

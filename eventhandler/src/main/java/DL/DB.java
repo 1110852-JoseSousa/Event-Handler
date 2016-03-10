@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.sql.Timestamp;
 
 public class DB {
 
@@ -30,10 +31,6 @@ public class DB {
     public DB() {
 
         DBProperties dbProp = new DBProperties();
-        System.out.println("U : " + dbProp.getUsername());
-        System.out.println("P: " + dbProp.getPassword());
-        System.out.println("URL: " + dbProp.getDb_url());
-        System.out.println("DRIVER: " + dbProp.getDb_driver());
         this.username = dbProp.getUsername();
         this.passwd = dbProp.getPassword();
         this.db_url = dbProp.getDb_url();
@@ -45,7 +42,8 @@ public class DB {
         Class.forName(this.db_driver);
 
         try {
-            Connection connection = DriverManager.getConnection(this.db_url, this.username, this.passwd);
+            this.con = DriverManager.getConnection(this.db_url, this.username, this.passwd);
+            System.out.println("Connected to db " + this.db_url);
             return true;
         } catch (SQLException e) {
 
@@ -57,6 +55,7 @@ public class DB {
     public void closeConnection() {
         try {
             this.con.close();
+            System.out.println("Closed connection to db " + this.db_url);
         } catch (SQLException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -65,20 +64,24 @@ public class DB {
     public void insertEventDb(EventType event) {
         try {
             // the mysql insert statement
-            String query = "insert into events (date, producerid, event_type, severity, payload)"
+            String query = "insert into events (date, producer_id, event_type, meta_id, payload)"
                     + " values (?, ?, ?, ?, ?)";
-
+            
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date date = new Date();
 
+            Timestamp timestamp = new Timestamp(date.getTime());
+            
             // create the mysql insert preparedstatement
             PreparedStatement preparedStmt = this.con.prepareStatement(query);
-            preparedStmt.setDate(1, (java.sql.Date) date);
-            preparedStmt.setString(1, event.getFrom());
-            preparedStmt.setString(2, event.getType());
+
+            preparedStmt.setTimestamp(1, timestamp);
+            preparedStmt.setString(2, event.getFrom());
+            preparedStmt.setString(3, event.getType());
             preparedStmt.setInt(4, event.getDescription().getSeverity());
             preparedStmt.setString(5, event.getPayload());
 
+            System.out.println("SQL Statement " + preparedStmt.toString());
             // execute the preparedstatement
             preparedStmt.execute();
         } catch (SQLException ex) {

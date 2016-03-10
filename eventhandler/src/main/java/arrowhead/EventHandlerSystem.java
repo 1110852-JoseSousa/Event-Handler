@@ -32,6 +32,10 @@ public class EventHandlerSystem {
         return instance;
     }
 
+    public static DB getDataBase() {
+        return db;
+    }
+
     EventHandlerOperations eventOp = new EventHandlerOperations();
 
     //	private static final Cloner cloner = new Cloner();
@@ -45,6 +49,12 @@ public class EventHandlerSystem {
 
     public void addEvent(EventType e) {
         this.events.getEvent().add(e);
+    }
+
+    public void addEventDB(EventType e) {
+
+        db.insertEventDb(e);
+
     }
 
     public Registered QueryProducer(String q_name, String q_type) {
@@ -207,6 +217,7 @@ public class EventHandlerSystem {
      }
      return false;
      }*/
+    
     public void ImportProducer(String uid, ProducerType p) {
         m_registered.getProducer().add(p);
         //logger.debug("");
@@ -216,47 +227,11 @@ public class EventHandlerSystem {
         m_registered.getConsumer().add(c);
     }
 
-    /* public boolean ImportEntity(String uid, Registered r) {
-        
-     Iterator<ProducerType> ip = r.getProducer().iterator();
-     while (ip.hasNext()) {
-     ProducerType p = ip.next();
-     if (p.getUid().equals(uid)) {
-     ProducerType newp = DeepCopyProducer(p);
-     m_registered.getProducer().add(newp);
-     System.out.println("added producer " + uid);
-     return true;
-     }
-     }
-     Iterator<ConsumerType> ic = r.getConsumer().iterator();
-     while (ic.hasNext()) {
-     ConsumerType c = ic.next();
-     if (c.getUid().equals(uid)) {
-     ConsumerType newp = DeepCopyConsumer(c);
-     m_registered.getConsumer().add(newp);
-     System.out.println("added consumer " + uid);
-     return true;
-     }
-     }
-     System.out.println("could not add " + uid);
-
-     return false;
-     }
-     */
- /*Instead of a Database server, a file will be used to store data*/
     public ArrayList<EventType> GetHistoricalDataDB(FilterType filter) {
-
-        try {
-            db.openConnection();
-            return db.getEventDB(filter);
-            
-        } catch (SQLException | ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EventHandlerSystem.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
-
+        return db.getEventDB(filter);
     }
 
+    /*Instead of a Database server, a file will be used to store data*/
     public String GetHistoricalDataFile(FilterType filter) {
 
         LogData data = new LogData();

@@ -48,10 +48,11 @@ public class Main {
         Registered r;
         producerOp.setTarget(Arrowhead.getEventHandlerURL());
         System.out.println("EVENT HANDLER : " + producerOp.getTarget());
-        Arrowhead.publishEvent();
+        
         
         response = producerOp.registerProducer();
 
+        Arrowhead.publishEvent();
         
         System.out.println(response.readEntity(String.class));
 
@@ -64,7 +65,7 @@ public class Main {
         
         
         Arrowhead.disconnectACS();
-        /*  Get Historicals example   /*
+        /* Get Historicals example   */
         
         /*producerOp.setFilter(1, "temperature", "porto-sensor-1");
         response = producerOp.getHistoricalData();
