@@ -21,54 +21,37 @@ import java.util.logging.Logger;
 
 public class DB {
 
-    private String userid;
-    private String passwd;
-    private String dbid;
+    private final String username;
+    private final String passwd;
+    private final String db_url;
+    private final String db_driver;
     private Connection con;
 
-    public DB(String userID, String passwd, String dbID) {
-        this.userid = userID;
-        this.passwd = passwd;
-        this.dbid = dbID;
-    }
-
     public DB() {
+
+        DBProperties dbProp = new DBProperties();
+        System.out.println("U : " + dbProp.getUsername());
+        System.out.println("P: " + dbProp.getPassword());
+        System.out.println("URL: " + dbProp.getDb_url());
+        System.out.println("DRIVER: " + dbProp.getDb_driver());
+        this.username = dbProp.getUsername();
+        this.passwd = dbProp.getPassword();
+        this.db_url = dbProp.getDb_url();
+        this.db_driver = dbProp.getDb_driver();
     }
 
-    public boolean connectionBD() throws ClassNotFoundException, SQLException {
+    public boolean openConnection() throws ClassNotFoundException, SQLException {
 
-        String dbUrl = "jdbc:mysql://localhost:3306/eventhandler";
-        String dbClass = "com.mysql.jdbc.Driver";
-        Class.forName("com.mysql.jdbc.Driver");
-        String username = "root";
-        String password = "cister";
+        Class.forName(this.db_driver);
 
         try {
-            Connection connection = DriverManager.getConnection(dbUrl, username, password);
+            Connection connection = DriverManager.getConnection(this.db_url, this.username, this.passwd);
             return true;
         } catch (SQLException e) {
 
             e.printStackTrace();
             return false;
         }
-    }
-
-    public void testConnect() throws ClassNotFoundException {
-
-        String dbUrl = "jdbc:mysql://localhost:3306/eventhandler";
-        String dbClass = "com.mysql.jdbc.Driver";
-        Class.forName("com.mysql.jdbc.Driver");
-        String username = "root";
-        String password = "cister";
-
-        try {
-            Connection connection = DriverManager.getConnection(dbUrl, username, password);
-        } catch (SQLException e) {
-
-            e.printStackTrace();
-
-        }
-
     }
 
     public void closeConnection() {
@@ -108,13 +91,13 @@ public class DB {
         ArrayList<EventType> events = new ArrayList<>();
         EventType event;
         try {
-            
+
             String query = "SELECT * FROM events";
-            
+
             Statement st = this.con.createStatement();
-            
+
             ResultSet rs = st.executeQuery(query);
-            
+
             while (rs.next()) {
                 event = new EventType();
                 Date date = rs.getDate("date");
@@ -122,20 +105,20 @@ public class DB {
                 String eventType = rs.getString("event_type");
                 int severity = rs.getInt("metaid");
                 String payload = rs.getString("payload");
-                
+
                 Meta m = new Meta();
                 m.setSeverity(severity);
-                
+
                 event.setDescription(m);
                 event.setFrom(producerID);
                 event.setType(eventType);
                 event.setPayload(payload);
-                
+
                 events.add(event);
             }
-            
+
             return events;
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
             return null;

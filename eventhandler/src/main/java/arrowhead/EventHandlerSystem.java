@@ -247,7 +247,7 @@ public class EventHandlerSystem {
     public ArrayList<EventType> GetHistoricalDataDB(FilterType filter) {
 
         try {
-            db.connectionBD();
+            db.openConnection();
             return db.getEventDB(filter);
             
         } catch (SQLException | ClassNotFoundException ex) {

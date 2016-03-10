@@ -16,7 +16,7 @@ import se.bnearit.arrowhead.common.core.service.discovery.exception.ServiceRegis
 public class Main {
     
     
-    private static DB db = new DB();
+    private static final DB db = new DB();
     public static String EndpointPrefix = "/eventhandler";
     public static int port = 8080;
     final static ResourceConfig config = new ResourceConfig().packages("arrowhead");
@@ -29,7 +29,7 @@ public class Main {
     @SuppressWarnings("deprecation")
     public static void main(String[] args) throws IOException, ServiceRegisterException, Exception {
 
-        if(db.connectionBD())
+        if(db.openConnection())
             System.out.println("Connected");
         else{
             System.out.println("Not connected");
