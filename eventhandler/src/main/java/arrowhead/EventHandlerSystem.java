@@ -15,7 +15,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.logging.Level;
 import javax.ws.rs.client.WebTarget;
 import org.apache.log4j.Logger;
 
@@ -24,12 +26,12 @@ public class EventHandlerSystem {
 
     final static Logger logger = Logger.getLogger(EventHandlerSystem.class);
     private static final EventHandlerSystem instance = new EventHandlerSystem();
-    
-    
+    private static final DB db = new DB();
+
     public static EventHandlerSystem getInstance() {
         return instance;
     }
-    
+
     EventHandlerOperations eventOp = new EventHandlerOperations();
 
     //	private static final Cloner cloner = new Cloner();
@@ -241,16 +243,29 @@ public class EventHandlerSystem {
      return false;
      }
      */
-    /*Instead of a Database server, a file will be used to store data*/
-    public String GetHistoricalData(FilterType filter) {
-        
+ /*Instead of a Database server, a file will be used to store data*/
+    public ArrayList<EventType> GetHistoricalDataDB(FilterType filter) {
+
+        try {
+            db.connectionBD();
+            return db.getEventDB(filter);
+            
+        } catch (SQLException | ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(EventHandlerSystem.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+
+    }
+
+    public String GetHistoricalDataFile(FilterType filter) {
+
         LogData data = new LogData();
         EventType e = new EventType();
         BufferedReader br = null;
         EventType event;
         List<String> subs;
         String ret = "";
-        
+
         try {
 
             String line;
@@ -259,8 +274,8 @@ public class EventHandlerSystem {
             while ((line = br.readLine()) != null) {
                 event = getEventInfoLog(line);
                 subs = getSubscribersLog(line);
-                
-                if(filter.getFrom().compareTo(event.getFrom()) == 0 && filter.getType().compareTo(event.getType()) == 0){
+
+                if (filter.getFrom().compareTo(event.getFrom()) == 0 && filter.getType().compareTo(event.getType()) == 0) {
                     data.setEvent(event);
                     data.addListConsumers(subs);
                     ret += data.writeObject();
