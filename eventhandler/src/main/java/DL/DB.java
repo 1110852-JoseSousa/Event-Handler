@@ -4,6 +4,7 @@
 package DL;
 
 import arrowhead.generated.EventType;
+import arrowhead.generated.Events;
 import arrowhead.generated.FilterType;
 import arrowhead.generated.Meta;
 import java.sql.Connection;
@@ -89,9 +90,10 @@ public class DB {
         }
     }
 
-    public ArrayList<EventType> getEventDB(FilterType f) {
+    public Events getEventDB(FilterType f) {
 
-        ArrayList<EventType> events = new ArrayList<>();
+        Events events = new Events();
+        
         EventType event;
         try {
 
@@ -103,10 +105,10 @@ public class DB {
 
             while (rs.next()) {
                 event = new EventType();
-                Date date = rs.getDate("date");
-                String producerID = rs.getString("producerid");
+                Timestamp date = rs.getTimestamp("date");
+                String producerID = rs.getString("producer_id");
                 String eventType = rs.getString("event_type");
-                int severity = rs.getInt("metaid");
+                int severity = rs.getInt("meta_id");
                 String payload = rs.getString("payload");
 
                 Meta m = new Meta();
@@ -117,7 +119,7 @@ public class DB {
                 event.setType(eventType);
                 event.setPayload(payload);
 
-                events.add(event);
+                events.getEvent().add(event);
             }
 
             return events;

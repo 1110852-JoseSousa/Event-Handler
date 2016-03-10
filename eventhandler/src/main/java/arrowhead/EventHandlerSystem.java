@@ -227,7 +227,7 @@ public class EventHandlerSystem {
         m_registered.getConsumer().add(c);
     }
 
-    public ArrayList<EventType> GetHistoricalDataDB(FilterType filter) {
+    public Events GetHistoricalDataDB(FilterType filter) {
         return db.getEventDB(filter);
     }
 

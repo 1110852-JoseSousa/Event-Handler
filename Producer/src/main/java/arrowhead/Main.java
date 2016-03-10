@@ -67,10 +67,10 @@ public class Main {
         Arrowhead.disconnectACS();
         /* Get Historicals example   */
         
-        /*producerOp.setFilter(1, "temperature", "porto-sensor-1");
+        producerOp.setFilter(1, "temperature", "porto-sensor-1");
         response = producerOp.getHistoricalData();
         System.out.println(response.readEntity(String.class));
-        */
+        
         
     }
 
