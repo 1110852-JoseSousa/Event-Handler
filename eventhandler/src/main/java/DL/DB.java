@@ -36,6 +36,11 @@ public class DB {
         this.passwd = dbProp.getPassword();
         this.db_url = dbProp.getDb_url();
         this.db_driver = dbProp.getDb_driver();
+        System.out.println(username);
+        System.out.println(passwd);
+        System.out.println(db_url);
+        System.out.println(db_driver);
+        
     }
 
     public boolean openConnection() throws ClassNotFoundException, SQLException {

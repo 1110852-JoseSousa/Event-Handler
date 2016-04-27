@@ -56,7 +56,7 @@ public class Registry {
 
     @GET
     @Path("query")
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_XML)
     public Registered queryRegistered(
             @DefaultValue("false") @QueryParam("condition") boolean condition,
             @DefaultValue("") @QueryParam("name") String q_name,

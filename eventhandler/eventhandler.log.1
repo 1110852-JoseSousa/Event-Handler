@@ -1,0 +1,101 @@
+Mar 15, 2016 10:59:31 PM se.bnearit.arrowhead.common.core.service.discovery.dnssd.ServiceDiscoveryDnsSD <init>
+INFO: DNS-SD overriding computer domain: test.bnearit.arrowhead.eu
+Mar 15, 2016 10:59:31 PM com.github.danieln.dnssdjava.UnicastDnsSDDomainEnumerator <init>
+INFO: Created DNS-SD DomainEnumerator for computer domains: [test.bnearit.arrowhead.eu]
+Mar 15, 2016 10:59:31 PM com.github.danieln.dnssdjava.UnicastDnsSDBrowser <init>
+INFO: Created DNS-SD Browser for domains: [srv.test.bnearit.arrowhead.eu.]
+Mar 15, 2016 10:59:32 PM com.github.danieln.dnssdjava.UnicastDnsSDRegistrator findUpdateResolver
+INFO: Using DNS server ns.test.bnearit.arrowhead.eu./10.200.0.10:53 to perform updates.
+Mar 15, 2016 10:59:32 PM com.github.danieln.dnssdjava.UnicastDnsSDRegistrator <init>
+INFO: Created DNS-SD Registrator for domain srv.test.bnearit.arrowhead.eu.
+Mar 15, 2016 10:59:32 PM se.bnearit.arrowhead.common.core.service.discovery.dnssd.ServiceDiscoveryDnsSD loadTsig
+INFO: Loading TSIG key from: tsig
+Mar 15, 2016 10:59:32 PM se.bnearit.arrowhead.common.core.service.discovery.dnssd.ServiceDiscoveryDnsSD loadTsig
+INFO: Using TSIG key 'key.test.bnearit.arrowhead.eu.' for registration.
+Mar 15, 2016 10:59:32 PM se.bnearit.arrowhead.common.core.service.discovery.dnssd.ServiceDiscoveryDnsSD <init>
+INFO: DNS-SD using TSIG: key.test.bnearit.arrowhead.eu.
+Mar 15, 2016 10:59:32 PM se.bnearit.arrowhead.common.core.service.discovery.dnssd.ServiceDiscoveryDnsSD <init>
+INFO: DNS-SD service register started (endpointTypes: [TcpEndpoint, HttpEndpoint])
+Mar 15, 2016 10:59:32 PM it.unibo.arrowhead.controller.ArrowheadSystem findAndCreateEndpoint
+INFO: Found service ServiceIdentity [id=authorisation-ctrl._auth-ws-https._tcp.srv.test.bnearit.arrowhead.eu., type=_auth-ws-https._tcp]
+Mar 15, 2016 10:59:32 PM it.unibo.arrowhead.controller.ArrowheadSystem configureCore
+INFO: Using authorisation control provider HttpEndpoint [host=ns.test.bnearit.arrowhead.eu., port=8181, path=/authorisation-control/, secure=true]
+Mar 15, 2016 10:59:32 PM it.unibo.arrowhead.controller.ArrowheadSystem findAndCreateEndpoint
+INFO: Found service ServiceIdentity [id=orchestration-store._orch-s-ws-https._tcp.srv.test.bnearit.arrowhead.eu., type=_orch-s-ws-https._tcp]
+Mar 15, 2016 10:59:32 PM it.unibo.arrowhead.controller.ArrowheadSystem configureCore
+INFO: Using orchestration store provider HttpEndpoint [host=ns.test.bnearit.arrowhead.eu., port=8181, path=/orchestration/store/, secure=true]
+Mar 15, 2016 10:59:32 PM se.bnearit.arrowhead.system.orchestration.OrchestrationMonitor$1 run
+INFO: OrchestrationMonitor started
+Mar 15, 2016 10:59:32 PM se.bnearit.arrowhead.system.service.GeneralServiceProducerFactory createServiceProducer
+INFO: Trying to create service producer with name:eh_registry type:_eh_registry-ws-http._tcp endpoint:8080|/eventhandler/registry params:null
+Mar 15, 2016 10:59:33 PM se.bnearit.arrowhead.common.core.service.discovery.dnssd.ServiceDiscoveryDnsSD createServiceName
+INFO: DNS-SD service id eh_registry._eh_registry-ws-http._tcp.srv.test.bnearit.arrowhead.eu. is already registered
+Mar 15, 2016 10:59:33 PM se.bnearit.arrowhead.system.service.GeneralServiceProducerFactory createServiceProducer
+INFO: Trying to create service producer with name:eh_publish type:_eh_publish-ws-http._tcp endpoint:8080|/eventhandler/publish params:null
+Mar 15, 2016 10:59:33 PM se.bnearit.arrowhead.common.core.service.discovery.dnssd.ServiceDiscoveryDnsSD createServiceName
+INFO: DNS-SD service id eh_publish._eh_publish-ws-http._tcp.srv.test.bnearit.arrowhead.eu. is already registered
+Mar 15, 2016 10:59:33 PM se.bnearit.arrowhead.system.service.GeneralServiceProducerFactory createServiceProducer
+INFO: Trying to create service producer with name:eh_historicals type:_eh_historicals-ws-http._tcp endpoint:8080|/eventhandler/historicals params:null
+Mar 15, 2016 10:59:33 PM se.bnearit.arrowhead.common.core.service.discovery.dnssd.ServiceDiscoveryDnsSD createServiceName
+INFO: DNS-SD service id eh_historicals._eh_historicals-ws-http._tcp.srv.test.bnearit.arrowhead.eu. is already registered
+Mar 15, 2016 10:59:33 PM org.eclipse.jetty.server.handler.ContextHandler setContextPath
+WARNING: o.e.j.s.ServletContextHandler@5f3a4b84{/,null,null} contextPath ends with /*
+Mar 15, 2016 10:59:33 PM org.eclipse.jetty.server.handler.ContextHandler setContextPath
+WARNING: Empty contextPath
+Mar 15, 2016 10:59:33 PM org.eclipse.jetty.server.Server doStart
+INFO: jetty-9.1.z-SNAPSHOT
+Mar 15, 2016 10:59:33 PM se.bnearit.arrowhead.common.core.service.orchestration.ws.rest.OrchestrationStoreConsumerREST_WS getActiveConfiguration
+WARNING: Request to HttpEndpoint [host=ns.test.bnearit.arrowhead.eu., port=8181, path=/orchestration/store/, secure=true] failed with exception javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path validation failed: java.security.cert.CertPathValidatorException: timestamp check failed
+
+Mar 15, 2016 10:59:33 PM org.eclipse.jetty.server.handler.ContextHandler doStart
+INFO: Started o.e.j.s.ServletContextHandler@5f3a4b84{/eventhandler,null,AVAILABLE}
+Mar 15, 2016 10:59:33 PM org.eclipse.jetty.util.component.AbstractLifeCycle setFailed
+WARNING: FAILED ServerConnector@2accdbb5{HTTP/1.1}{0.0.0.0:8080}: java.net.BindException: Address already in use: bind
+java.net.BindException: Address already in use: bind
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Net.java:433)
+	at sun.nio.ch.Net.bind(Net.java:425)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:223)
+	at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:74)
+	at org.eclipse.jetty.server.ServerConnector.open(ServerConnector.java:264)
+	at org.eclipse.jetty.server.AbstractNetworkConnector.doStart(AbstractNetworkConnector.java:80)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:69)
+	at org.eclipse.jetty.server.Server.doStart(Server.java:303)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:69)
+	at arrowhead.Main.main(Main.java:46)
+
+Mar 15, 2016 10:59:33 PM org.eclipse.jetty.util.component.AbstractLifeCycle setFailed
+WARNING: FAILED org.eclipse.jetty.server.Server@6631f5ca: java.net.BindException: Address already in use: bind
+java.net.BindException: Address already in use: bind
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Net.java:433)
+	at sun.nio.ch.Net.bind(Net.java:425)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:223)
+	at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:74)
+	at org.eclipse.jetty.server.ServerConnector.open(ServerConnector.java:264)
+	at org.eclipse.jetty.server.AbstractNetworkConnector.doStart(AbstractNetworkConnector.java:80)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:69)
+	at org.eclipse.jetty.server.Server.doStart(Server.java:303)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:69)
+	at arrowhead.Main.main(Main.java:46)
+
+Mar 15, 2016 10:59:40 PM se.bnearit.arrowhead.common.core.service.discovery.dnssd.ServiceDiscoveryDnsSD unpublish
+INFO: DNS-SD unregistered service ServiceIdentity [id=eh_historicals._eh_historicals-ws-http._tcp.srv.test.bnearit.arrowhead.eu., type=_eh_historicals-ws-http._tcp]
+Mar 15, 2016 10:59:40 PM it.unibo.arrowhead.controller.ArrowheadSystem eraseService
+INFO: Erased service eh_historicals._eh_historicals-ws-http._tcp.srv.test.bnearit.arrowhead.eu.
+Mar 15, 2016 10:59:41 PM se.bnearit.arrowhead.common.core.service.discovery.dnssd.ServiceDiscoveryDnsSD unpublish
+INFO: DNS-SD unregistered service ServiceIdentity [id=eh_registry._eh_registry-ws-http._tcp.srv.test.bnearit.arrowhead.eu., type=_eh_registry-ws-http._tcp]
+Mar 15, 2016 10:59:41 PM it.unibo.arrowhead.controller.ArrowheadSystem eraseService
+INFO: Erased service eh_registry._eh_registry-ws-http._tcp.srv.test.bnearit.arrowhead.eu.
+Mar 15, 2016 10:59:41 PM se.bnearit.arrowhead.common.core.service.discovery.dnssd.ServiceDiscoveryDnsSD unpublish
+INFO: DNS-SD unregistered service ServiceIdentity [id=eh_publish._eh_publish-ws-http._tcp.srv.test.bnearit.arrowhead.eu., type=_eh_publish-ws-http._tcp]
+Mar 15, 2016 10:59:41 PM it.unibo.arrowhead.controller.ArrowheadSystem eraseService
+INFO: Erased service eh_publish._eh_publish-ws-http._tcp.srv.test.bnearit.arrowhead.eu.
+Mar 15, 2016 10:59:41 PM se.bnearit.arrowhead.common.service.ws.rest.BaseProviderREST_WS stop
+WARNING: Failed to stop HTTP server: null
+Mar 15, 2016 10:59:41 PM se.bnearit.arrowhead.common.service.ws.rest.BaseProviderREST_WS stop
+WARNING: Failed to stop HTTP server: null
+Mar 15, 2016 10:59:41 PM se.bnearit.arrowhead.common.service.ws.rest.BaseProviderREST_WS stop
+WARNING: Failed to stop HTTP server: null
+Mar 15, 2016 10:59:41 PM se.bnearit.arrowhead.system.orchestration.OrchestrationMonitor$1 run
+INFO: OrchestrationMonitor stopped
