@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.ws.rs.core.Response;
-import eventhandler.operations.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -18,7 +17,11 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.logging.Level;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 import org.apache.log4j.Logger;
 
 //import com.rits.cloning.Cloner;
@@ -36,7 +39,6 @@ public class EventHandlerSystem {
         return db;
     }
 
-    EventHandlerOperations eventOp = new EventHandlerOperations();
 
     //	private static final Cloner cloner = new Cloner();
     public Registered m_registered;
@@ -281,8 +283,8 @@ public class EventHandlerSystem {
 
         for (ConsumerType c : subs) {
             System.out.println("TEST GET SUB URL : " + Arrowhead.getSubscriberURL(c.getUid()));
-            target = eventOp.setTarget(Arrowhead.getSubscriberURL(c.getUid()));
-            r = eventOp.notifySubscriber(event, target);
+            target = setTarget(Arrowhead.getSubscriberURL(c.getUid()));
+            r = notifySubscriber(event, target);
         }
         storeEvent(event);
     }
@@ -375,4 +377,18 @@ public class EventHandlerSystem {
         return e;
     }
 
+    public  WebTarget setTarget(String URI){
+		Client c = ClientBuilder.newClient();
+		WebTarget target;
+		target = c.target(URI);
+		return target;
+	}
+	
+	public Response notifySubscriber(EventType e, WebTarget target){
+		
+		return target.path("notify").request(MediaType.APPLICATION_XML).post(Entity.entity(e, MediaType.APPLICATION_XML));
+				
+	}
+
+    
 }
