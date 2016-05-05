@@ -1,0 +1,48 @@
+ <resource path="registry">
+    <resource path="queryAll">
+        <method id="queryAllRegistered" name="GET">
+            <response>
+                <representation xmlns:ns2="http://www.arrowhead.org/eventhandler/registered" element="ns2:Registered" mediaType="application/xml"/>
+            </response>
+        </method>
+    </resource>
+    <resource path="/{uid}">
+        <param xmlns:xs="http://www.w3.org/2001/XMLSchema" name="uid" style="template" type="xs:string"/>
+        <method id="registerConsumer" name="PUT">
+            <request>
+                <representation xmlns:ns2="http://www.arrowhead.org/eventhandler/registered" element="ns2:consumer" mediaType="application/xml"/>
+            </request>
+            <response>
+                <representation mediaType="*/*"/>
+            </response>
+        </method>
+        <method id="unRegisterEntity" name="DELETE">
+            <response>
+                <representation mediaType="*/*"/>
+            </response>
+        </method>
+        <method id="registerProducer" name="POST">
+            <request>
+                <representation xmlns:ns2="http://www.arrowhead.org/eventhandler/registered" element="ns2:producer" mediaType="application/xml"/>
+            </request>
+            <response>
+                <representation mediaType="*/*"/>
+            </response>
+        </method>
+    </resource>
+    <resource path="query">
+        <method id="queryRegistered" name="GET">
+            <request>
+                <param xmlns:xs="http://www.w3.org/2001/XMLSchema" name="condition" style="query" type="xs:boolean" default="false"/>
+                <param xmlns:xs="http://www.w3.org/2001/XMLSchema" name="name" style="query" type="xs:string" default=""/>
+                <param xmlns:xs="http://www.w3.org/2001/XMLSchema" name="type" style="query" type="xs:string" default=""/>
+                <param xmlns:xs="http://www.w3.org/2001/XMLSchema" name="from" style="query" type="xs:string" default=""/>
+            </request>
+            <response>
+                <representation xmlns:ns2="http://www.arrowhead.org/eventhandler/registered" element="ns2:Registered" mediaType="application/xml"/>
+            </response>
+        </method>
+    </resource>
+</resource>
+        
+        

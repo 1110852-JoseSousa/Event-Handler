@@ -62,11 +62,11 @@ public class Registry {
             @DefaultValue("") @QueryParam("name") String q_name,
             @DefaultValue("") @QueryParam("type") String q_type,
             @DefaultValue("") @QueryParam("from") String q_from
-    //		@Context UriInfo uri,
     ) {
         EventHandlerSystem ehs = EventHandlerSystem.getInstance();
         Registered r = ehs.m_registered;
-
+        
+        // condition = true -> Event Producer | condition = false -> Event Consumer
         if (condition) {
             r = ehs.QueryProducer(q_name, q_type);
         } else {
@@ -98,6 +98,8 @@ public class Registry {
         }
     }
 
+    // In case the UID is not yet registed a response 200 is returned
+    // In case the UID is already registered a response 204 is returned
     @POST
     @Path("/{uid}")
     @Consumes(MediaType.APPLICATION_XML)
@@ -139,7 +141,7 @@ public class Registry {
             return Response.status(200).entity("removed Consumer " + uid).build();
         }
 
-        return Response.status(200).entity("could not remove " + uid).build();
+        return Response.status(204).entity("could not remove " + uid).build();
 
     }
 

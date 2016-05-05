@@ -41,7 +41,7 @@ public class Main {
         ServletContextHandler context = new ServletContextHandler(server, "/*");
         context.setContextPath(EndpointPrefix);
         context.addServlet(servlet, "/*");
-
+        System.out.println(server.getURI());
         try {
             server.start();
             System.out.println("\n--- PRESS ENTER TO STOP THE APPLICATION AND REMOVE ALL SERVICES ---\n");

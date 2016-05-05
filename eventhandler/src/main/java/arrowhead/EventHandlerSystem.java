@@ -39,24 +39,35 @@ public class EventHandlerSystem {
         return db;
     }
 
-
     //	private static final Cloner cloner = new Cloner();
     public Registered m_registered;
     public Events events;
 
-    private EventHandlerSystem() {
-        m_registered = new Registered();
-        events = new Events();
-    }
-
-    public void addEvent(EventType e) {
+    public void addEventMemory(EventType e) {
         this.events.getEvent().add(e);
     }
 
-    public void addEventDB(EventType e) {
+    public void storeEventDB(EventType e) {
 
         db.insertEventDb(e);
 
+    }
+
+    public void storeEventFile(EventType event) {
+
+        List<ConsumerType> subs = applyFilter(event);
+        LogData data = new LogData();
+        data.setEvent(event);
+        for (ConsumerType c : subs) {
+            data.addConsumer(c.getUid());
+        }
+        logger.debug(data.writeObject());
+
+    }
+
+    private EventHandlerSystem() {
+        m_registered = new Registered();
+        events = new Events();
     }
 
     public Registered QueryProducer(String q_name, String q_type) {
@@ -219,7 +230,6 @@ public class EventHandlerSystem {
      }
      return false;
      }*/
-    
     public void ImportProducer(String uid, ProducerType p) {
         m_registered.getProducer().add(p);
         //logger.debug("");
@@ -282,11 +292,11 @@ public class EventHandlerSystem {
         subs = applyFilter(event);
 
         for (ConsumerType c : subs) {
+
             System.out.println("TEST GET SUB URL : " + Arrowhead.getSubscriberURL(c.getUid()));
             target = setTarget(Arrowhead.getSubscriberURL(c.getUid()));
             r = notifySubscriber(event, target);
         }
-        storeEvent(event);
     }
 
     // For an event apply the filter of each subscriber and return a list
@@ -317,18 +327,6 @@ public class EventHandlerSystem {
             }
         }
         return false;
-    }
-
-    public void storeEvent(EventType event) {
-
-        List<ConsumerType> subs = applyFilter(event);
-        LogData data = new LogData();
-        data.setEvent(event);
-        for (ConsumerType c : subs) {
-            data.addConsumer(c.getUid());
-        }
-        logger.debug(data.writeObject());
-
     }
 
     /*
@@ -377,18 +375,18 @@ public class EventHandlerSystem {
         return e;
     }
 
-    public  WebTarget setTarget(String URI){
-		Client c = ClientBuilder.newClient();
-		WebTarget target;
-		target = c.target(URI);
-		return target;
-	}
-	
-	public Response notifySubscriber(EventType e, WebTarget target){
-		
-		return target.path("notify").request(MediaType.APPLICATION_XML).post(Entity.entity(e, MediaType.APPLICATION_XML));
-				
-	}
+    public WebTarget setTarget(String URI) {
+        Client c = ClientBuilder.newClient();
+        WebTarget target;
+        target = c.target(URI);
+        return target;
+    }
 
-    
+    public Response notifySubscriber(EventType e, WebTarget target) {
+
+        return target.path("notify").request(MediaType.APPLICATION_XML).post(
+                Entity.entity(e, MediaType.APPLICATION_XML));
+
+    }
+
 }
