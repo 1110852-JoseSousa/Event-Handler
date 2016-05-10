@@ -24,6 +24,7 @@ public class Main {
      *
      * @param args
      * @throws IOException
+     * @throws se.bnearit.arrowhead.common.core.service.discovery.exception.ServiceRegisterException
      */
     @SuppressWarnings("deprecation")
     public static void main(String[] args) throws IOException, ServiceRegisterException, Exception {

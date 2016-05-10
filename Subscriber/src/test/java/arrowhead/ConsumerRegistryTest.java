@@ -27,13 +27,15 @@ import arrowhead.generated.ConsumerType;
 import arrowhead.generated.Events;
 import arrowhead.generated.FilterType;
 import arrowhead.generated.Meta;
-import arrowhead.generated.Registered;
+import static org.hamcrest.CoreMatchers.anyOf;
+import static org.hamcrest.CoreMatchers.is;
+
 
 /**
  * @author Cister
  *
  */
-public class RegistryTest {
+public class ConsumerRegistryTest {
 
 	/**
 	 * @throws java.lang.Exception
@@ -47,15 +49,15 @@ public class RegistryTest {
 	private Events events;
 	final static ResourceConfig rc = new ResourceConfig().packages("arrowhead");
 	private static HttpServer sub;
+        private ConsumerType consumer;
 	
-	Registered r;
 	private String name;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		
+		Arrowhead.connectACS();
 		Client c = ClientBuilder.newClient();
-		target = c.target("http://localhost:8080/eventhandler");	
+		target = c.target(Arrowhead.getEventHandlerURL());	
 		sub = GrizzlyHttpServerFactory.createHttpServer(URI.create("http://localhost:8081"), rc);
 	}
 
@@ -93,15 +95,12 @@ public class RegistryTest {
 		filter.setDescription(m);
 		filter.setType("Test");
 		
-		r = new Registered();
+		consumer = new ConsumerType();
 		
-		ConsumerType subscriber = new ConsumerType();
+		consumer.setUid(this.UID);
+		consumer.setName(this.name);
+		consumer.setFilter(this.filter);
 		
-		subscriber.setUid(this.UID);
-		subscriber.setName(this.name);
-		subscriber.setFilter(this.filter);
-		
-		r.getConsumer().add(subscriber);
 		
 	}
 
@@ -109,9 +108,8 @@ public class RegistryTest {
 
 	@Test
 	public void testRegistry() throws Exception {
-			System.out.println("Running Registry Test");
-			response = target.path("registry").path(this.UID).request(MediaType.APPLICATION_XML).post(Entity.entity(r, MediaType.APPLICATION_XML));
-			assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
+			response = target.path("registry").path(this.UID).request(MediaType.APPLICATION_XML).put(Entity.entity(consumer, MediaType.APPLICATION_XML));
+			assertThat(response.getStatus(), anyOf( is(201), is(204) , is(200)));
 	}
 	
 
@@ -120,6 +118,7 @@ public class RegistryTest {
 	 */
 	@After
 	public void tearDown() throws Exception {
+            Arrowhead.disconnectACS();
 	}
 	
 }

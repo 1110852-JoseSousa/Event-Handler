@@ -5,8 +5,6 @@ package arrowhead;
 
 import static org.junit.Assert.*;
 
-import java.net.URI;
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -14,42 +12,39 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.glassfish.grizzly.http.server.HttpServer;
-import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
-import org.glassfish.jersey.server.ResourceConfig;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import arrowhead.generated.ConsumerType;
-import arrowhead.generated.Events;
-import arrowhead.generated.FilterType;
-import arrowhead.generated.Meta;
 import arrowhead.generated.ProducerType;
 import arrowhead.generated.Registered;
+import static org.hamcrest.CoreMatchers.anyOf;
+import static org.hamcrest.CoreMatchers.is;
 
 /**
  * @author Cister
  *
  */
-public class RegistryTest {
+public class ProducerRegistryTest {
 
 	/**
 	 * @throws java.lang.Exception
 	 */
 	
 	Response response;
-	
+	ProducerType producer;
+        
 	private static WebTarget target;
 	Registered r;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		
+                Arrowhead.connectACS();
 		Client c = ClientBuilder.newClient();
-		target = c.target("http://localhost:8080/eventhandler");	
+		target = c.target(Arrowhead.getEventHandlerURL());	
 		
 	}
 
@@ -68,7 +63,7 @@ public class RegistryTest {
 		
 		r = new Registered();
 		
-		ProducerType producer = new ProducerType();
+		producer = new ProducerType();
 		
 		producer.setUid("ProducerTest");
 		producer.setName("Test Sensor");
@@ -79,11 +74,11 @@ public class RegistryTest {
 	}
 
 	
-
+        // If returned HTTP code is 201 or 204 the Registry Service is Working properly
 	@Test
 	public void testRegistry() throws Exception {
-			response = target.path("registry").path("ProducerTest").request(MediaType.APPLICATION_XML).post(Entity.entity(r, MediaType.APPLICATION_XML));
-			assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
+			response = target.path("registry").path("ProducerTest").request(MediaType.APPLICATION_XML).post(Entity.entity(producer, MediaType.APPLICATION_XML));
+			assertThat(response.getStatus(), anyOf( is(201), is(204)));
 	}
 	
 
@@ -92,6 +87,7 @@ public class RegistryTest {
 	 */
 	@After
 	public void tearDown() throws Exception {
+            Arrowhead.disconnectACS();
 	}
 	
 }
