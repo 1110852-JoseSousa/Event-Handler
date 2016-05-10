@@ -20,6 +20,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.Timestamp;
+import java.text.ParseException;
 
 public class DB {
 
@@ -75,7 +76,7 @@ public class DB {
             
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date date = new Date();
-
+            
             Timestamp timestamp = new Timestamp(date.getTime());
             
             // create the mysql insert preparedstatement
@@ -101,16 +102,26 @@ public class DB {
         
         EventType event;
         try {
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            Date date = new Date();
 
-            String query = "SELECT * FROM events";
+            Timestamp timestamp = new Timestamp(date.getTime());
 
+            /*String query = "SELECT * FROM events WHERE event_type='" + f.getType() + "' "
+                    + "AND meta_id='" + f.getDescription().getSeverity() + "' "
+                    + "AND producer_id='" + f.getFrom() + "' "
+                    + "AND date BETWEEN " + f.getStartDateTime() + " AND " + f.getEndDateTime() + ";";
+*/
+            String query = "SELECT * FROM events;";
+            System.out.println("HISTOCAL QUERY = " + query);
+            
             Statement st = this.con.createStatement();
 
             ResultSet rs = st.executeQuery(query);
 
             while (rs.next()) {
                 event = new EventType();
-                Timestamp date = rs.getTimestamp("date");
+                
                 String producerID = rs.getString("producer_id");
                 String eventType = rs.getString("event_type");
                 int severity = rs.getInt("meta_id");

@@ -9,11 +9,8 @@ import it.unibo.arrowhead.controller.ArrowheadController;
 import it.unibo.arrowhead.controller.ArrowheadSystem;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import se.bnearit.arrowhead.common.core.service.discovery.exception.ServiceRegisterException;
 import se.bnearit.arrowhead.common.service.ServiceIdentity;
-import se.bnearit.arrowhead.common.service.exception.ServiceNotStartedException;
 import se.bnearit.arrowhead.system.service.AppServiceProducer;
 
 /**
