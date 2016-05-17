@@ -102,16 +102,15 @@ public class DB {
         
         EventType event;
         try {
-            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            Date date = new Date();
 
-            Timestamp timestamp = new Timestamp(date.getTime());
-
-            /*String query = "SELECT * FROM events WHERE event_type='" + f.getType() + "' "
+            Timestamp timestampEnd = new Timestamp(f.getEndDateTime().getMillisecond());
+            
+            /*
+            String query = "SELECT * FROM events WHERE event_type='" + f.getType() + "' "
                     + "AND meta_id='" + f.getDescription().getSeverity() + "' "
                     + "AND producer_id='" + f.getFrom() + "' "
-                    + "AND date BETWEEN " + f.getStartDateTime() + " AND " + f.getEndDateTime() + ";";
-*/
+                    + "AND date BETWEEN " + timestampBegin + " AND " + timestampEnd;
+            */
             String query = "SELECT * FROM events;";
             System.out.println("HISTOCAL QUERY = " + query);
             

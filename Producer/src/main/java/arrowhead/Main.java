@@ -11,6 +11,7 @@
  */
 package arrowhead;
 
+import arrowhead.generated.Events;
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.core.Response;
 
@@ -19,6 +20,7 @@ import eventhandler.operations.*;
 
 import java.io.IOException;
 import java.net.ConnectException;
+import org.eclipse.jetty.http.MimeTypes;
 /**
  * Main class.
  *
@@ -56,20 +58,20 @@ public class Main {
         
         System.out.println(response.readEntity(String.class));
 
-        for (int i = 0; i < 5; i++) {
-            producerOp.createEvent(1, "porto-sensor-1", "temperature", "10ºC");
+        /*for (int i = 0; i < 5; i++) {
+            producerOp.createEvent(1, "porto-sensor-1", "temperature", ""+i);
             response = producerOp.publishEvent(producerOp.getEvent());
         }
+        */
+        //System.out.println(response.readEntity(String.class));
         
-        System.out.println(response.readEntity(String.class));
-        
-        
+       
         Arrowhead.disconnectACS();
         /* Get Historicals example   */
         
         producerOp.setFilter(1, "temperature", "porto-sensor-1");
         response = producerOp.getHistoricalData();
-        System.out.println(response.readEntity(String.class));
+        System.out.println(response.getStatus() + " " +response.readEntity(String.class));
         
         
     }

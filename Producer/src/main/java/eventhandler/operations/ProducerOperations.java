@@ -126,7 +126,7 @@ public class ProducerOperations {
 	}
     
     public Response getHistoricalData() {
-        return this.target.path("historicals").request(MediaType.APPLICATION_XML).post(Entity.entity(this.historicalFilter,MediaType.APPLICATION_XML));
+        return this.target.path("historicals").request(MediaType.TEXT_XML).post(Entity.entity(this.historicalFilter,MediaType.APPLICATION_XML));
     }
     
     
