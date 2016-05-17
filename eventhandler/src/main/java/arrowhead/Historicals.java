@@ -25,12 +25,15 @@ public class Historicals {
         Events e = ehs.GetHistoricalDataDB(filter);
 
         if (e.getEvent().size() > 0) {
+            
             final Marshaller m = JAXBContext.newInstance(Events.class)
                     .createMarshaller();
             m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             final StringWriter w = new StringWriter();
             m.marshal(e, w);
+            
             return Response.status(200).type(MediaType.TEXT_XML).entity(w.toString()).build();
+            
         } else {
             return Response.status(201).type(MediaType.TEXT_XML).entity("No Match").build();
         }

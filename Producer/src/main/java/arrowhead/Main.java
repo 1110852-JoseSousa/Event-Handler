@@ -28,7 +28,6 @@ import org.eclipse.jetty.http.MimeTypes;
 public class Main {
 
     // Base URI the Grizzly HTTP server will listen on
-    public static final String BASE_URI = "http://localhost:8080/eventhandler/";
 
     private static ProducerOperations producerOp = new ProducerOperations();
 
@@ -58,11 +57,11 @@ public class Main {
         
         System.out.println(response.readEntity(String.class));
 
-        /*for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++) {
             producerOp.createEvent(1, "porto-sensor-1", "temperature", ""+i);
             response = producerOp.publishEvent(producerOp.getEvent());
         }
-        */
+        
         //System.out.println(response.readEntity(String.class));
         
        
