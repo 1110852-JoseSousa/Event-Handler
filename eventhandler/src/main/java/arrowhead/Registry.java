@@ -11,6 +11,7 @@ package arrowhead;
 
 import arrowhead.EventHandlerSystem;
 import arrowhead.generated.ConsumerType;
+import arrowhead.generated.Events;
 import arrowhead.generated.ProducerType;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -26,6 +27,10 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import arrowhead.generated.Registered;
+import java.io.StringWriter;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 
 @Path("registry")
 public class Registry {
@@ -49,30 +54,50 @@ public class Registry {
     @GET
     @Path("queryAll")
     @Produces(MediaType.APPLICATION_XML)
-    public Registered queryAllRegistered() {
+    public Response queryAllRegistered() throws JAXBException {
         EventHandlerSystem ehs = EventHandlerSystem.getInstance();
-        return ehs.m_registered;
+        if( ehs.m_registered.getConsumer().size() > 0 || ehs.m_registered.getProducer().size() > 0){
+        final Marshaller m = JAXBContext.newInstance(Registered.class)
+                    .createMarshaller();
+            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            final StringWriter w = new StringWriter();
+            m.marshal(ehs.m_registered, w);
+        return Response.status(200).type(MediaType.TEXT_XML).entity(w.toString()).build();
+        }
+        else
+            return Response.status(201).type(MediaType.TEXT_XML).entity("No entity matches the specified criteria\n").build();
     }
 
     @GET
     @Path("query")
-    @Produces(MediaType.APPLICATION_XML)
-    public Registered queryRegistered(
+    @Produces(MediaType.TEXT_XML)
+    public Response queryRegistered(
             @DefaultValue("false") @QueryParam("condition") boolean condition,
             @DefaultValue("") @QueryParam("name") String q_name,
             @DefaultValue("") @QueryParam("type") String q_type,
             @DefaultValue("") @QueryParam("from") String q_from
-    ) {
+    ) throws JAXBException {
+        
         EventHandlerSystem ehs = EventHandlerSystem.getInstance();
         Registered r = ehs.m_registered;
-        
+                
         // condition = true -> Event Producer | condition = false -> Event Consumer
         if (condition) {
             r = ehs.QueryProducer(q_name, q_type);
         } else {
             r = ehs.QueryConsumer(q_name, q_type, q_from);
         }
-        return r;
+        
+        if( r.getConsumer().size() > 0 || r.getProducer().size() > 0){
+        final Marshaller m = JAXBContext.newInstance(Registered.class)
+                    .createMarshaller();
+            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            final StringWriter w = new StringWriter();
+            m.marshal(r, w);
+        return Response.status(200).type(MediaType.TEXT_XML).entity(w.toString()).build();
+        }
+        else
+            return Response.status(201).type(MediaType.TEXT_XML).entity("No entity matches the specified criteria\n").build();
     }
 
     // In case the UID is not yet registed and there is a Producer which matches the Consumer filter response 200 is returned

@@ -35,7 +35,7 @@ public class Historicals {
             return Response.status(200).type(MediaType.TEXT_XML).entity(w.toString()).build();
             
         } else {
-            return Response.status(201).type(MediaType.TEXT_XML).entity("No Match").build();
+            return Response.status(201).type(MediaType.TEXT_XML).entity("Historical Service -> No Data Matched Criteria!!\n").build();
         }
 
     }

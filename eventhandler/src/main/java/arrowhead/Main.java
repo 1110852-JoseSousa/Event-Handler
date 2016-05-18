@@ -3,6 +3,7 @@ package arrowhead;
 import DL.DB;
 import org.glassfish.jersey.server.ResourceConfig;
 import java.io.IOException;
+import java.net.ConnectException;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -29,7 +30,10 @@ public class Main {
     @SuppressWarnings("deprecation")
     public static void main(String[] args) throws IOException, ServiceRegisterException, Exception {
         
+        
         EventHandlerSystem.getDataBase().openConnection();
+        
+        
         Arrowhead.connectACS();
         Arrowhead.publishRegistry();
         Arrowhead.publishPublishEvents();
