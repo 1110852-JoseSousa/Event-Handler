@@ -53,7 +53,7 @@ public class Registry {
      */
     @GET
     @Path("queryAll")
-    @Produces(MediaType.APPLICATION_XML)
+    @Produces(MediaType.TEXT_XML)
     public Response queryAllRegistered() throws JAXBException {
         EventHandlerSystem ehs = EventHandlerSystem.getInstance();
         if( ehs.m_registered.getConsumer().size() > 0 || ehs.m_registered.getProducer().size() > 0){
