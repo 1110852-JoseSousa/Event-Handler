@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package arrowhead;
 
@@ -19,7 +19,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import arrowhead.generated.EventType;
-import arrowhead.generated.Events;
 import arrowhead.generated.Meta;
 
 /**
@@ -27,64 +26,59 @@ import arrowhead.generated.Meta;
  *
  */
 public class PublishTest {
-	
-	
-	private static WebTarget target;
-	Response response;
-	
 
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+    private static WebTarget target;
+    Response response;
+    EventType event = new EventType();
 
-		Client c = ClientBuilder.newClient();
-		target = c.target("http://localhost:8080/eventhandler");	
-	}
+    /**
+     * @throws java.lang.Exception
+     */
+    @BeforeClass
+    public static void setUpBeforeClass() throws Exception {
 
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
+        Arrowhead.connectACS();
+        Client c = ClientBuilder.newClient();
+        target = c.target(Arrowhead.getEventHandlerURL());
 
-	private Events events;
+    }
 
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@Before
-	public void setUp() throws Exception {
+    /**
+     * @throws java.lang.Exception
+     */
+    @AfterClass
+    public static void tearDownAfterClass() throws Exception {
+    }
 
-		Meta m = new Meta();
-		m.setSeverity(2);
-		
-		this.events = new Events();
-		
-		EventType event = new EventType();
-		
-		event.setPayload("TestPayload");
-		event.setFrom("TestProducer");
-    	event.setDescription(m);
-    	event.setType("Test");
-    	
-    	this.events.getEvent().add(event);
-    	
-	}
+    /**
+     * @throws java.lang.Exception
+     */
+    @Before
+    public void setUp() throws Exception {
 
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@After
-	public void tearDown() throws Exception {
-	}
+        Meta meta = new Meta();
+        meta.setSeverity(5);
+        
+        event.setDescription(meta);
+        event.setPayload("TestPayload");
+        event.setFrom("TestProducer");
+        event.setType("Test");
+        
+    }
 
-	@Test
-	public void test() {
-    	response = target.path("publish").path("TestProducer").request(MediaType.APPLICATION_XML).post(Entity.entity(events , MediaType.APPLICATION_XML));
-    	assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
-	}
+    /**
+     * @throws java.lang.Exception
+     */
+    @After
+    public void tearDown() throws Exception {
+        Arrowhead.disconnectACS();
+    }
+
+    @Test
+    public void test() {
+        response = target.path("publish").path("TestProducer").request
+        (MediaType.APPLICATION_XML).post(Entity.entity(event, MediaType.APPLICATION_XML));
+        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+    }
 
 }

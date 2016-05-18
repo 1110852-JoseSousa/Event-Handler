@@ -88,7 +88,6 @@ public class DB {
             preparedStmt.setInt(4, event.getDescription().getSeverity());
             preparedStmt.setString(5, event.getPayload());
 
-            System.out.println("SQL Statement " + preparedStmt.toString());
             // execute the preparedstatement
             preparedStmt.execute();
         } catch (SQLException ex) {
@@ -112,7 +111,6 @@ public class DB {
                     + "AND date BETWEEN " + timestampBegin + " AND " + timestampEnd;
             */
             String query = "SELECT * FROM events;";
-            System.out.println("HISTOCAL QUERY = " + query);
             
             Statement st = this.con.createStatement();
 

@@ -16,7 +16,6 @@ public class Notify {
     public Response notifyEvents(EventType event) {
         System.out.println("Event Payload: " + event.getPayload());
         return Response.status(200).entity("events posted ").build();
-
     }
 
 }

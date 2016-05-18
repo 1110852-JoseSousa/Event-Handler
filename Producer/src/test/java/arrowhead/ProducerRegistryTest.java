@@ -81,7 +81,6 @@ public class ProducerRegistryTest {
 			assertThat(response.getStatus(), anyOf( is(201), is(204)));
 	}
 	
-
 	/**
 	 * @throws java.lang.Exception
 	 */

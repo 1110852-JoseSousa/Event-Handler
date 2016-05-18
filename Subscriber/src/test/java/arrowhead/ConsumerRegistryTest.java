@@ -42,31 +42,24 @@ public class ConsumerRegistryTest {
 	 */
 	
 	private Response response;
+        
 	private static WebTarget target;
-
-	private FilterType filter;
-	private String UID;
-	private Events events;
-	final static ResourceConfig rc = new ResourceConfig().packages("arrowhead");
-	private static HttpServer sub;
-        private ConsumerType consumer;
+        
+        private ConsumerType consumer = new ConsumerType();
 	
-	private String name;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		Arrowhead.connectACS();
 		Client c = ClientBuilder.newClient();
 		target = c.target(Arrowhead.getEventHandlerURL());	
-		sub = GrizzlyHttpServerFactory.createHttpServer(URI.create("http://localhost:8081"), rc);
 	}
 
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-		sub.stop();
+	public static void tearDownAfterClass() throws Exception {		
 	}
 
 	/**
@@ -78,8 +71,8 @@ public class ConsumerRegistryTest {
 		Meta m = new Meta();
 		m.setSeverity(5);
 		
-		this.UID = "sub";
-		this.name = "TestSub";
+		this.consumer.setUid("sub");
+		this.consumer.setName("TestSub");
 		
 		javax.xml.datatype.DatatypeFactory dtFactory = null;
 		try {
@@ -88,18 +81,14 @@ public class ConsumerRegistryTest {
 			throw new RuntimeException(e);
 		}
 		
-		this.filter = new FilterType();
-		this.filter.setStartDateTime(dtFactory.newXMLGregorianCalendar(2015, 8, 1, 12, 0, 30, 125, 0));
-		this.filter.setEndDateTime(dtFactory.newXMLGregorianCalendar(2015, 9, 1, 12, 0, 30, 125, 0));
-		filter = new FilterType();
+		FilterType filter = new FilterType();
+		
+                filter.setStartDateTime(dtFactory.newXMLGregorianCalendar(2015, 8, 1, 12, 0, 30, 125, 0));
+		filter.setEndDateTime(dtFactory.newXMLGregorianCalendar(2015, 9, 1, 12, 0, 30, 125, 0));
 		filter.setDescription(m);
 		filter.setType("Test");
-		
-		consumer = new ConsumerType();
-		
-		consumer.setUid(this.UID);
-		consumer.setName(this.name);
-		consumer.setFilter(this.filter);
+				
+		consumer.setFilter(filter);
 		
 		
 	}
@@ -108,7 +97,7 @@ public class ConsumerRegistryTest {
 
 	@Test
 	public void testRegistry() throws Exception {
-			response = target.path("registry").path(this.UID).request(MediaType.APPLICATION_XML).put(Entity.entity(consumer, MediaType.APPLICATION_XML));
+			response = target.path("registry").path("sub").request(MediaType.APPLICATION_XML).put(Entity.entity(consumer, MediaType.APPLICATION_XML));
 			assertThat(response.getStatus(), anyOf( is(201), is(204) , is(200)));
 	}
 	

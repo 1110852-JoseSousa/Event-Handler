@@ -294,7 +294,6 @@ public class EventHandlerSystem {
 
         for (ConsumerType c : subs) {
 
-            System.out.println("TEST GET SUB URL : " + Arrowhead.getSubscriberURL(c.getUid()));
             target = setTarget(Arrowhead.getSubscriberURL(c.getUid()));
             r = notifySubscriber(event, target);
         }

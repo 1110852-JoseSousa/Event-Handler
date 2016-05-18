@@ -72,18 +72,21 @@ public class Arrowhead {
     }
 
     public static String getEventHandlerURL() throws ServiceNotStartedException {
+
         ServiceIdentity service = arrowheadSystem.getServiceByName("eh_registry");
         URL endpoint = null;
         try {
             endpoint = arrowheadSystem.serviceGetCompleteUrlForResource(service, "");
-        } catch (MalformedURLException e) {
+
+            return endpoint.toString().replace("/registry", "");
+        } catch (MalformedURLException | NullPointerException e) {
             e.printStackTrace();
+            return null;
         }
-        return endpoint.toString().replace("/registry", "");
     }
 
     public static void eraseServiceNotify() {
-        ServiceIdentity service = arrowheadSystem.getServiceByName("eh_notify_"+UID);
+        ServiceIdentity service = arrowheadSystem.getServiceByName("eh_notify_" + UID);
         arrowheadSystem.eraseService(service);
         System.out.println("Notify erased");
 

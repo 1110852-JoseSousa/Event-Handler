@@ -61,7 +61,7 @@ public class Arrowhead {
             ServiceIdentity service = arrowheadSystem.getServiceByName("eh_publish");
             endpoint = arrowheadSystem.serviceGetCompleteUrlForResource(service, "UID");
             System.out.println("publishing to endpoint " + endpoint);
-        } catch (MalformedURLException ex) {
+        } catch (MalformedURLException | NullPointerException ex) {
             logger.debug(ex.getMessage());
         }
         
