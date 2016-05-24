@@ -31,9 +31,9 @@ public class EventHandlerSystem {
     final static Logger logger = Logger.getLogger(EventHandlerSystem.class);
     private static final EventHandlerSystem instance = new EventHandlerSystem();
     private static final DB db = new DB();
-    
+
     private static boolean isDatabaseConnected = false;
-    
+
     public static EventHandlerSystem getInstance() {
         return instance;
     }
@@ -42,14 +42,14 @@ public class EventHandlerSystem {
         return db;
     }
 
-    public static void openConnection() throws ClassNotFoundException, SQLException{
-       isDatabaseConnected = db.openConnection();
+    public static void openConnection() throws ClassNotFoundException, SQLException {
+        isDatabaseConnected = db.openConnection();
     }
-    
-    public boolean isConnected(){
+
+    public boolean isConnected() {
         return isDatabaseConnected;
     }
-    
+
     //	private static final Cloner cloner = new Cloner();
     public Registered m_registered;
     public Events events;

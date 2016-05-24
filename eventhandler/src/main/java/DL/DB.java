@@ -41,7 +41,7 @@ public class DB {
         System.out.println(passwd);
         System.out.println(db_url);
         System.out.println(db_driver);
-        
+
     }
 
     public boolean openConnection() throws ClassNotFoundException, SQLException {
@@ -72,12 +72,12 @@ public class DB {
             // the mysql insert statement
             String query = "insert into events (date, producer_id, event_type, meta_id, payload)"
                     + " values (?, ?, ?, ?, ?)";
-            
+
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date date = new Date();
-            
+
             Timestamp timestamp = new Timestamp(date.getTime());
-            
+
             // create the mysql insert preparedstatement
             PreparedStatement preparedStmt = this.con.prepareStatement(query);
 
@@ -97,27 +97,27 @@ public class DB {
     public Events getEventDB(FilterType f) {
 
         Events events = new Events();
-        
+
         EventType event;
         try {
 
             Timestamp timestampEnd = new Timestamp(f.getEndDateTime().getMillisecond());
-            
+
             /*
             String query = "SELECT * FROM events WHERE event_type='" + f.getType() + "' "
                     + "AND meta_id='" + f.getDescription().getSeverity() + "' "
                     + "AND producer_id='" + f.getFrom() + "' "
                     + "AND date BETWEEN " + timestampBegin + " AND " + timestampEnd;
-            */
+             */
             String query = "SELECT * FROM events;";
-            
+
             Statement st = this.con.createStatement();
 
             ResultSet rs = st.executeQuery(query);
 
             while (rs.next()) {
                 event = new EventType();
-                
+
                 String producerID = rs.getString("producer_id");
                 String eventType = rs.getString("event_type");
                 int severity = rs.getInt("meta_id");

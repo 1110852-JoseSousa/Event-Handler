@@ -15,25 +15,24 @@ import se.bnearit.arrowhead.common.core.service.discovery.exception.ServiceRegis
  *
  */
 public class Main {
-    
-    
+
     public static String EndpointPrefix = "/eventhandler";
     public static int port = 8080;
     final static ResourceConfig config = new ResourceConfig().packages("arrowhead");
+
     /**
      * Main method.
      *
      * @param args
      * @throws IOException
-     * @throws se.bnearit.arrowhead.common.core.service.discovery.exception.ServiceRegisterException
+     * @throws
+     * se.bnearit.arrowhead.common.core.service.discovery.exception.ServiceRegisterException
      */
     @SuppressWarnings("deprecation")
     public static void main(String[] args) throws IOException, ServiceRegisterException, Exception {
-        
-        
+
         EventHandlerSystem.openConnection();
-        
-        
+
         Arrowhead.connectACS();
         Arrowhead.publishRegistry();
         Arrowhead.publishPublishEvents();
@@ -52,7 +51,7 @@ public class Main {
             System.out.println("\n--- PRESS ENTER TO STOP THE APPLICATION AND REMOVE ALL SERVICES ---\n");
             System.in.read();
             server.stop();
-            
+
         } finally {
             Arrowhead.eraseServiceHistoricals();
             Arrowhead.eraseServiceRegistry();
@@ -62,14 +61,13 @@ public class Main {
             server.destroy();
         }
     }
-    
+
     /**
      * Starts Grizzly HTTP server exposing JAX-RS resources defined in this
      * application.
      *
      * @return Grizzly HTTP server.
      */
-    
     /* Base URI the Grizzly HTTP server will listen on
     public static final String BASE_URI = "http://localhost:8080/eventhandler/"
      public static HttpServer startServer() {
@@ -79,9 +77,7 @@ public class Main {
 
      return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);
      }*/
-    
-
-        /*final HttpServer server = startServer();
+ /*final HttpServer server = startServer();
          System.out.println(String.format("Grizzly app started with WADL available at "
          + "%sapplication.wadl\n\n PRESS ENTER IN ORDER TO ERASE PUBLISHED SERVICES AND KILL PROCESS!", BASE_URI));
          System.in.read();

@@ -1,6 +1,5 @@
 package arrowhead;
 
-
 import static org.junit.Assert.*;
 
 import javax.ws.rs.client.Client;
@@ -25,64 +24,62 @@ import arrowhead.generated.Meta;
  *
  */
 public class PublisherServiceTest {
-	
-	
-	private static WebTarget target;
-	Response response;
-	
 
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+    private static WebTarget target;
+    Response response;
 
-		Client c = ClientBuilder.newClient();
-		target = c.target("http://localhost:8080/eventhandler");	
-	}
+    /**
+     * @throws java.lang.Exception
+     */
+    @BeforeClass
+    public static void setUpBeforeClass() throws Exception {
 
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
+        Client c = ClientBuilder.newClient();
+        target = c.target("http://localhost:8080/eventhandler");
+    }
 
-	private Events events;
+    /**
+     * @throws java.lang.Exception
+     */
+    @AfterClass
+    public static void tearDownAfterClass() throws Exception {
+    }
 
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@Before
-	public void setUp() throws Exception {
+    private Events events;
 
-		Meta m = new Meta();
-		m.setSeverity(2);
-		
-		this.events = new Events();
-		
-		EventType event = new EventType();
-		
-		event.setPayload("TestPayload");
-		event.setFrom("TestProducer");
-    	event.setDescription(m);
-    	event.setType("Test");
-    	
-    	this.events.getEvent().add(event);
-    	
-	}
+    /**
+     * @throws java.lang.Exception
+     */
+    @Before
+    public void setUp() throws Exception {
 
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@After
-	public void tearDown() throws Exception {
-	}
+        Meta m = new Meta();
+        m.setSeverity(2);
 
-	@Test
-	public void test() {
-    	response = target.path("publish").path("TestProducer").request(MediaType.APPLICATION_XML).post(Entity.entity(events , MediaType.APPLICATION_XML));
-    	assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
-	}
+        this.events = new Events();
+
+        EventType event = new EventType();
+
+        event.setPayload("TestPayload");
+        event.setFrom("TestProducer");
+        event.setDescription(m);
+        event.setType("Test");
+
+        this.events.getEvent().add(event);
+
+    }
+
+    /**
+     * @throws java.lang.Exception
+     */
+    @After
+    public void tearDown() throws Exception {
+    }
+
+    @Test
+    public void test() {
+        response = target.path("publish").path("TestProducer").request(MediaType.APPLICATION_XML).post(Entity.entity(events, MediaType.APPLICATION_XML));
+        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+    }
 
 }

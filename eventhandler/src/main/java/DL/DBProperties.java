@@ -11,8 +11,6 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.File;
-import java.io.FileNotFoundException;
-import org.eclipse.jetty.servlet.jmx.FilterMappingMBean;
 
 /**
  *
@@ -35,7 +33,7 @@ public class DBProperties {
         try {
             inputStream = new FileInputStream(f);
             prop.load(inputStream);
-            
+
         } catch (IOException ex) {
             Logger.getLogger(DBProperties.class.getName()).log(Level.SEVERE, null, ex);
         }

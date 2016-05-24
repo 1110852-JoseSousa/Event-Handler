@@ -134,5 +134,5 @@ public class Arrowhead {
         }
         return endpoint.toString();
     }
-    
+
 }
