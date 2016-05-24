@@ -97,7 +97,8 @@ public class ConsumerRegistryTest {
 
 	@Test
 	public void testRegistry() throws Exception {
-			response = target.path("registry").path("sub").request(MediaType.APPLICATION_XML).put(Entity.entity(consumer, MediaType.APPLICATION_XML));
+			response = target.path("registry").path("sub").request
+        (MediaType.APPLICATION_XML).put(Entity.entity(consumer, MediaType.APPLICATION_XML));
 			assertThat(response.getStatus(), anyOf( is(201), is(204) , is(200)));
 	}
 	

@@ -3,8 +3,6 @@ package eventhandler.operations;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
@@ -15,64 +13,11 @@ import arrowhead.generated.*;
 public class SubscriberOperations {
 
 	
-	private FilterType filter;
-	private WebTarget target;
-	private String UID;
-	private String name;
-	private String description;
-	private Events events;
-	// private String my_ip;
 	
-	public SubscriberOperations(){}
-	
-	public SubscriberOperations(FilterType f, WebTarget t, String uid, String n, String d){
+	public static FilterType createFilter(int severity, String type, String from){
 		
-	}
-	
-	public void flushEvents(){ this.events.getEvent().clear(); }
-	
-	public void setDescription(String d){
-		
-		this.description = d;
-	}
-	
-	public String getDescription(){
-		
-		return this.description;
-	}
-	
-	public void setName(String name){
-		
-		this.name = name;
-	}
-	
-	public String getName(){
-		
-		return this.name;
-	}
-	
-	public void setUID(String uid){
-	
-		this.UID = uid;
-	}
-	
-	public String getUID(){
-		
-		return this.UID;
-	}
-	
-	public void setTarget(String BASE_URI){
-		Client c = ClientBuilder.newClient();
-		target = c.target(BASE_URI);
-	}
-	
-	public WebTarget getTarget(){
-		
-		return this.target;
-	}
-	
-	public void setFilter(int severity, String type, String from){
-		javax.xml.datatype.DatatypeFactory dtFactory = null;
+                FilterType f = new FilterType();
+                javax.xml.datatype.DatatypeFactory dtFactory = null;
 		try {
 			dtFactory = javax.xml.datatype.DatatypeFactory.newInstance();
 		} catch (javax.xml.datatype.DatatypeConfigurationException e) {
@@ -81,20 +26,16 @@ public class SubscriberOperations {
 		Meta newm = new arrowhead.generated.Meta();
 		newm.setSeverity(severity);
 		
-		this.filter = new FilterType();
-		this.filter.setDescription(newm);
-		this.filter.setStartDateTime(dtFactory.newXMLGregorianCalendar(2015, 8, 1, 12, 0, 30, 125, 0));
-		this.filter.setEndDateTime(dtFactory.newXMLGregorianCalendar(2015, 9, 1, 12, 0, 30, 125, 0));
-		this.filter.setType(type);
-		this.filter.setFrom(from);
+		f.setDescription(newm);
+		f.setStartDateTime(dtFactory.newXMLGregorianCalendar(2015, 8, 1, 12, 0, 30, 125, 0));
+		f.setEndDateTime(dtFactory.newXMLGregorianCalendar(2015, 9, 1, 12, 0, 30, 125, 0));
+		f.setType(type);
+		f.setFrom(from);
+                
+                return f;
 	}
-	
-	public FilterType getFilter(){
 		
-		return this.filter;
-	}
-	
-	private ConsumerType createSubscriber()
+	public static ConsumerType createSubscriber(String uid, String name, FilterType f)
 	{
 		ConsumerType subscriber = new ConsumerType();
 		
@@ -105,41 +46,26 @@ public class SubscriberOperations {
 		}
 		
                 
-		subscriber.setUid(this.getUID());
-		subscriber.setName(this.getName());
-		subscriber.setFilter(this.getFilter());
-		
-		
+		subscriber.setUid(uid);
+		subscriber.setName(name);
+		subscriber.setFilter(f);
+			
 		return subscriber;
 		
 	}
 	
-	public Response registerSubscriber(WebTarget eventHandler){
-		return eventHandler.path("registry").path(this.getUID()).request(MediaType.APPLICATION_XML).put(Entity.entity(createSubscriber(), MediaType.APPLICATION_XML));
+	public static Response registerSubscriber(WebTarget eventHandler, ConsumerType c){
+		return eventHandler.path("registry").path(c.getUid()).request(MediaType.APPLICATION_XML).put(Entity.entity(c, MediaType.APPLICATION_XML));
 	}
-
-	public Events getEvents() { return this.events; }
-	
-	public String setURI() {
+	/*
+	public static String setURI(ConsumerType c) {
 		
-			if ( this.getUID() == null){
+			if ( c.getUid() == null){
 				System.out.println("No uid defined");
-				System.exit(-1);
+                                return null;
 			}
-			
-			// To use ip addressing
-			//return "http://0.0.0.0:8081" +  "/" + this.getUID();
-			
-			// For testing locally
-			return "http://localhost:8081" + "/" + this.getUID();
+			else
+                            return "http://localhost:8081" + "/" + c.getUid();
 	}
-
-	public void setEvents(Events event) {
-		flushEvents();
-		for ( EventType e : event.getEvent()) {
-			this.events.getEvent().add(e);
-		}
-	}
-        
-
+        */
 }
