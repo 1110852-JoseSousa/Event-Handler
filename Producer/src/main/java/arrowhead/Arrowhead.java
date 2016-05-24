@@ -5,16 +5,11 @@
  */
 package arrowhead;
 
-import arrowhead.generated.EventType;
 import it.unibo.arrowhead.controller.ArrowheadController;
 import it.unibo.arrowhead.controller.ArrowheadSystem;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import se.bnearit.arrowhead.common.core.service.discovery.exception.ServiceRegisterException;
 import se.bnearit.arrowhead.common.service.ServiceIdentity;
-import se.bnearit.arrowhead.system.service.AppServiceProducer;
 
 /**
  *
@@ -28,10 +23,10 @@ public class Arrowhead {
 
     final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(Arrowhead.class);
 
-    public static void disconnectACS(){
+    public static void disconnectACS() {
         arrowheadSystem.stop();
     }
-    
+
     public static void connectACS() {
         arrowheadController = new ArrowheadController("eh_producer");
 
@@ -53,9 +48,9 @@ public class Arrowhead {
         }
 
     }
-    
-    public static void publishEvent(){
-        
+
+    public static void publishEvent() {
+
         try {
             URL endpoint = null;
             ServiceIdentity service = arrowheadSystem.getServiceByName("eh_publish");
@@ -64,10 +59,9 @@ public class Arrowhead {
         } catch (MalformedURLException | NullPointerException ex) {
             logger.debug(ex.getMessage());
         }
-        
+
     }
-    
-    
+
     public static String getEventHandlerURL() {
         ServiceIdentity service = arrowheadSystem.getServiceByName("eh_registry");
         URL endpoint = null;
@@ -78,5 +72,5 @@ public class Arrowhead {
         }
         return endpoint.toString().replace("/registry", "");
     }
-    
+
 }

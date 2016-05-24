@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package arrowhead;
 
@@ -29,65 +29,62 @@ import static org.hamcrest.CoreMatchers.is;
  */
 public class ProducerRegistryTest {
 
-	/**
-	 * @throws java.lang.Exception
-	 */
-	
-	Response response;
-	ProducerType producer;
-        
-	private static WebTarget target;
-	Registered r;
-	
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-		
-                Arrowhead.connectACS();
-		Client c = ClientBuilder.newClient();
-		target = c.target(Arrowhead.getEventHandlerURL());	
-		
-	}
+    /**
+     * @throws java.lang.Exception
+     */
+    Response response;
+    ProducerType producer;
 
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
+    private static WebTarget target;
+    Registered r;
 
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@Before
-	public void setUp() throws Exception {
-		
-		r = new Registered();
-		
-		producer = new ProducerType();
-		
-		producer.setUid("ProducerTest");
-		producer.setName("Test Sensor");
-		producer.setType("Test");
-		
-		r.getProducer().add(producer);
-		
-	}
+    @BeforeClass
+    public static void setUpBeforeClass() throws Exception {
 
-	
-        // If returned HTTP code is 201 or 204 the Registry Service is Working properly
-	@Test
-	public void testRegistry() throws Exception {
-			response = target.path("registry").path("ProducerTest").request
-        (MediaType.APPLICATION_XML).post(Entity.entity(producer, MediaType.APPLICATION_XML));
-			assertThat(response.getStatus(), anyOf( is(201), is(204)));
-	}
-	
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@After
-	public void tearDown() throws Exception {
-            Arrowhead.disconnectACS();
-	}
-	
+        Arrowhead.connectACS();
+        Client c = ClientBuilder.newClient();
+        target = c.target(Arrowhead.getEventHandlerURL());
+
+    }
+
+    /**
+     * @throws java.lang.Exception
+     */
+    @AfterClass
+    public static void tearDownAfterClass() throws Exception {
+    }
+
+    /**
+     * @throws java.lang.Exception
+     */
+    @Before
+    public void setUp() throws Exception {
+
+        r = new Registered();
+
+        producer = new ProducerType();
+
+        producer.setUid("ProducerTest");
+        producer.setName("Test Sensor");
+        producer.setType("Test");
+
+        r.getProducer().add(producer);
+
+    }
+
+    // If returned HTTP code is 201 or 204 the Registry Service is Working properly
+    @Test
+    public void testRegistry() throws Exception {
+        response = target.path("registry").path("ProducerTest").request(MediaType.APPLICATION_XML).post(Entity.entity(producer, MediaType.APPLICATION_XML));
+        assertThat(response.getStatus(), anyOf(is(201), is(204)));
+    }
+
+    /**
+     * @throws java.lang.Exception
+     */
+    @After
+    public void tearDown() throws Exception {
+        Arrowhead.disconnectACS();
+    }
+
 }

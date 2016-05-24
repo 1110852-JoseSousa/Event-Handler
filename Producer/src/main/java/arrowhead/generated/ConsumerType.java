@@ -4,8 +4,6 @@
 // Any modifications to this file will be lost upon recompilation of the source schema. 
 // Generated on: 2015.08.22 at 07:12:59 PM BST 
 //
-
-
 package arrowhead.generated;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,12 +12,14 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for ConsumerType complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p>
+ * Java class for ConsumerType complex type.
+ *
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ *
  * <pre>
  * &lt;complexType name="ConsumerType">
  *   &lt;complexContent>
@@ -33,8 +33,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ConsumerType", propOrder = {
@@ -58,11 +58,9 @@ public class ConsumerType {
 
     /**
      * Gets the value of the uid property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getUid() {
         return uid;
@@ -70,11 +68,9 @@ public class ConsumerType {
 
     /**
      * Sets the value of the uid property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setUid(String value) {
         this.uid = value;
@@ -82,11 +78,9 @@ public class ConsumerType {
 
     /**
      * Gets the value of the name property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getName() {
         return name;
@@ -94,11 +88,9 @@ public class ConsumerType {
 
     /**
      * Sets the value of the name property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setName(String value) {
         this.name = value;
@@ -106,11 +98,9 @@ public class ConsumerType {
 
     /**
      * Gets the value of the filter property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link FilterType }
-     *     
+     *
+     * @return possible object is {@link FilterType }
+     *
      */
     public FilterType getFilter() {
         return filter;
@@ -118,21 +108,19 @@ public class ConsumerType {
 
     /**
      * Sets the value of the filter property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link FilterType }
-     *     
+     *
+     * @param value allowed object is {@link FilterType }
+     *
      */
     public void setFilter(FilterType value) {
         this.filter = value;
     }
-    
-    public void setIP(String ipaddr){
-    	this.ip = ipaddr;
+
+    public void setIP(String ipaddr) {
+        this.ip = ipaddr;
     }
 
-    public String getIP(){
-    	return this.ip;
+    public String getIP() {
+        return this.ip;
     }
 }

@@ -58,12 +58,12 @@ public class PublishTest {
 
         Meta meta = new Meta();
         meta.setSeverity(5);
-        
+
         event.setDescription(meta);
         event.setPayload("TestPayload");
         event.setFrom("TestProducer");
         event.setType("Test");
-        
+
     }
 
     /**
@@ -76,8 +76,7 @@ public class PublishTest {
 
     @Test
     public void test() {
-        response = target.path("publish").path("TestProducer").request
-        (MediaType.APPLICATION_XML).post(Entity.entity(event, MediaType.APPLICATION_XML));
+        response = target.path("publish").path("TestProducer").request(MediaType.APPLICATION_XML).post(Entity.entity(event, MediaType.APPLICATION_XML));
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
     }
 

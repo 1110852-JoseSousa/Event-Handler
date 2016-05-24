@@ -4,6 +4,5 @@
 // Any modifications to this file will be lost upon recompilation of the source schema. 
 // Generated on: 2015.08.22 at 07:12:59 PM BST 
 //
-
 @javax.xml.bind.annotation.XmlSchema(namespace = "http://www.arrowhead.org/eventhandler/registered", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
 package arrowhead.generated;
