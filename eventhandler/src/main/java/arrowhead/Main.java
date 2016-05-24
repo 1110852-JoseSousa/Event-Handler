@@ -31,7 +31,7 @@ public class Main {
     public static void main(String[] args) throws IOException, ServiceRegisterException, Exception {
         
         
-        EventHandlerSystem.getDataBase().openConnection();
+        EventHandlerSystem.openConnection();
         
         
         Arrowhead.connectACS();

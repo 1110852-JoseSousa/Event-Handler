@@ -52,9 +52,8 @@ public class DB {
             this.con = DriverManager.getConnection(this.db_url, this.username, this.passwd);
             System.out.println("Connected to db " + this.db_url);
             return true;
-        } catch (SQLException e) {
-
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("Could not connect to database!");
             return false;
         }
     }

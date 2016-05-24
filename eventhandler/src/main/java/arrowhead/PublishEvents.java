@@ -22,13 +22,15 @@ public class PublishEvents {
         EventHandlerSystem ehs = EventHandlerSystem.getInstance();
 
         ehs.addEventMemory(event);
-        
+
         ehs.storeEventFile(event);
-        
-        ehs.storeEventDB(event);
-        
+
+        if (ehs.isConnected()) {
+            ehs.storeEventDB(event);
+        }
+
         ehs.notifyEvent(event);
-        
+
         ehs.flushEvents();
 
         return Response.status(200).entity("Events Posted!").build();
