@@ -4,6 +4,6 @@ import arrowhead.generated.EventType;
 
 public interface EventOperations {
 
-	public void handleEvents(EventType event);
-	
+    public void handleEvents(EventType event);
+
 }

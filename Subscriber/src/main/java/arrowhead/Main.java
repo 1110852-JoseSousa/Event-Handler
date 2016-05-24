@@ -70,9 +70,7 @@ public class Main implements EventOperations {
         if (target != null) {
             response = SubscriberOperations.registerSubscriber(target, consumer);
             System.out.println(response.readEntity(String.class));
-        }
-        
-        else{
+        } else {
             System.out.println("Could not find eventhandler");
         }
 

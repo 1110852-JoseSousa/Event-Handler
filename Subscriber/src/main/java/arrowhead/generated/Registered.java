@@ -4,8 +4,6 @@
 // Any modifications to this file will be lost upon recompilation of the source schema. 
 // Generated on: 2015.08.22 at 07:12:59 PM BST 
 //
-
-
 package arrowhead.generated;
 
 import java.util.ArrayList;
@@ -15,12 +13,14 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p>
+ * Java class for anonymous complex type.
+ *
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -33,8 +33,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -49,25 +49,25 @@ public class Registered {
 
     /**
      * Gets the value of the consumer property.
-     * 
+     *
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the consumer property.
-     * 
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the consumer property.
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getConsumer().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link ConsumerType }
-     * 
-     * 
+     *
+     *
      */
     public List<ConsumerType> getConsumer() {
         if (consumer == null) {
@@ -78,25 +78,25 @@ public class Registered {
 
     /**
      * Gets the value of the producer property.
-     * 
+     *
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the producer property.
-     * 
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the producer property.
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getProducer().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link ProducerType }
-     * 
-     * 
+     *
+     *
      */
     public List<ProducerType> getProducer() {
         if (producer == null) {
