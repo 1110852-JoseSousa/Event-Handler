@@ -77,7 +77,8 @@ public class ProducerRegistryTest {
         // If returned HTTP code is 201 or 204 the Registry Service is Working properly
 	@Test
 	public void testRegistry() throws Exception {
-			response = target.path("registry").path("ProducerTest").request(MediaType.APPLICATION_XML).post(Entity.entity(producer, MediaType.APPLICATION_XML));
+			response = target.path("registry").path("ProducerTest").request
+        (MediaType.APPLICATION_XML).post(Entity.entity(producer, MediaType.APPLICATION_XML));
 			assertThat(response.getStatus(), anyOf( is(201), is(204)));
 	}
 	

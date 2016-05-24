@@ -89,7 +89,8 @@ public class HistoricalsTest {
         
 	@Test
 	public void testHistoricals() throws Exception {
-			response =  this.target.path("historicals").request(MediaType.TEXT_XML).post(Entity.entity(this.filter,MediaType.APPLICATION_XML));
+			response =  this.target.path("historicals").request
+        (MediaType.TEXT_XML).post(Entity.entity(this.filter,MediaType.APPLICATION_XML));
                         assertThat(response.getStatus(), anyOf( is(200), is(201)));
 	}
 	
