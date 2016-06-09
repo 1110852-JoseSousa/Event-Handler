@@ -17,13 +17,13 @@ import se.bnearit.arrowhead.system.service.AppServiceProducer;
  *
  * @author Cister
  */
-public class Arrowhead {
+public class BneartIT {
 
     public static int port = 8080;
     public static ArrowheadSystem arrowheadSystem;
     public static ArrowheadController arrowheadController;
 
-    final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(Arrowhead.class);
+    final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(BneartIT.class);
 
     public static void disconnectACS() {
         arrowheadSystem.stop();

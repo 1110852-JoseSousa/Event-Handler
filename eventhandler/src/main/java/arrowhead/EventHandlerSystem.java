@@ -304,7 +304,7 @@ public class EventHandlerSystem {
 
         for (ConsumerType c : subs) {
 
-            target = setTarget(Arrowhead.getSubscriberURL(c.getUid()));
+            target = setTarget(BneartIT.getSubscriberURL(c.getUid()));
             r = notifySubscriber(event, target);
         }
     }

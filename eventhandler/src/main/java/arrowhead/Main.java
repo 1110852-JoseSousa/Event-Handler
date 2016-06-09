@@ -33,10 +33,10 @@ public class Main {
 
         EventHandlerSystem.openConnection();
 
-        Arrowhead.connectACS();
-        Arrowhead.publishRegistry();
-        Arrowhead.publishPublishEvents();
-        Arrowhead.publishHistoricals();
+        BneartIT.connectACS();
+        BneartIT.publishRegistry();
+        BneartIT.publishPublishEvents();
+        BneartIT.publishHistoricals();
 
         /* Jetty Server */
         ServletHolder servlet = new ServletHolder(new ServletContainer(config));
@@ -53,10 +53,10 @@ public class Main {
             server.stop();
 
         } finally {
-            Arrowhead.eraseServiceHistoricals();
-            Arrowhead.eraseServiceRegistry();
-            Arrowhead.eraseServicePublishEvents();
-            Arrowhead.disconnectACS();
+            BneartIT.eraseServiceHistoricals();
+            BneartIT.eraseServiceRegistry();
+            BneartIT.eraseServicePublishEvents();
+            BneartIT.disconnectACS();
             EventHandlerSystem.getDataBase().closeConnection();
             server.destroy();
         }
