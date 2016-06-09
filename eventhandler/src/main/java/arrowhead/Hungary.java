@@ -27,8 +27,7 @@ public class Hungary {
 
     private static WebTarget target = c.target(URI);
 
-    public static Response publishPublishEvents() {
-        return target.path("registry").path().request(MediaType.APPLICATION_JSON).put(Entity.entity(c, MediaType.APPLICATION_XML));
+    public static void publishPublishEvents() {
     }
 
     public static void publishHistoricals() {
