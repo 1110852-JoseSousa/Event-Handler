@@ -38,15 +38,15 @@ public class EventHandlerSystem {
         return instance;
     }
 
-    public static DB getDataBase() {
-        return db;
+    public static void closeConnection() {
+        db.closeConnection();
     }
 
     public static void openConnection() throws ClassNotFoundException, SQLException {
         isDatabaseConnected = db.openConnection();
     }
 
-    public boolean isConnected() {
+    public static boolean isConnected() {
         return isDatabaseConnected;
     }
 

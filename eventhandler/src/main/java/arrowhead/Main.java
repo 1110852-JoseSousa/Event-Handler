@@ -57,7 +57,9 @@ public class Main {
             BneartIT.eraseServiceRegistry();
             BneartIT.eraseServicePublishEvents();
             BneartIT.disconnectACS();
-            EventHandlerSystem.getDataBase().closeConnection();
+            if (EventHandlerSystem.isConnected()) {
+                EventHandlerSystem.closeConnection();
+            }
             server.destroy();
         }
     }
@@ -69,7 +71,7 @@ public class Main {
      * @return Grizzly HTTP server.
      */
     /* Base URI the Grizzly HTTP server will listen on
-    public static final String BASE_URI = "http://localhost:8080/eventhandler/"
+     public static final String BASE_URI = "http://localhost:8080/eventhandler/"
      public static HttpServer startServer() {
      // create a resource config that scans for JAX-RS resources and providers
      // in arrowhead package
@@ -77,10 +79,10 @@ public class Main {
 
      return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);
      }*/
- /*final HttpServer server = startServer();
-         System.out.println(String.format("Grizzly app started with WADL available at "
-         + "%sapplication.wadl\n\n PRESS ENTER IN ORDER TO ERASE PUBLISHED SERVICES AND KILL PROCESS!", BASE_URI));
-         System.in.read();
+    /*final HttpServer server = startServer();
+     System.out.println(String.format("Grizzly app started with WADL available at "
+     + "%sapplication.wadl\n\n PRESS ENTER IN ORDER TO ERASE PUBLISHED SERVICES AND KILL PROCESS!", BASE_URI));
+     System.in.read();
         
-        server.stop(); */
+     server.stop(); */
 }

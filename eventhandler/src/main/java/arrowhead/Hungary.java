@@ -1,47 +1,150 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package arrowhead;
 
-import static arrowhead.BneartIT.arrowheadSystem;
-import java.net.MalformedURLException;
-import java.net.URL;
+import eu.ArrowheadService;
+import eu.ArrowheadSystem;
+import eu.ServiceMetadata;
+import eu.ServiceRegistryEntry;
+import java.net.URI;
+import java.util.ArrayList;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
 
-/**
- *
- * @author Cister
- */
-public class Hungary {
+@Path("eventhandler")
+@Produces(MediaType.TEXT_PLAIN)
+public class Hungary extends ArrowheadService {
 
-    private static String URI = "localhost:8080/core/serviceregistry";
+	
+	/////////////////////////////////////////////
+	//// CONFIG /////////////////////////////////
+	/////////////////////////////////////////////
+	private String own_IP = "localhost";
+	private String registry_IP ="localhost";
+	private String serviceGroup = "eventhandler";
+	private String serviceDefinition = "eventhandler";
+	/////////////////////////////////////////////
+	
+	/**
+	 * Own ArrowheadSystem info.
+	 */
+	private ArrowheadSystem arrowheadSystem = new ArrowheadSystem("PROBA", "eventhandler", own_IP, "8081",
+			"eventhandlercert");
 
-    private static Client c = ClientBuilder.newClient();
+	/**
+	 * Constructor setting initial parameters of superclass.
+	 */
+	public Hungary() {
+		super();
+		ArrayList<String> interfaces = new ArrayList<String>();
+                ArrayList<ServiceMetadata> metadata = new ArrayList<ServiceMetadata> ();
+		this.setServiceGroup(serviceGroup);
+		this.setServiceDefinition(serviceDefinition);
+		this.setMetaData(metadata);
+		interfaces.add("RESTJSON");
+		this.setInterfaces(interfaces);
+	}
 
-    private static WebTarget target = c.target(URI);
+	@GET
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getIt() {
+		return "Hello, I am the Eventhandler.";
+	}
 
-    public static void publishPublishEvents() {
-    }
+	/**
+	 * This function invokes the provider to register itself to the Service
+	 * Registry.
+	 * 
+	 * @return String
+	 */
+	@GET
+	@Path("/registryservice")
+	public Response invokeRegistryServiceRegistry() {
+		ServiceRegistryEntry serviceRegistryEntry = new ServiceRegistryEntry();
 
-    public static void publishHistoricals() {
+		// Preparing ServiceRegistryEntry
+		serviceRegistryEntry.setProvider(arrowheadSystem);
+		serviceRegistryEntry.setServiceURI("/eventhandler/registry");
+		serviceRegistryEntry.setServiceMetadata(this.getMetaData());
+		//serviceRegistryEntry.settSIG_key("RIuxP+vb5GjLXJo686NvKQ=="); // .168
+		 serviceRegistryEntry.settSIG_key("RM/jKKEPYB83peT0DQnYGg=="); // .237
 
-    }
+		/*
+		 * if (registerProvider(serviceRegistryEntry) == 200) { return
+		 * "Provider successfully registered to Service Registry."; }
+		 */
 
-    public static void eraseServiceRegistry() {
-    }
+		return registerEventhandler(serviceRegistryEntry);
+	}
+        
+        @GET
+	@Path("/publishservice")
+	public Response invokePublishServiceRegistry() {
+		ServiceRegistryEntry serviceRegistryEntry = new ServiceRegistryEntry();
 
-    public static void eraseServicePublishEvents() {
-    }
+		// Preparing ServiceRegistryEntry
+		serviceRegistryEntry.setProvider(arrowheadSystem);
+		serviceRegistryEntry.setServiceURI("/eventhandler/publish");
+		serviceRegistryEntry.setServiceMetadata(this.getMetaData());
+		//serviceRegistryEntry.settSIG_key("RIuxP+vb5GjLXJo686NvKQ=="); // .168
+		 serviceRegistryEntry.settSIG_key("RM/jKKEPYB83peT0DQnYGg=="); // .237
 
-    public static void eraseServiceHistoricals() {
+		/*
+		 * if (registerProvider(serviceRegistryEntry) == 200) { return
+		 * "Provider successfully registered to Service Registry."; }
+		 */
 
-    }
+		return registerEventhandler(serviceRegistryEntry);
+	}
+        
+        @GET
+	@Path("/historicalsservice")
+	public Response invokeHistoricalsServiceRegistry() {
+		ServiceRegistryEntry serviceRegistryEntry = new ServiceRegistryEntry();
+
+		// Preparing ServiceRegistryEntry
+		serviceRegistryEntry.setProvider(arrowheadSystem);
+		serviceRegistryEntry.setServiceURI("/eventhandler/historicals");
+		serviceRegistryEntry.setServiceMetadata(this.getMetaData());
+		//serviceRegistryEntry.settSIG_key("RIuxP+vb5GjLXJo686NvKQ=="); // .168
+		 serviceRegistryEntry.settSIG_key("RM/jKKEPYB83peT0DQnYGg=="); // .237
+
+		/*
+		 * if (registerProvider(serviceRegistryEntry) == 200) { return
+		 * "Provider successfully registered to Service Registry."; }
+		 */
+
+		return registerEventhandler(serviceRegistryEntry);
+	}
+
+	/**
+	 * This function returns the current temperature data.
+	 * 
+	 * @return String
+	 */
+	
+	/**
+	 * This function handles the necessary communication through REST to
+	 * register the TemperatureProvider to the Service Registry.
+	 * 
+	 * @return String Temperature data.
+	 */
+	public Response registerEventhandler(ServiceRegistryEntry serviceRegistryEntry) {
+		Client client = ClientBuilder.newClient();
+		URI uri = UriBuilder.fromPath("http://" + registry_IP + ":" + "8080").path("core").path("serviceregistry")
+				.path(this.getServiceGroup()).path(this.getServiceDefinition()).path("RESTJSON").build();
+		WebTarget target = client.target(uri);
+		System.out.println(target.getUri().toString());
+		Response response = target.request().header("Content-type", "application/json")
+				.post(Entity.json(serviceRegistryEntry));
+		return response;
+	}
 
 }
