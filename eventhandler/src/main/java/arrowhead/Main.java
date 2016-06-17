@@ -9,6 +9,8 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.servlet.ServletContainer;
 import se.bnearit.arrowhead.common.core.service.discovery.exception.ServiceRegisterException;
+import eu.EventHandlerProvider;
+import javax.ws.rs.core.Response;
 
 /**
  * Main class.
@@ -33,13 +35,24 @@ public class Main {
 
         EventHandlerSystem.openConnection();
 
-        BneartIT.connectACS();
-        BneartIT.publishRegistry();
-        BneartIT.publishPublishEvents();
-        BneartIT.publishHistoricals();
-
+        /*try {
+            BneartIT.connectACS();
+            BneartIT.publishRegistry();
+            BneartIT.publishPublishEvents();
+            BneartIT.publishHistoricals();
+        } catch (NullPointerException ex) {
+            ex.printStackTrace();
+        }*/
         /* Jetty Server */
         ServletHolder servlet = new ServletHolder(new ServletContainer(config));
+
+        /* Hungary Service Registry*/
+        EventHandlerProvider ep = new EventHandlerProvider();
+
+        Response response;
+
+        response = ep.invokeRegister();
+        System.out.println(response.getStatus());
 
         Server server = new Server(port);
         ServletContextHandler context = new ServletContextHandler(server, "/*");
@@ -53,14 +66,11 @@ public class Main {
             server.stop();
 
         } finally {
-            BneartIT.eraseServiceHistoricals();
-            BneartIT.eraseServiceRegistry();
-            BneartIT.eraseServicePublishEvents();
-            BneartIT.disconnectACS();
+           /* BneartIT.disconnectACS();
             if (EventHandlerSystem.isConnected()) {
                 EventHandlerSystem.closeConnection();
             }
-            server.destroy();
+            server.destroy();*/
         }
     }
 
