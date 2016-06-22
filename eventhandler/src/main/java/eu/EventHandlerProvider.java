@@ -14,7 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
-@Path("humidity")
+@Path("eventhandler")
 @Produces(MediaType.TEXT_PLAIN)
 public class EventHandlerProvider extends ArrowheadService {
 
