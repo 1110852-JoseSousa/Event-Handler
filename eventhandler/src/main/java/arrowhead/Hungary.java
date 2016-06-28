@@ -27,7 +27,7 @@ public class Hungary extends ArrowheadService {
 	//// CONFIG /////////////////////////////////
 	/////////////////////////////////////////////
 	private String own_IP = "localhost";
-	private String registry_IP ="localhost";
+	private String registry_IP ="arrowhead.tmit.bme.hu";
 	private String serviceGroup = "eventhandler";
 	private String serviceDefinition = "eventhandler";
 	/////////////////////////////////////////////
@@ -65,13 +65,13 @@ public class Hungary extends ArrowheadService {
 	 * @return String
 	 */
 	@GET
-	@Path("/registryservice")
-	public Response invokeRegistryServiceRegistry() {
+	@Path("/registry")
+	public Response invokeRegistry() {
 		ServiceRegistryEntry serviceRegistryEntry = new ServiceRegistryEntry();
 
 		// Preparing ServiceRegistryEntry
 		serviceRegistryEntry.setProvider(arrowheadSystem);
-		serviceRegistryEntry.setServiceURI("/eventhandler/registry");
+		serviceRegistryEntry.setServiceURI("/eventhandler");
 		serviceRegistryEntry.setServiceMetadata(this.getMetaData());
 		//serviceRegistryEntry.settSIG_key("RIuxP+vb5GjLXJo686NvKQ=="); // .168
 		 serviceRegistryEntry.settSIG_key("RM/jKKEPYB83peT0DQnYGg=="); // .237
@@ -83,7 +83,7 @@ public class Hungary extends ArrowheadService {
 
 		return registerEventhandler(serviceRegistryEntry);
 	}
-        
+        /*
         @GET
 	@Path("/publishservice")
 	public Response invokePublishServiceRegistry() {
@@ -99,7 +99,7 @@ public class Hungary extends ArrowheadService {
 		/*
 		 * if (registerProvider(serviceRegistryEntry) == 200) { return
 		 * "Provider successfully registered to Service Registry."; }
-		 */
+		 
 
 		return registerEventhandler(serviceRegistryEntry);
 	}
@@ -119,11 +119,11 @@ public class Hungary extends ArrowheadService {
 		/*
 		 * if (registerProvider(serviceRegistryEntry) == 200) { return
 		 * "Provider successfully registered to Service Registry."; }
-		 */
+		 
 
 		return registerEventhandler(serviceRegistryEntry);
 	}
-
+        */
 	/**
 	 * This function returns the current temperature data.
 	 * 

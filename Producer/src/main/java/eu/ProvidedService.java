@@ -3,7 +3,6 @@ package eu;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import eu.ArrowheadSystem;
-import eu.ArrowheadSystem;
 
 @XmlRootElement
 public class ProvidedService {

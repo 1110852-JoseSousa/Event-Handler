@@ -23,7 +23,7 @@ public class EventHandlerProvider extends ArrowheadService {
     /////////////////////////////////////////////
     private String own_IP = "localhost";
     private String registry_IP = "arrowhead.tmit.bme.hu";
-    private String serviceGroup = "eventhandler_group";
+    private String serviceGroup = "eventhandler";
     private String serviceDefinition = "eventhandler";
 	/////////////////////////////////////////////
 
@@ -81,6 +81,16 @@ public class EventHandlerProvider extends ArrowheadService {
         System.out.println(target.getUri().toString());
         Response response = target.request().header("Content-type", "application/json")
                 .post(Entity.json(serviceRegistryEntry));
+        return response;
+    }
+
+    public Response removeProvider(ServiceRegistryEntry serviceRegistryEntry) {
+        Client client = ClientBuilder.newClient();
+        URI uri = UriBuilder.fromPath("http://" + registry_IP + ":" + "8080").path("core").path("serviceregistry")
+                .path(this.getServiceGroup()).path(this.getServiceDefinition()).path("RESTJSON").build();
+        WebTarget target = client.target(uri);
+        System.out.println(target.getUri().toString());
+        Response response = target.request().header("Content-type", "application/json").delete();
         return response;
     }
 

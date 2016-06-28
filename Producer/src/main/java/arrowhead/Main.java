@@ -21,15 +21,10 @@ import arrowhead.generated.Registered;
 import eventhandler.operations.*;
 
 import java.io.IOException;
-import java.net.ConnectException;
-import java.util.Timer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
-import org.eclipse.jetty.http.MimeTypes;
-import se.bnearit.arrowhead.common.service.exception.ServiceNotStartedException;
+import jdk.nashorn.internal.parser.JSONParser;
 
 /**
  * Main class.
@@ -54,7 +49,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        Arrowhead.connectACS();
+       // Arrowhead.connectACS();
 
         Response response;
         ProducerType producer;
@@ -62,8 +57,9 @@ public class Main {
         producer = ProducerOperations.createProducer(uid, type, name);
 
         client = ClientBuilder.newClient();
-        target = client.target(Arrowhead.getEventHandlerURL());
+        target = client.target(ProducerOperations.getEventHandlerUri());
 
+        System.out.println(ProducerOperations.getEventHandlerUri());
         response = ProducerOperations.registerProducer(target, producer);
 
         Arrowhead.publishEvent();
@@ -85,13 +81,13 @@ public class Main {
         System.out.println(timeneeded);
 
         //System.out.println(response.readEntity(String.class));
-        Arrowhead.disconnectACS();
+        //Arrowhead.disconnectACS();
         /* Get Historicals example   */
  /*
         producerOp.setFilter(1, "temperature", "porto-sensor-1");
         response = producerOp.getHistoricalData();
         System.out.println(response.getStatus() + " " +response.readEntity(String.class));
-         */
+   */      
 
     }
 

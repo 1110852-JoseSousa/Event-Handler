@@ -34,28 +34,27 @@ public class Main {
     public static void main(String[] args) throws IOException, ServiceRegisterException, Exception {
 
         //EventHandlerSystem.openConnection();
-        try {
-            BneartIT.connectACS();
-            BneartIT.publishRegistry();
-            BneartIT.publishPublishEvents();
-            BneartIT.publishHistoricals();
-        } catch (NullPointerException ex) {
-            ex.printStackTrace();
-        }
+        /*try {
+         BneartIT.connectACS();
+         BneartIT.publishRegistry();
+         BneartIT.publishPublishEvents();
+         BneartIT.publishHistoricals();
+         } catch (NullPointerException ex) {
+         ex.printStackTrace();
+         }*/
         /* Jetty Server */
         ServletHolder servlet = new ServletHolder(new ServletContainer(config));
 
         /* Hungary Service Registry*/
-        //EventHandlerProvider ep = new EventHandlerProvider();
+        /*EventHandlerProvider ep = new EventHandlerProvider();
         Response response;
 
-        /*response = ep.invokeRegister();
-         System.out.println(response.getStatus());
-         */
+        response = ep.invokeRegister();
+*/
         Server server = new Server(port);
-        ServletContextHandler context = new ServletContextHandler(server, "/*");
+        ServletContextHandler context = new ServletContextHandler(server, "/");
         context.setContextPath(EndpointPrefix);
-        context.addServlet(servlet, "/*");
+        context.addServlet(servlet, "/");
         System.out.println(server.getURI());
         try {
             server.start();
@@ -64,7 +63,7 @@ public class Main {
             server.stop();
 
         } finally {
-            BneartIT.disconnectACS();
+            //BneartIT.disconnectACS();
             if (EventHandlerSystem.isConnected()) {
                 EventHandlerSystem.closeConnection();
             }
