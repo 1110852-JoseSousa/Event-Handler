@@ -62,9 +62,9 @@ public class BneartIT {
                     "8080|" + EndpointPrefix,
                     null);
             publisher.publish();
-            //logger.warn("Sucessfully published registry service");
+            logger.warn("Sucessfully published registry service");
         } catch (ServiceRegisterException ex) {
-            //logger.warn(ex.getMessage());
+            logger.warn(ex.getMessage());
         }
 
     }
@@ -80,9 +80,9 @@ public class BneartIT {
                     "8080|" + EndpointPrefix,
                     null);
             publisher.publish();
-            //logger.warn("Sucessfully published publisher service");
+            logger.warn("Sucessfully published publisher service");
         } catch (ServiceRegisterException ex) {
-            //logger.warn(ex.getMessage());
+            logger.warn(ex.getMessage());
         }
 
     }
@@ -98,9 +98,9 @@ public class BneartIT {
                     "8080|" + EndpointPrefix,
                     null);
             publisher.publish();
-            //logger.warn("Sucessfully published historicals service");
+            logger.warn("Sucessfully published historicals service");
         } catch (ServiceRegisterException ex) {
-            //logger.warn(ex.getMessage());
+            logger.warn(ex.getMessage());
         }
 
     }

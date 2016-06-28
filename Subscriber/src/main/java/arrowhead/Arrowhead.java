@@ -74,13 +74,15 @@ public class Arrowhead {
     public static String getEventHandlerURL() throws ServiceNotStartedException {
 
         ServiceIdentity service = arrowheadSystem.getServiceByName("eh_registry");
-        URL endpoint = null;
+        for (int i = 0; i < arrowheadSystem.getAllServices().size(); i++) {
+            System.out.println(arrowheadSystem.getAllServices().get(i));
+        }
+        URL endpoint;
         try {
             endpoint = arrowheadSystem.serviceGetCompleteUrlForResource(service, "");
 
             return endpoint.toString().replace("/registry", "");
         } catch (MalformedURLException | NullPointerException e) {
-            e.printStackTrace();
             return null;
         }
     }

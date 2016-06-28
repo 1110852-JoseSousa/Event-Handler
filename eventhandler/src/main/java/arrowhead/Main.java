@@ -33,27 +33,25 @@ public class Main {
     @SuppressWarnings("deprecation")
     public static void main(String[] args) throws IOException, ServiceRegisterException, Exception {
 
-        EventHandlerSystem.openConnection();
-
-        /*try {
+        //EventHandlerSystem.openConnection();
+        try {
             BneartIT.connectACS();
             BneartIT.publishRegistry();
             BneartIT.publishPublishEvents();
             BneartIT.publishHistoricals();
         } catch (NullPointerException ex) {
             ex.printStackTrace();
-        }*/
+        }
         /* Jetty Server */
         ServletHolder servlet = new ServletHolder(new ServletContainer(config));
 
         /* Hungary Service Registry*/
-        EventHandlerProvider ep = new EventHandlerProvider();
-
+        //EventHandlerProvider ep = new EventHandlerProvider();
         Response response;
 
-        response = ep.invokeRegister();
-        System.out.println(response.getStatus());
-
+        /*response = ep.invokeRegister();
+         System.out.println(response.getStatus());
+         */
         Server server = new Server(port);
         ServletContextHandler context = new ServletContextHandler(server, "/*");
         context.setContextPath(EndpointPrefix);
@@ -66,11 +64,11 @@ public class Main {
             server.stop();
 
         } finally {
-           /* BneartIT.disconnectACS();
+            BneartIT.disconnectACS();
             if (EventHandlerSystem.isConnected()) {
                 EventHandlerSystem.closeConnection();
             }
-            server.destroy();*/
+            server.destroy();
         }
     }
 
