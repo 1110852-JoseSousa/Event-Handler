@@ -12,7 +12,7 @@ import eu.arrowhead.model.Consumer;
 import eu.arrowhead.model.Metadata;
 import eu.arrowhead.model.Event;
 import eu.arrowhead.model.Registered;
-import eu.arrowhead.datalayer.DB;
+import eu.arrowhead.datalayer.Database;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -37,7 +37,7 @@ public class EventHandlerSystem {
 
     final static Logger logger = Logger.getLogger(EventHandlerSystem.class);
     private static final EventHandlerSystem instance = new EventHandlerSystem();
-    private static final DB db = new DB();
+    private static final Database db = new Database();
 
     private static boolean isDatabaseConnected = false;
 

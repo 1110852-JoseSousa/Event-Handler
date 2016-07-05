@@ -14,7 +14,7 @@ import java.io.File;
 
 /**
  *
- * @author Cister
+ * @author José Sousa
  */
 public class DBProperties {
 

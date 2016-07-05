@@ -3,10 +3,12 @@
  */
 package eu.arrowhead.datalayer;
 
+import eu.arrowhead.model.Consumer;
 import eu.arrowhead.model.Event;
 import eu.arrowhead.model.Events;
 import eu.arrowhead.model.Filter;
 import eu.arrowhead.model.Metadata;
+import eu.arrowhead.model.Producer;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -21,8 +23,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.Timestamp;
 import java.text.ParseException;
+import java.util.List;
 
-public class DB {
+public class Database  implements EventDAO, ProducerDAO, ConsumerDAO{
 
     private final String username;
     private final String passwd;
@@ -30,7 +33,7 @@ public class DB {
     private final String db_driver;
     private Connection con;
 
-    public DB() {
+    public Database() {
 
         DBProperties dbProp = new DBProperties();
         this.username = dbProp.getUsername();
@@ -63,7 +66,7 @@ public class DB {
             this.con.close();
             System.out.println("Closed connection to db " + this.db_url);
         } catch (SQLException ex) {
-            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -90,7 +93,7 @@ public class DB {
             // execute the preparedstatement
             preparedStmt.execute();
         } catch (SQLException ex) {
-            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -137,10 +140,50 @@ public class DB {
             return events;
 
         } catch (SQLException ex) {
-            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
 
+    }
+
+    @Override
+    public void insertEvent(Event e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Event> getEventsThroughFilter(Filter f) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void insertProducer(Producer c) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void removeProducer(String uid) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Producer getProducer(String uid) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void insertConsumer(Consumer c) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void removeConsumer(String uid) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Consumer getConsumer(String uid) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

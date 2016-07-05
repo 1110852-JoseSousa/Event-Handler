@@ -1,6 +1,6 @@
 package eu.arrowhead.services;
 
-import eu.arrowhead.datalayer.DB;
+import eu.arrowhead.datalayer.Database;
 import org.glassfish.jersey.server.ResourceConfig;
 import java.io.IOException;
 import java.net.ConnectException;
