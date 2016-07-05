@@ -6,7 +6,7 @@
 //
 
 
-package arrowhead.generated;
+package eu.arrowhead.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -16,18 +16,18 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for EventType complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Java class for Event complex type.
+ 
+ <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="EventType">
+ * &lt;complexType name="Event">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="from" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="type" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="description" type="{http://www.arrowhead.org/eventhandler/events}Meta"/>
+ *         &lt;element name="description" type="{http://www.arrowhead.org/eventhandler/events}Metadata"/>
  *         &lt;element name="payload" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -46,14 +46,14 @@ import javax.xml.bind.annotation.XmlType;
 })
 
 @XmlRootElement(name = "event")
-public class EventType {
+public class Event {
 
     @XmlElement(required = true)
     protected String from;
     @XmlElement(required = true)
     protected String type;
     @XmlElement(required = true)
-    protected Meta description;
+    protected Metadata description;
     @XmlElement(required = true)
     protected String payload;
 
@@ -110,10 +110,10 @@ public class EventType {
      * 
      * @return
      *     possible object is
-     *     {@link Meta }
+     *     {@link Metadata }
      *     
      */
-    public Meta getDescription() {
+    public Metadata getDescription() {
         return description;
     }
 
@@ -122,10 +122,10 @@ public class EventType {
      * 
      * @param value
      *     allowed object is
-     *     {@link Meta }
+     *     {@link Metadata }
      *     
      */
-    public void setDescription(Meta value) {
+    public void setDescription(Metadata value) {
         this.description = value;
     }
 

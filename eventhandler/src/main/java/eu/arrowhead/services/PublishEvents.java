@@ -1,6 +1,6 @@
-package arrowhead;
+package eu.arrowhead.services;
 
-import arrowhead.generated.EventType;
+import eu.arrowhead.model.Event;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
@@ -17,7 +17,7 @@ public class PublishEvents {
     @POST
     @Path("/{uid}")
     @Consumes(MediaType.APPLICATION_XML)
-    public Response publishEvents(EventType event) {
+    public Response publishEvents(Event event) {
 
         EventHandlerSystem ehs = EventHandlerSystem.getInstance();
 

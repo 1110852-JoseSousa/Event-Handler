@@ -6,7 +6,7 @@
 //
 
 
-package arrowhead.generated;
+package eu.arrowhead.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -16,18 +16,18 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for ConsumerType complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Java class for Consumer complex type.
+ 
+ <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="ConsumerType">
+ * &lt;complexType name="Consumer">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="uid" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="filter" type="{http://www.arrowhead.org/eventhandler/registered}FilterType"/>
+ *         &lt;element name="filter" type="{http://www.arrowhead.org/eventhandler/registered}Filter"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -45,7 +45,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 
 @XmlRootElement(name = "consumer")
-public class ConsumerType {
+public class Consumer {
 
     @XmlElement(required = true)
     protected String uid;
@@ -54,7 +54,7 @@ public class ConsumerType {
     @XmlElement(required = true)
     protected String ip;
     @XmlElement(required = true)
-    protected FilterType filter;
+    protected Filter filter;
 
     /**
      * Gets the value of the uid property.
@@ -109,10 +109,10 @@ public class ConsumerType {
      * 
      * @return
      *     possible object is
-     *     {@link FilterType }
+     *     {@link Filter }
      *     
      */
-    public FilterType getFilter() {
+    public Filter getFilter() {
         return filter;
     }
 
@@ -121,10 +121,10 @@ public class ConsumerType {
      * 
      * @param value
      *     allowed object is
-     *     {@link FilterType }
+     *     {@link Filter }
      *     
      */
-    public void setFilter(FilterType value) {
+    public void setFilter(Filter value) {
         this.filter = value;
     }
     

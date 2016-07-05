@@ -6,7 +6,7 @@
 //
 
 
-package arrowhead.generated;
+package eu.arrowhead.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="event" type="{http://www.arrowhead.org/eventhandler/events}EventType" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="event" type="{http://www.arrowhead.org/eventhandler/events}Event" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -42,7 +42,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "Events")
 public class Events {
 
-    protected List<EventType> event;
+    protected List<Event> event;
 
     /**
      * Gets the value of the event property.
@@ -62,13 +62,13 @@ public class Events {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link EventType }
+     * {@link Event }
      * 
      * 
      */
-    public List<EventType> getEvent() {
+    public List<Event> getEvent() {
         if (event == null) {
-            event = new ArrayList<EventType>();
+            event = new ArrayList<Event>();
         }
         return this.event;
     }

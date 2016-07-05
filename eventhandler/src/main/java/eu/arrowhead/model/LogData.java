@@ -1,4 +1,4 @@
-package arrowhead.generated;
+package eu.arrowhead.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="event" type="{http://www.arrowhead.org/eventhandler/events}EventType" maxOccurs="1" minOccurs="0"/>
+ *         &lt;element name="event" type="{http://www.arrowhead.org/eventhandler/events}Event" maxOccurs="1" minOccurs="0"/>
  *         &lt;element name="consumer" type="Integer" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -39,11 +39,11 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "LogData")
 public class LogData {
 
-    protected EventType event;
+    protected Event event;
     protected List<String> consumerList;
 
     public LogData(){
-        this.event = new EventType();
+        this.event = new Event();
         this.consumerList = new ArrayList<>();
     }
     /**
@@ -51,10 +51,10 @@ public class LogData {
      * 
      * @return
      *     possible object is
-     *     {@link EventType }
+     *     {@link Event }
      *     
      */
-    public EventType getEvent() {
+    public Event getEvent() {
         return event;
     }
 
@@ -70,12 +70,12 @@ public class LogData {
      *     {@link String }
      * @param description
      * allowed object is
-     *     {@link Meta }
+     *     {@link Metadata }
      * @param payload
      * allowed object is
      *     {@link String }
      */
-    public void setEvent(String from, String type, Meta description, String payload) {
+    public void setEvent(String from, String type, Metadata description, String payload) {
         this.event.setFrom(from);
         this.event.setType(type);
         this.event.setDescription(description);
@@ -88,10 +88,10 @@ public class LogData {
      *     
      * @param event
      * allowed object is
-     *     {@link EventType }
+     *     {@link Event }
      */
     
-    public void setEvent(EventType event) {
+    public void setEvent(Event event) {
         this.event = event;
     }
     

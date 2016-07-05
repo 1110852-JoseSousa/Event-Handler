@@ -1,10 +1,10 @@
-package arrowhead;
+package eu.arrowhead.services;
 
-import arrowhead.generated.Events;
+import eu.arrowhead.model.Events;
 import javax.ws.rs.POST;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.core.MediaType;
-import arrowhead.generated.FilterType;
+import eu.arrowhead.model.Filter;
 import java.io.StringWriter;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -19,7 +19,7 @@ public class Historicals {
     @POST
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.APPLICATION_XML)
-    public Response getHistoricalData(FilterType filter) throws JAXBException {
+    public Response getHistoricalData(Filter filter) throws JAXBException {
 
         EventHandlerSystem ehs = EventHandlerSystem.getInstance();
         Events e = ehs.GetHistoricalDataDB(filter);

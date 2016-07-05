@@ -1,6 +1,6 @@
-package arrowhead;
+package eu.arrowhead.services;
 
-import DL.DB;
+import eu.arrowhead.datalayer.DB;
 import org.glassfish.jersey.server.ResourceConfig;
 import java.io.IOException;
 import java.net.ConnectException;
@@ -9,7 +9,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.servlet.ServletContainer;
 import se.bnearit.arrowhead.common.core.service.discovery.exception.ServiceRegisterException;
-import eu.EventHandlerProvider;
+import eu.arrowhead.hungary.EventHandlerProvider;
 import javax.ws.rs.core.Response;
 
 /**

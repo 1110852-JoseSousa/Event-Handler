@@ -7,11 +7,11 @@
  *
  *
  */
-package arrowhead;
+package eu.arrowhead.services;
 
-import arrowhead.EventHandlerSystem;
-import arrowhead.generated.ConsumerType;
-import arrowhead.generated.ProducerType;
+import eu.arrowhead.services.EventHandlerSystem;
+import eu.arrowhead.model.Consumer;
+import eu.arrowhead.model.Producer;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.POST;
@@ -24,7 +24,7 @@ import javax.ws.rs.DefaultValue;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import arrowhead.generated.Registered;
+import eu.arrowhead.model.Registered;
 import java.io.StringWriter;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -104,7 +104,7 @@ public class Registry {
     @PUT
     @Path("/{uid}")
     @Consumes(MediaType.APPLICATION_XML)
-    public Response registerConsumer(@PathParam("uid") String uid, ConsumerType c) {
+    public Response registerConsumer(@PathParam("uid") String uid, Consumer c) {
 
         EventHandlerSystem ehs = EventHandlerSystem.getInstance();
 
@@ -126,7 +126,7 @@ public class Registry {
     @POST
     @Path("/{uid}")
     @Consumes(MediaType.APPLICATION_XML)
-    public Response registerProducer(@PathParam("uid") String uid, ProducerType p) {
+    public Response registerProducer(@PathParam("uid") String uid, Producer p) {
 
         EventHandlerSystem ehs = EventHandlerSystem.getInstance();
 

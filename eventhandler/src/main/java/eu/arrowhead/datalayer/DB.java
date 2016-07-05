@@ -1,12 +1,12 @@
 /*
  This class will later be used for the database operations
  */
-package DL;
+package eu.arrowhead.datalayer;
 
-import arrowhead.generated.EventType;
-import arrowhead.generated.Events;
-import arrowhead.generated.FilterType;
-import arrowhead.generated.Meta;
+import eu.arrowhead.model.Event;
+import eu.arrowhead.model.Events;
+import eu.arrowhead.model.Filter;
+import eu.arrowhead.model.Metadata;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -67,7 +67,7 @@ public class DB {
         }
     }
 
-    public void insertEventDb(EventType event) {
+    public void insertEventDb(Event event) {
         try {
             // the mysql insert statement
             String query = "insert into events (date, producer_id, event_type, meta_id, payload)"
@@ -94,11 +94,11 @@ public class DB {
         }
     }
 
-    public Events getEventDB(FilterType f) {
+    public Events getEventDB(Filter f) {
 
         Events events = new Events();
 
-        EventType event;
+        Event event;
         try {
 
             Timestamp timestampEnd = new Timestamp(f.getEndDateTime().getMillisecond());
@@ -116,14 +116,14 @@ public class DB {
             ResultSet rs = st.executeQuery(query);
 
             while (rs.next()) {
-                event = new EventType();
+                event = new Event();
 
                 String producerID = rs.getString("producer_id");
                 String eventType = rs.getString("event_type");
                 int severity = rs.getInt("meta_id");
                 String payload = rs.getString("payload");
 
-                Meta m = new Meta();
+                Metadata m = new Metadata();
                 m.setSeverity(severity);
 
                 event.setDescription(m);

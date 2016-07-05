@@ -6,7 +6,7 @@
 //
 
 
-package arrowhead.generated;
+package eu.arrowhead.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +26,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="consumer" type="{http://www.arrowhead.org/eventhandler/registered}ConsumerType" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="producer" type="{http://www.arrowhead.org/eventhandler/registered}ProducerType" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="consumer" type="{http://www.arrowhead.org/eventhandler/registered}Consumer" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="producer" type="{http://www.arrowhead.org/eventhandler/registered}Producer" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -44,8 +44,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "Registered")
 public class Registered {
 
-    protected List<ConsumerType> consumer;
-    protected List<ProducerType> producer;
+    protected List<Consumer> consumer;
+    protected List<Producer> producer;
 
     /**
      * Gets the value of the consumer property.
@@ -65,13 +65,13 @@ public class Registered {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link ConsumerType }
+     * {@link Consumer }
      * 
      * 
      */
-    public List<ConsumerType> getConsumer() {
+    public List<Consumer> getConsumer() {
         if (consumer == null) {
-            consumer = new ArrayList<ConsumerType>();
+            consumer = new ArrayList<Consumer>();
         }
         return this.consumer;
     }
@@ -94,13 +94,13 @@ public class Registered {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link ProducerType }
+     * {@link Producer }
      * 
      * 
      */
-    public List<ProducerType> getProducer() {
+    public List<Producer> getProducer() {
         if (producer == null) {
-            producer = new ArrayList<ProducerType>();
+            producer = new ArrayList<Producer>();
         }
         return this.producer;
     }

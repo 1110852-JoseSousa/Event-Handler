@@ -6,7 +6,7 @@
 //
 
 
-package arrowhead.generated;
+package eu.arrowhead.model;
 
 import javax.xml.bind.annotation.XmlRegistry;
 
@@ -45,35 +45,35 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ConsumerType }
+     * Create an instance of {@link Consumer }
      * 
      */
-    public ConsumerType createConsumerType() {
-        return new ConsumerType();
+    public Consumer createConsumerType() {
+        return new Consumer();
     }
 
     /**
-     * Create an instance of {@link ProducerType }
+     * Create an instance of {@link Producer }
      * 
      */
-    public ProducerType createProducerType() {
-        return new ProducerType();
+    public Producer createProducerType() {
+        return new Producer();
     }
 
     /**
-     * Create an instance of {@link Meta }
+     * Create an instance of {@link Metadata }
      * 
      */
-    public Meta createMeta() {
-        return new Meta();
+    public Metadata createMeta() {
+        return new Metadata();
     }
 
     /**
-     * Create an instance of {@link FilterType }
+     * Create an instance of {@link Filter }
      * 
      */
-    public FilterType createFilterType() {
-        return new FilterType();
+    public Filter createFilterType() {
+        return new Filter();
     }
 
 }

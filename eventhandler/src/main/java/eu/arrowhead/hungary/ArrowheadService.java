@@ -1,10 +1,10 @@
-package eu;
+package eu.arrowhead.hungary;
 
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import eu.ServiceMetadata;
+import eu.arrowhead.hungary.ServiceMetadata;
 
 @XmlRootElement
 public class ArrowheadService {

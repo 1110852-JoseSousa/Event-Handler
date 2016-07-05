@@ -1,4 +1,4 @@
-package eu;
+package eu.arrowhead.hungary;
 
 import java.net.URI;
 import java.util.ArrayList;

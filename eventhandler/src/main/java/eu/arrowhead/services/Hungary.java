@@ -1,9 +1,9 @@
-package arrowhead;
+package eu.arrowhead.services;
 
-import eu.ArrowheadService;
-import eu.ArrowheadSystem;
-import eu.ServiceMetadata;
-import eu.ServiceRegistryEntry;
+import eu.arrowhead.hungary.ArrowheadService;
+import eu.arrowhead.hungary.ArrowheadSystem;
+import eu.arrowhead.hungary.ServiceMetadata;
+import eu.arrowhead.hungary.ServiceRegistryEntry;
 import java.net.URI;
 import java.util.ArrayList;
 

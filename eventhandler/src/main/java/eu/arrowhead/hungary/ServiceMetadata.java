@@ -1,4 +1,4 @@
-package eu;
+package eu.arrowhead.hungary;
 
 import javax.xml.bind.annotation.XmlRootElement;
 

@@ -6,7 +6,7 @@
 //
 
 
-package arrowhead.generated;
+package eu.arrowhead.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -15,12 +15,12 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for Meta complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Java class for Metadata complex type.
+ 
+ <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Meta">
+ * &lt;complexType name="Metadata">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;attribute name="severity" type="{http://www.w3.org/2001/XMLSchema}int" />
@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Meta")
-public class Meta {
+public class Metadata {
 
     @XmlAttribute
     protected Integer severity;

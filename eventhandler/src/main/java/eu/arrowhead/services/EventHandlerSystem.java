@@ -2,10 +2,17 @@
  * todo: the query for publishers/consumers could return XML
  *
  */
-package arrowhead;
+package eu.arrowhead.services;
 
-import DL.DB;
-import arrowhead.generated.*;
+import eu.arrowhead.model.Producer;
+import eu.arrowhead.model.LogData;
+import eu.arrowhead.model.Filter;
+import eu.arrowhead.model.Events;
+import eu.arrowhead.model.Consumer;
+import eu.arrowhead.model.Metadata;
+import eu.arrowhead.model.Event;
+import eu.arrowhead.model.Registered;
+import eu.arrowhead.datalayer.DB;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -54,22 +61,22 @@ public class EventHandlerSystem {
     public Registered m_registered;
     public Events events;
 
-    public void addEventMemory(EventType e) {
+    public void addEventMemory(Event e) {
         this.events.getEvent().add(e);
     }
 
-    public void storeEventDB(EventType e) {
+    public void storeEventDB(Event e) {
 
         db.insertEventDb(e);
 
     }
 
-    public void storeEventFile(EventType event) {
+    public void storeEventFile(Event event) {
 
-        List<ConsumerType> subs = applyFilter(event);
+        List<Consumer> subs = applyFilter(event);
         LogData data = new LogData();
         data.setEvent(event);
-        for (ConsumerType c : subs) {
+        for (Consumer c : subs) {
             data.addConsumer(c.getUid());
         }
         logger.debug(data.writeObject());
@@ -83,9 +90,9 @@ public class EventHandlerSystem {
 
     public Registered QueryProducer(String q_name, String q_type) {
         Registered r = new Registered();
-        Iterator<ProducerType> ip = m_registered.getProducer().iterator();
+        Iterator<Producer> ip = m_registered.getProducer().iterator();
         while (ip.hasNext()) {
-            ProducerType p = ip.next();
+            Producer p = ip.next();
             if ((q_name.equals("") || q_name.equals(p.getName()))
                     && (q_type.equals("") || q_type.equals(p.getType()))) {
                 r.getProducer().add(p);
@@ -96,9 +103,9 @@ public class EventHandlerSystem {
 
     public Registered QueryConsumer(String q_name, String q_type, String q_from) {
         Registered r = new Registered();
-        Iterator<ConsumerType> ip = m_registered.getConsumer().iterator();
+        Iterator<Consumer> ip = m_registered.getConsumer().iterator();
         while (ip.hasNext()) {
-            ConsumerType c = ip.next();
+            Consumer c = ip.next();
             if ((q_name.equals("") || q_name.equals(c.getName()))
                     && (q_type.equals("") || q_type.equals(c.getFilter().getType()))
                     && (q_from.equals("") || q_from.equals(c.getFilter().getFrom()))) {
@@ -108,10 +115,10 @@ public class EventHandlerSystem {
         return r;
     }
 
-    public ProducerType GetProducer(String uid) {
-        Iterator<ProducerType> ip = m_registered.getProducer().iterator();
+    public Producer GetProducer(String uid) {
+        Iterator<Producer> ip = m_registered.getProducer().iterator();
         while (ip.hasNext()) {
-            ProducerType p = ip.next();
+            Producer p = ip.next();
             if (p.getUid().equals(uid)) {
                 return p;
             }
@@ -119,10 +126,10 @@ public class EventHandlerSystem {
         return null;
     }
 
-    public ConsumerType GetConsumer(String uid) {
-        Iterator<ConsumerType> ip = m_registered.getConsumer().iterator();
+    public Consumer GetConsumer(String uid) {
+        Iterator<Consumer> ip = m_registered.getConsumer().iterator();
         while (ip.hasNext()) {
-            ConsumerType p = ip.next();
+            Consumer p = ip.next();
             if (p.getUid().equals(uid)) {
                 return p;
             }
@@ -131,7 +138,7 @@ public class EventHandlerSystem {
     }
 
     public boolean DeleteProducer(String uid) {
-        ProducerType p1 = GetProducer(uid);
+        Producer p1 = GetProducer(uid);
         if (null == p1) {
             return false;
         }
@@ -139,7 +146,7 @@ public class EventHandlerSystem {
     }
 
     public boolean DeleteConsumer(String uid) {
-        ConsumerType p1 = GetConsumer(uid);
+        Consumer p1 = GetConsumer(uid);
         if (null == p1) {
             return false;
         }
@@ -162,21 +169,21 @@ public class EventHandlerSystem {
      }
      }*/
     public Registered ResolveQueryProducer(String uid) {
-        ProducerType p = GetProducer(uid);
+        Producer p = GetProducer(uid);
         if (null == p) {
             return null;
         }
 
-//		ProducerType newp = cloner.deepClone(p);
-        ProducerType newp = DeepCopyProducer(p);
+//		Producer newp = cloner.deepClone(p);
+        Producer newp = DeepCopyProducer(p);
 
         Registered ret = new Registered();
         ret.getProducer().add(newp);
         return ret;
     }
 
-    private ProducerType DeepCopyProducer(ProducerType p) {
-        ProducerType newp = new ProducerType();
+    private Producer DeepCopyProducer(Producer p) {
+        Producer newp = new Producer();
         newp.setUid(p.getUid());
         newp.setType(p.getType());
         newp.setName(p.getName());
@@ -184,15 +191,15 @@ public class EventHandlerSystem {
         return newp;
     }
 
-    private Meta DeepCopyMeta(Meta m) {
-        Meta newm = new Meta();
+    private Metadata DeepCopyMeta(Metadata m) {
+        Metadata newm = new Metadata();
         newm.setSeverity(m.getSeverity());
         return newm;
     }
 
-    private FilterType DeepCopyFilter(FilterType f) {
+    private Filter DeepCopyFilter(Filter f) {
 
-        FilterType newf = new FilterType();
+        Filter newf = new Filter();
         newf.setDescription(DeepCopyMeta(f.getDescription()));
         newf.setEndDateTime(f.getEndDateTime());
         newf.setStartDateTime(f.getStartDateTime());
@@ -201,8 +208,8 @@ public class EventHandlerSystem {
         return newf;
     }
 
-    private ConsumerType DeepCopyConsumer(ConsumerType p) {
-        ConsumerType newp = new ConsumerType();
+    private Consumer DeepCopyConsumer(Consumer p) {
+        Consumer newp = new Consumer();
         newp.setFilter(DeepCopyFilter(p.getFilter()));
         newp.setUid(p.getUid());
 //		newp.setType(p.getType());
@@ -211,13 +218,13 @@ public class EventHandlerSystem {
     }
 
     public Registered ResolveQueryConsumer(String uid) {
-        ConsumerType p = GetConsumer(uid);
+        Consumer p = GetConsumer(uid);
         if (null == p) {
             return null;
         }
 
-//		ConsumerType newp = cloner.deepClone(p);
-        ConsumerType newp = DeepCopyConsumer(p);
+//		Consumer newp = cloner.deepClone(p);
+        Consumer newp = DeepCopyConsumer(p);
 
         Registered ret = new Registered();
         ret.getConsumer().add(newp);
@@ -227,40 +234,40 @@ public class EventHandlerSystem {
     /*public boolean alreadyExists(String uid) {
      Iterator<ProducerType> ip = m_registered.getProducer().iterator();
      while (ip.hasNext()) {
-     ProducerType p = ip.next();
+     Producer p = ip.next();
      if (p.getUid().equals(uid)) {
      return true;
      }
      }
      Iterator<ConsumerType> ic = m_registered.getConsumer().iterator();
      while (ic.hasNext()) {
-     ConsumerType c = ic.next();
+     Consumer c = ic.next();
      if (c.getUid().equals(uid)) {
      return true;
      }
      }
      return false;
      }*/
-    public void ImportProducer(String uid, ProducerType p) {
+    public void ImportProducer(String uid, Producer p) {
         m_registered.getProducer().add(p);
         //logger.debug("");
     }
 
-    public void ImportConsumer(String uid, ConsumerType c) {
+    public void ImportConsumer(String uid, Consumer c) {
         m_registered.getConsumer().add(c);
     }
 
-    public Events GetHistoricalDataDB(FilterType filter) {
+    public Events GetHistoricalDataDB(Filter filter) {
         return db.getEventDB(filter);
     }
 
     /*Instead of a Database server, a file will be used to store data*/
-    public String GetHistoricalDataFile(FilterType filter) {
+    public String GetHistoricalDataFile(Filter filter) {
 
         LogData data = new LogData();
-        EventType e = new EventType();
+        Event e = new Event();
         BufferedReader br = null;
-        EventType event;
+        Event event;
         List<String> subs;
         String ret = "";
 
@@ -292,17 +299,17 @@ public class EventHandlerSystem {
     }
 
     // Access each Subscriber's notify Service to send the events
-    public void notifyEvent(EventType event) {
+    public void notifyEvent(Event event) {
 
         WebTarget target;
         Response r;
         LogData data = new LogData();
         data.setEvent(event);
-        List<ConsumerType> subs;
+        List<Consumer> subs;
 
         subs = applyFilter(event);
 
-        for (ConsumerType c : subs) {
+        for (Consumer c : subs) {
 
             target = setTarget(BneartIT.getSubscriberURL(c.getUid()));
             r = notifySubscriber(event, target);
@@ -310,15 +317,15 @@ public class EventHandlerSystem {
     }
 
     // For an event apply the filter of each subscriber and return a list
-    public List<ConsumerType> applyFilter(EventType e) {
+    public List<Consumer> applyFilter(Event e) {
 
-        List<ConsumerType> toNotify = new ArrayList<ConsumerType>();
+        List<Consumer> toNotify = new ArrayList<Consumer>();
 
-        Iterator<ConsumerType> itSub = m_registered.getConsumer().iterator();
+        Iterator<Consumer> itSub = m_registered.getConsumer().iterator();
 
         while (itSub.hasNext()) {
 
-            ConsumerType c = itSub.next();
+            Consumer c = itSub.next();
 
             // Using the type and from as filter, also can be used the timestamp.. && c.getFilter().getFrom().compareTo(e.getFrom()) == 0
             if (c.getFilter().getType().compareTo(e.getType()) == 0) {
@@ -330,8 +337,8 @@ public class EventHandlerSystem {
     }
 
     // Checks if there is any producer publishing events according to the subscriber filter
-    boolean ExistsEventsForConsumer(ConsumerType c) {
-        for (ProducerType p : m_registered.getProducer()) {
+    boolean ExistsEventsForConsumer(Consumer c) {
+        for (Producer p : m_registered.getProducer()) {
             if (c.getFilter().getFrom().equalsIgnoreCase(p.getUid()) && c.getFilter().getType().equalsIgnoreCase(p.getType())) {
                 return true;
             }
@@ -364,9 +371,9 @@ public class EventHandlerSystem {
 
     }
 
-    public EventType getEventInfoLog(String line) {
+    public Event getEventInfoLog(String line) {
 
-        EventType e = new EventType();
+        Event e = new Event();
 
         String type, from, payload;
         String[] array;
@@ -377,7 +384,7 @@ public class EventHandlerSystem {
         Integer severity = Integer.parseInt(array[6]);
         e.setType(type);
         e.setFrom(from);
-        Meta m = new Meta();
+        Metadata m = new Metadata();
         m.setSeverity(severity);
         e.setDescription(m);
         e.setPayload(payload);
@@ -392,7 +399,7 @@ public class EventHandlerSystem {
         return target;
     }
 
-    public Response notifySubscriber(EventType e, WebTarget target) {
+    public Response notifySubscriber(Event e, WebTarget target) {
 
         return target.path("notify").request(MediaType.APPLICATION_XML).post(
                 Entity.entity(e, MediaType.APPLICATION_XML));

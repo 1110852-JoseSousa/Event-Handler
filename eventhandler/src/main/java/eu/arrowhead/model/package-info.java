@@ -6,4 +6,4 @@
 //
 
 @javax.xml.bind.annotation.XmlSchema(namespace = "http://www.arrowhead.org/eventhandler/registered", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
-package arrowhead.generated;
+package eu.arrowhead.model;

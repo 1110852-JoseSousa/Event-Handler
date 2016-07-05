@@ -6,7 +6,7 @@
 //
 
 
-package arrowhead.generated;
+package eu.arrowhead.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -18,16 +18,16 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
- * <p>Java class for FilterType complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Java class for Filter complex type.
+ 
+ <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="FilterType">
+ * &lt;complexType name="Filter">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="description" type="{http://www.arrowhead.org/eventhandler/registered}Meta"/>
+ *         &lt;element name="description" type="{http://www.arrowhead.org/eventhandler/registered}Metadata"/>
  *         &lt;element name="startDateTime" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="endDateTime" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="type" type="{http://www.w3.org/2001/XMLSchema}string"/>
@@ -49,10 +49,10 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "from"
 })
 @XmlRootElement(name = "filter")
-public class FilterType {
+public class Filter {
 
     @XmlElement(required = true)
-    protected Meta description;
+    protected Metadata description;
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar startDateTime;
     @XmlSchemaType(name = "dateTime")
@@ -67,10 +67,10 @@ public class FilterType {
      * 
      * @return
      *     possible object is
-     *     {@link Meta }
+     *     {@link Metadata }
      *     
      */
-    public Meta getDescription() {
+    public Metadata getDescription() {
         return description;
     }
 
@@ -79,10 +79,10 @@ public class FilterType {
      * 
      * @param value
      *     allowed object is
-     *     {@link Meta }
+     *     {@link Metadata }
      *     
      */
-    public void setDescription(Meta value) {
+    public void setDescription(Metadata value) {
         this.description = value;
     }
 
